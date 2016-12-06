@@ -17,7 +17,7 @@ class Gestion extends CI_Controller {
     
     public function postulantes(){
         $this->db->from('postulantes');
-        //hola
+		$array = array();
         $this->db->join('personas','personas.rut = postulantes.rut');
         $this->db->where('postulantes.id_solicitud is null');
         $query = $this->db->get();

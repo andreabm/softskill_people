@@ -45,7 +45,7 @@
                 
                     <label>Rut:</label>
                     <div class="input-group">
-                      <input type="text" id="rut" name="rut" class="form-control" placeholder="Rut" />
+                      <input type="text" id="rut" name="rut" class="form-control" placeholder="Rut" autocomplete="off" />
                       <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="validar_rut(event)">Validar</a></span>
                     </div>
                     

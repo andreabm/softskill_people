@@ -12,6 +12,22 @@
     <?php
   echo form_open('Gestion/agregar_postulante');
   ?>
+  
+  <div class="row">
+    <div class="col-xs-8">
+        <div class="alert alert-danger alert-dismissible" id="alerta" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El Rut ya se encuentra ingresado anteriormente.
+        </div>
+    </div><br />
+    <div class="col-xs-8">
+        <div class="alert alert-danger alert-dismissible" id="alerta_rut" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El Rut es Incorrecto. Favor validar.
+        </div>
+    </div>
+  </div>
+  
       <div class="row">
         <div class="col-xs-12">
             <div class="box box-success">
@@ -22,14 +38,26 @@
                 <div class="row">
                 
                 <div class="col-md-3">
-                      <div class="form-group">
-                        <label>Rut</label>
-                        <input class="form-control" type="text" name="rut" id="rut" placeholder="RUT">
-                      </div>
+                
+                    <div class="form-group">
+                        <span id="respuesta"></span>
+                        <span id="muestra"></span>
+                
+                    <label>Rut:</label>
+                    <div class="input-group">
+                      <input type="text" id="rut" name="rut" class="form-control" placeholder="Rut" />
+                      <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="validar_rut(event)">Validar</a></span>
                     </div>
                     
-                    <div class="col-md-3 verificar">
-                        <div class="form-group">
+                    
+                    
+                    
+                        
+                      </div>
+                    </div>
+                
+                <div class="col-md-3 verificar">
+                      <div class="form-group">
                         <label>Fecha:</label>
         
                         <div class="input-group date">
@@ -40,25 +68,26 @@
                         </div>
                         <!-- /.input group -->
                       </div>
-                      
-                    
-                    
                     </div>
+                    
+                    
+                    
                     <div class="col-md-3 verificar">
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control " type="text" name="nombre" id="nombre" placeholder="Nombre">
+                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre">
                         </div>
                     </div>
+                    
                     <div class="col-md-3 verificar">
                         <div class="form-group">
                             <label>Edad</label>
-                            <input class="form-control " type="text" name="edad" id="edad" placeholder="Edad">                           
+                            <input class="form-control" type="text" name="edad" id="edad" placeholder="Edad">                           
                         </div>
                     </div>
               </div>
-              <div class="row">
-                <div class="col-md-3 verificar">
+              <div class="row verificar">
+                <div class="col-md-3">
                       <div class="form-group">
                         <label>Fecha de Nacimiento:</label>
         
@@ -71,7 +100,7 @@
                         <!-- /.input group -->
                       </div>
                     </div>
-                    <div class="col-md-3 verificar">
+                    <div class="col-md-3">
                     <div class="form-group">
                         <label>Sexo</label>
                             <select class="form-control" style="width: 100%;" name="sexo">
@@ -80,7 +109,7 @@
                             </select>
                       </div>
                     </div>
-                    <div class="col-md-3 verificar">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Estado Civil</label>
                             <select class="form-control" style="width: 100%;" name="estado_civil">
@@ -90,7 +119,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3 verificar">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Nacionalidad</label>
                             <input class="form-control" type="text" name="nacionalidad" id="nacionalidad" placeholder="Nacionalidad">                           
@@ -98,34 +127,34 @@
                     </div>
               </div>
                   
-              <div class="row">
-                <div class="col-md-8 verificar">
+              <div class="row verificar">
+                <div class="col-md-8">
                     <div class="form-group">
                       <label>Direcci&oacute;n</label>
                       <input type="text" class="form-control" placeholder="Direccion" name="direccion">
                     </div>
                  </div>
-                 <div class="col-md-4 verificar">
+                 <div class="col-md-4">
                     <label>Comuna</label>
                     <?php
                     echo form_dropdown('comuna',$comunas,'',array('class' => 'form-control','id' => 'comuna'));
                     ?>
                  </div>
               </div>
-              <div class="row">
-                    <div class="col-md-3 verificar">
+              <div class="row verificar">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Celular</label>
                             <input class="form-control" type="text" name="celular" id="celular" placeholder="Celular">                           
                         </div>
                     </div>
-                    <div class="col-md-3 verificar">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Fono Fijo</label>
                             <input class="form-control" type="text" name="fono" id="fono" placeholder="Fono">                           
                         </div>
                     </div>
-                    <div class="col-md-3 verificar">
+                    <div class="col-md-3">
                             <div class="form-group">
                                 <label>Numero de Hijos</label>
                                 <select class="form-control" style="width: 100%;" name="hijos">
@@ -140,7 +169,7 @@
                                 </select>
                             </div>
                     </div>
-                    <div class="col-md-3 verificar">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Edades</label>
                             <input class="form-control" type="text" name="edades_hijos" id="edades_hijos" placeholder="Edades">                           
@@ -223,7 +252,7 @@
                         </div>
                     </div>
               </div>
-              <div class="row verificar">
+              <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
                             <label>Otro (Indicar)</label>
@@ -273,7 +302,7 @@
                         </div>
                     </div>
               </div>
-              <div class="row verificar">
+              <div class="row">
                 <br />
                     <div class="col-md-3">
                         <div class="form-group">
@@ -302,7 +331,7 @@
                     <br />
               </div>
               <label>Indique Referencias Laborales</label>
-              <div class="row verificar">
+              <div class="row">
                 <br />
                 <div class="col-md-9">
                         <div class="form-group">
@@ -497,12 +526,62 @@
     </section>
 
 <script>
+
 $('.verificar').hide();
+
 $('.datepicker').datepicker({
       autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
+});
+
+
+$('#rut').Rut({
+  on_error: function(){ 
+    $('#alerta_rut').fadeIn();
+    setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
+    },
+  format_on: 'keyup'
+});
+
+setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
+setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
+        
+function validar_rut(event){
+    event.preventDefault();
+    var edValue = document.getElementById("rut");
+    var rut = edValue.value;    
+    
+    var muestra = document.getElementById("muestra");
+    //muestra.innerText = "Campo rut ingresado: "+rut;
+        
+    var respuesta = document.getElementById("respuesta");
+    $.ajax({
+          url:"<?php echo base_url('index.php/gestion/valida_rut')?>",
+          type: 'POST',
+          data: {rut:rut},
+          success: function(data){
+            
+            console.debug(data);
+            data  = JSON.parse(data);          
+            
+            if (data.existe=='SI'){
+                $('.verificar').hide();
+                $('#alerta').fadeIn();
+                setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
+                return false;
+            } else {                
+                $('.verificar').fadeIn();
+                respuesta.innerText = "Exito";
+            }            
+            
+          },
+          error: function(e) {
+            alert('error');
+            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
     });
+}   
 </script>

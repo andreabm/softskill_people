@@ -617,6 +617,22 @@ class Gestion extends CI_Controller {
         $this->load->view('gestion/solicitudes',$data);
         $this->load->view('common/footer');
     }
-
+    
+      function valida_rut(){##Validar Rut##
+        $id = $this->input->post('rut');                
+        if(!empty($id)){        
+            $this->db->select('*');        
+            $this->db->from('postulantes');
+            $this->db->where('rut="'.$id.'"');
+            $query = $this->db->get();
+            $postulante = $query->result_array();            
+            if (!empty($postulante)) {
+                $data['existe'] = 'SI';
+            }   else {
+                $data['existe'] = 'NO';
+            }
+        }
+        echo json_encode($data);
+    }
 }
 ?>

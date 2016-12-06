@@ -1,0 +1,502 @@
+ <div class="content-wrapper">
+ <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Postulacion 
+        <small> de Empleo</small>
+      </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+    <br />
+    <?php
+  echo form_open('Gestion/editar_postulante');
+  ?>
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header">
+                  <h3 class="box-title">Antecedentes Personales</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+               
+                    <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Rut</label>
+                        <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut'] ?>">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" value="<?php echo $postulante[0]['nombre'] ?>">
+                        </div>
+                    </div>
+                     <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Fecha de Nacimiento:</label>
+        
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right datepicker" name="fecha_nac" value="<?php echo $postulante[0]['fecha_nacimiento'] ?>">
+                        </div>
+                        <!-- /.input group -->
+                      </div>
+                    </div>
+              </div>
+              <div class="row">
+               
+                    <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Sexo</label>
+                            <select class="form-control" style="width: 100%;" name="sexo">
+                                <?php 
+                                if ($postulante[0]['sexo'] == 'Fe') { ?>
+                                  <option selected="selected" value="Fe">Femenino</option>
+                                  <option value="Ma">Masculino</option>
+                                  <?php 
+                                } else {
+                                    ?>
+                                    <option value="Fe">Femenino</option>
+                                    <option selected="selected"  value="Ma">Masculino</option>
+                                    <?php 
+                                }
+                                  ?>
+                            </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Estado Civil</label>
+                            <select class="form-control" style="width: 100%;" name="estado_civil">
+                                    <?php 
+                                    if ($postulante[0]['edo_civil'] == 'Soltero') { ?>
+                                         <option value="Soltero" selected="selected">Soltero</option>
+                                          <option value="Casado" >Casado</option>
+                                          <option value="viudo" >Viudo</option>
+                                    <?php 
+                                    } elseif ($postulante[0]['edo_civil'] == 'Casado') { ?>
+                                         <option value="Soltero">Soltero</option>
+                                          <option value="Casado"  selected="selected">Casado</option>
+                                          <option value="viudo" >Viudo</option>
+                                    <?php
+                                    } else {
+                                        ?>
+                                        <option value="Soltero">Soltero</option>
+                                          <option value="Casado">Casado</option>
+                                          <option value="viudo" selected="selected">Viudo</option>
+                                        <?php 
+                                    }
+                                    ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Nacionalidad</label>
+                            <input class="form-control" type="text" name="nacionalidad" id="nacionalidad" placeholder="Nacionalidad" value="<?php echo $postulante[0]['nacionalidad']?>">                           
+                        </div>
+                    </div>
+              </div>
+                  
+              <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                      <label>Direcci&oacute;n</label>
+                      <input type="text" class="form-control" placeholder="Direccion" name="direccion" value="<?php echo $postulante[0]['direccion'] ?>">
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+                    <label>Comuna</label>
+                    <?php
+                    echo form_dropdown('comuna',$comunas,$postulante[0]['comuna'],array('class' => 'form-control','id' => 'comuna'));
+                    ?>
+                 </div>
+              </div>
+              <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Celular</label>
+                            <input class="form-control" type="text" name="celular" id="celular" placeholder="Celular" value="<?php echo $postulante[0]['fono_movil'] ?>">                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Fono Fijo</label>
+                            <input class="form-control" type="text" name="fono" id="fono" placeholder="Fono" value="<?php echo $postulante[0]['fono_fijo'] ?>">                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Numero de Hijos</label>
+                                 <?php
+                                    echo form_dropdown('hijos',array('0'=> '0','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6','7'=>'7'),$postulante[0]['num_hijos'],array('class' => 'form-control','id' => 'hijos'));
+                                    ?>
+                                
+                            </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Edades</label>
+                            <input class="form-control" type="text" name="edades_hijos" id="edades_hijos" placeholder="Edades" value="<?php $postulante[0]['edad_hijos'] ?>">                           
+                        </div>
+                    </div>
+              </div>
+              <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>¿Tiene Alguna Discapacidad?</label>
+                            <input class="form-control" type="text" name="discapacidad" id="discapacidad" value="<?php echo $postulante[0]['discapacidad']?>">                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>¿Tiene Alguna Enfermedad Importante?</label>
+                            <input class="form-control" type="text" name="enfermedad" id="enfermedad" value="<?php echo $postulante[0]['enfermedad'] ?>">                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Indique Nombre y Contacto Familiar</label>
+                            <input class="form-control" type="text" name="familiar" id="familiar" value="<?php echo $postulante[0]['contacto_familiar']?>">                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Cargo que Postula</label>
+                              <?php
+                                echo form_dropdown('id_cargo',$cargos,$postulante[0]['id_cargo'],array('class' => 'form-control','id' => 'id_cargo'));
+                                ?>                   
+                        </div>
+                    </div>
+              </div>
+          </div>
+            <!-- /.box-body -->
+            </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      </div>
+       <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title">Antecedentes Academicos</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Educaci&oacute;n Media</label>
+                             <?php
+                                echo form_dropdown('educacion_media',array('INCOMPLETA' => 'INCOMPLETA','COMPLETA' => 'COMPLETA','EN CURSO' => 'EN CURSO'),$postulante[0]['educacion_media'],array('class' => 'form-control','id' => 'educacion_media'));
+                                ?>
+                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Media T&eacute;cnica</label>
+                            <input class="form-control" type="text" name="media_tecnica" id="media_tecnica" value="<?php echo $postulante[0]['educacion_media_tecnica']?>">                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Educaci&oacute;n Superior</label>
+                            <?php
+                                echo form_dropdown('educacion_superior',array('INCOMPLETA' => 'INCOMPLETA','COMPLETA' => 'COMPLETA','EN CURSO' => 'EN CURSO'),$postulante[0]['educacion_superior'],array('class' => 'form-control','id' => 'educacion_superior'));
+                                ?>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Carrera</label>
+                            <input class="form-control" type="text" name="carrera" id="carrera" value="<?php echo $postulante[0]['carrera'] ?>">                           
+                        </div>
+                    </div>
+              </div>
+              <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label>Otro (Indicar)</label>
+                            <input class="form-control" type="text" name="otro" id="otro" value="<?php echo $postulante[0]['otro'] ?>">                           
+                        </div>
+                    </div>
+              </div>
+          </div>
+            <!-- /.box-body -->
+            </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-danger">
+                <div class="box-header">
+                  <h3 class="box-title">Antecedentes Laborales</h3>
+              </div>
+              <div class="box-body">
+                <label>Indique sus dos últimos trabajos</label>
+                <div class="row">
+                <br />
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Empresa 1</label>
+                            <input class="form-control" type="text" name="empresa_1" id="empresa_1" value="<?php echo $postulante[0]['empresa1']?>">                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Cargo</label>
+                            <input class="form-control" type="text" name="cargo_e1" id="cargao_e1" value="<?php echo $postulante[0]['cargo1']?>" >                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Duraci&oacute;n</label>
+                            <input class="form-control" type="text" name="duracion_e1" id="duracion_e1" value="<?php echo $postulante[0]['duracion1']?>"  >                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Motivo Salida</label>
+                            <input class="form-control" type="text" name="motivo_e1" id="motivo_e1"  value="<?php echo $postulante[0]['motivo_salida1']?>" >                           
+                        </div>
+                    </div>
+              </div>
+              <div class="row">
+                <br />
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Empresa 2</label>
+                            <input class="form-control" type="text" name="empresa_2" id="empresa_2"  value="<?php echo $postulante[0]['empresa2']?>" >                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Cargo</label>
+                            <input class="form-control" type="text" name="cargo_e2" id="cargao_e2"  value="<?php echo $postulante[0]['cargo2']?>" >                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Duraci&oacute;n</label>
+                            <input class="form-control" type="text" name="duracion_e2" id="duracion_e2"  value="<?php echo $postulante[0]['duracion2']?>" >                           
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Motivo Salida</label>
+                            <input class="form-control" type="text" name="motivo_e2" id="motivo_e2"  value="<?php echo $postulante[0]['motivo_salida2']?>" >                           
+                        </div>
+                    </div>
+                    <br />
+              </div>
+              <label>Indique Referencias Laborales</label>
+              <div class="row">
+                <br />
+                <div class="col-md-9">
+                        <div class="form-group">
+                            <label>Nombre Empresa</label>
+                            <input class="form-control" type="text" name="empresa_referencia" id="empresa_referencia"  value="<?php echo $postulante[0]['referencia_empresa']?>" >                           
+                        </div>
+                    </div>
+              </div>
+              <div class="row">
+                <div class="col-md-9">
+                        <div class="form-group">
+                            <label>Nombre Jefe y Cargo</label>
+                            <input class="form-control" type="text" name="jefe_referencia" id="jefe_referencia"  value="<?php echo $postulante[0]['nombre_referencia']?>" >                           
+                        </div>
+                    </div>
+              </div>
+              <div class="row">
+                <div class="col-md-9">
+                        <div class="form-group">
+                            <label>Telefonos o E-mail</label>
+                            <input class="form-control" type="text" name="contacto_referencia" id="contacto_referencia"  value="<?php echo $postulante[0]['contacto_referencia']?>" >                           
+                        </div>
+                    </div>
+              </div>
+              <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label>¿Ha trabajado anteriormente en Serbanc?</label>
+                        <div class="form-group">
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" checked>
+                             SI
+                            </label>
+                            <label>
+                              <input type="radio" name="optionsRadios" id="optionsRadios1" value="2" checked>
+                             NO
+                            </label>
+                          </div>
+                        </div>
+                    </div>                      
+                </div>
+              </div>
+            </div>
+          </div>
+            <!-- /.box-body -->
+            </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-warning">
+                <div class="box-header">
+                  <h3 class="box-title">Horario de Postulaci&oacute;n</h3>
+              </div>
+              <div class="box-body">
+              <label>Marcar horario solo en los que posee disponibilidad</label>
+                <div class="row">
+                <br />
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <?php 
+                            foreach($turnos as $id => $t) {
+                                if (!empty($turnos_seleccionados) && in_array($id,$turnos_seleccionados)) {
+                                    $checked = 'checked';
+                                } else {
+                                    $checked = '';
+                                }
+                                ?>
+                                <div class="checkbox">
+                                <label>
+                                  <input type="checkbox" name="<?php echo $id ?>" <?php echo $checked ?>><?php echo $t?>
+                                 </label>
+                                </div>
+                                <?php
+                            } ?>
+                        </div>
+                    </div>                    
+                </div>
+
+              </div>
+            <!-- /.box-body -->
+            </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-info">
+                <div class="box-header">
+                  <h3 class="box-title">Otros</h3>
+              </div>
+        <div class="box-body">
+              <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Manejo de PC (manejo Office)</label>
+                            <?php echo form_dropdown('manejo_pc',array('bajo' => 'Bajo','medio' => 'Medio','Avanzado' => 'Avanzado'),$postulante[0]['manejo_pc'],array('class' => 'form-control','id' => 'manejo_pc'));
+                                ?>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Señale Expectativas de Renta</label>
+                            <input class="form-control" type="text" name="renta" id="renta" value="<?php echo $postulante[0]['pretension_renta']?>">                           
+                        </div>
+                    </div>                    
+              </div>
+              <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Acepta Condiciones Informadas</label>
+                             <?php echo form_dropdown('acepta_condicion',array('si' => 'Si','no' => 'No'),$postulante[0]['acepta_condicion'],array('class' => 'form-control','id' => 'manejo_pc'));?>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Fuente</label>
+                            <?php
+                                echo form_dropdown('id_fuente',$fuentes,$postulante[0]['id_fuente'],array('class' => 'form-control','id' => 'fuente'));
+                            ?>  
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Prefiltro</label>
+                            <?php
+                                echo form_dropdown('prefiltro',array('SI' => 'Si','NO' => 'No'),$postulante[0]['prefiltro'],array('class' => 'form-control','id' => 'prefiltro'));
+                              ?> 
+                        </div>
+                    </div>
+                    <?php
+                    $fecha_hora_entrevista = explode(' ',$postulante[0]['fecha_entrevista']);
+        
+                    ?>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Fecha de Entrevista:</label>
+        
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right datepicker" name="fecha_entrevista" value="<?php echo $fecha_hora_entrevista[0]?>">
+                        </div>
+                        <!-- /.input group -->
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                    <div class="bootstrap-timepicker">
+                        <div class="form-group">
+                          <label>Hora de la Entrevista:</label>        
+                          <div class="input-group">
+                            <input type="text" class="form-control timepicker" name="hora_entrevista" value="<?php echo $fecha_hora_entrevista[1]?>">        
+                            <div class="input-group-addon">
+                              <i class="fa fa-clock-o"></i>
+                            </div>
+                          </div>
+                          <!-- /.input group -->
+                        </div>
+                        <!-- /.form group -->
+                    </div>
+                </div>                                       
+              </div>
+              <div class="row">
+              <?php
+              echo form_hidden('id_persona',$postulante[0]['id_persona']);
+              echo form_hidden('id_postulante',$postulante[0]['id_postulante']);
+              echo form_hidden('id_antecedente',$postulante[0]['id_antecedente']);
+              echo form_hidden('id_antecedente_academico',$postulante[0]['id_antecedente_academico']);
+              
+              ?>
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-info pull-right">Guardar</button>
+                    </div>
+                         
+                  </div>
+              
+          </div>
+          
+            <!-- /.box-body -->
+            </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      </div>
+      </div>
+    </section>
+
+<script>
+$('.datepicker').datepicker({
+      autoclose: true
+    });
+$(".timepicker").timepicker({
+      showInputs: false,
+      showMeridian: false
+    });
+</script>

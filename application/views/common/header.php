@@ -51,6 +51,9 @@
   <script src="<?php echo base_url("assets/plugins/datepicker/bootstrap-datepicker.js"); ?>"></script>
   <!-- bootstrap time picker -->
   <script src="<?php echo base_url("assets/plugins/timepicker/bootstrap-timepicker.min.js"); ?>"></script>
+    <!-- validador rut -->
+  <script src="<?php echo base_url("assets/plugins/validador_rut/jquery.Rut.js"); ?>"></script>
+  <script src="<?php echo base_url("assets/plugins/validador_rut/jquery.Rut.min.js"); ?>"></script>
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
 <div class="wrapper">

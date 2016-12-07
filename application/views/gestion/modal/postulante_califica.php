@@ -21,6 +21,7 @@
             <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut'] ?>" readonly="readonly"/>
         </div>
     </div>
+    
     <div class="col-md-12">
         <div class="form-group">
             <label>Email</label>

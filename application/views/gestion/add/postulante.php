@@ -87,7 +87,6 @@
                             <input class="form-control" type="text" name="email" id="email" placeholder="Email" />
                         </div>
                     </div>
-                    
               </div>
               
               <div class="row verificar">

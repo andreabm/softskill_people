@@ -469,11 +469,10 @@ class Gestion extends CI_Controller {
             $this->db->update('solicitudes', $update_solicitud);
             $id_solicitud = $solicitud[0]['id_solicitud'];
             $update_postulante['id_solicitud'] = $id_solicitud;
-            
             $password = substr ($rut, 0, -2);
             $password = str_ireplace(".","",$password);                        
             $passwordx = md5($password);
-            
+                        
             $data = array(
                 'rut' => $rut ,
                 'usuario' => $password,

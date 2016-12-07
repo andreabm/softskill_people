@@ -55,10 +55,13 @@ class Gestion extends CI_Controller {
         $cargos = $this->MyModel->buscar_select('cargos','id_cargo','cargo');
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
         $fuentes = $this->MyModel->buscar_select('fuentes','id_fuente','fuente');
+        $hobbies = $this->MyModel->buscar_select('hobbies','id_hobbies','hobbies');
+      
         $data['turnos'] = $turnos;
         $data['cargos'] = $cargos;
         $data['comunas'] = $comunas;
         $data['fuentes'] = $fuentes;
+        $data['hobbies'] = $hobbies;
         if ($this->input->post('rut')) {
             $rut = $this->input->post('rut');
             $nombre = $this->input->post('nombre');
@@ -657,5 +660,42 @@ class Gestion extends CI_Controller {
         }
         echo json_encode($data);
     }
+    function agregar_hobbie(){
+        $hobbie = $this->input->post('hobbie');        
+            $dato = array(
+               'hobbies' => $hobbie
+            );
+            
+            
+            $this->db->select('*');        
+            $this->db->from('hobbies');
+            $this->db->where('hobbies="'.$hobbie.'"');
+            $query = $this->db->get();
+            $hobbies = $query->result_array();            
+            if (!empty($hobbies)) {            
+            
+            
+                $data['guardo'] = 'NO';
+            
+            }else{
+                
+                $this->db->insert('hobbies', $dato); 
+                $ins_hobbies = $this->db->affected_rows();                        
+                if ($ins_hobbies==1) {
+                    $data['guardo'] = 'SI';
+                }else{
+                    $data['guardo'] = 'NO';
+                }
+                
+            }
+                  
+        echo json_encode($data);       
+    }
+    function mostrar_hobbies(){
+        $hobbies = $this->MyModel->buscar_select('hobbies','id_hobbies','hobbies');
+        $data['hobbies'] = $hobbies;        
+        $this->load->view('gestion/modal/mostrar_hobbies',$data);
+    }
+    
 }
 ?>

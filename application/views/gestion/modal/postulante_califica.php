@@ -1,4 +1,14 @@
 <div class="row">
+
+
+    <div class="col-xs-8">
+        <div class="alert alert-danger alert-dismissible" id="alerta_rut" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El Rut es Incorrecto. Favor validar.
+        </div>
+    </div>
+
+
     <div class="col-md-12">
         <div class="form-group">
             <label>Nombre</label>
@@ -8,7 +18,13 @@
     <div class="col-md-12">
         <div class="form-group">
             <label>RUT</label>
-            <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut'] ?>"/>
+            <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut'] ?>" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" type="text" name="email" id="email" value="<?php echo $postulante[0]['email'] ?>" readonly="readonly"/>
         </div>
     </div>
     <div class="col-md-4">
@@ -50,4 +66,5 @@ $('#califica').change(function(){
         $('#div_motivo_no_califica').show();
     }
 });
+
 </script>

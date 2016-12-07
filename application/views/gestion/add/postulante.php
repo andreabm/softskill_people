@@ -35,10 +35,9 @@
                   <h3 class="box-title">Antecedentes Personales</h3>
               </div>
               <div class="box-body">
-                <div class="row">
-                
+              
+              <div class="row">                
                 <div class="col-md-3">
-                
                     <div class="form-group">
                         <span id="respuesta"></span>
                         <span id="muestra"></span>
@@ -48,15 +47,13 @@
                       <input type="text" id="rut" name="rut" class="form-control" placeholder="Rut" autocomplete="off" />
                       <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="validar_rut(event)">Validar</a></span>
                     </div>
-                    
-                    
-                    
-                    
-                        
-                      </div>
-                    </div>
+                </div>
+              </div>
+              </div>  
+              
+                <div class="row verificar">                
                 
-                <div class="col-md-3 verificar">
+                <div class="col-md-3">
                       <div class="form-group">
                         <label>Fecha:</label>
         
@@ -64,28 +61,35 @@
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right" class="datepicker" name="fecha" value="<?php echo date('d-m-Y') ?>" disabled="disabled">
+                          <input type="text" class="form-control pull-right" class="datepicker" name="fecha" value="<?php echo date('d-m-Y') ?>" disabled="disabled" />
                         </div>
                         <!-- /.input group -->
                       </div>
                     </div>
                     
-                    
-                    
-                    <div class="col-md-3 verificar">
+                    <div class="col-md-3 ">
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre">
+                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" />
                         </div>
                     </div>
                     
-                    <div class="col-md-3 verificar">
+                    <div class="col-md-3 ">
                         <div class="form-group">
                             <label>Edad</label>
-                            <input class="form-control" type="text" name="edad" id="edad" placeholder="Edad">                           
+                            <input class="form-control" type="text" name="edad" id="edad" placeholder="Edad" />                           
                         </div>
                     </div>
+                    
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="text" name="email" id="email" placeholder="Email" />
+                        </div>
+                    </div>
+                    
               </div>
+              
               <div class="row verificar">
                 <div class="col-md-3">
                       <div class="form-group">
@@ -95,7 +99,7 @@
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right datepicker" name="fecha_nac">
+                          <input type="text" class="form-control pull-right datepicker" name="fecha_nac" />
                         </div>
                         <!-- /.input group -->
                       </div>
@@ -541,7 +545,9 @@ $(".timepicker").timepicker({
 $('#rut').Rut({
   on_error: function(){ 
     $('#alerta_rut').fadeIn();
-    setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
+    $('.verificar').fadeOut();
+    setTimeout(function(){
+        $("#alerta_rut").fadeOut(2000);},3000);
     },
   format_on: 'keyup'
 });
@@ -574,7 +580,7 @@ function validar_rut(event){
                 return false;
             } else {                
                 $('.verificar').fadeIn();
-                respuesta.innerText = "Exito";
+                //respuesta.innerText = "Exito";
             }            
             
           },

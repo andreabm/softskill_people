@@ -105,6 +105,7 @@ class Gestion extends CI_Controller {
             $hora_entrevista = $this->input->post('hora_entrevista');
             $fecha_entrevista = date("Y-m-d", strtotime($fecha_entrevista));
             $fecha_nacimiento = date("Y-m-d", strtotime($fecha_nacimiento));
+            $email = $this->input->post('email');
             
             $nueva_persona = array(
                 'rut' => $rut,
@@ -122,7 +123,7 @@ class Gestion extends CI_Controller {
                 'discapacidad' => $discapacidad,
                 'enfermedad' => $enfermedad,
                 'contacto_familiar' => $familiar,
-               
+                'email' => $email
             ); 
             $nuevo_postulante = array(
                 'rut' => $rut,
@@ -173,7 +174,7 @@ class Gestion extends CI_Controller {
             $this->MyModel->agregar_model('antecedentes_academicos',$nuevo_antecedente_academico);
             $this->MyModel->agregar_model('antecedentes_laborales',$nuevo_antecedente_laboral);
             redirect(base_url("index.php/Gestion/postulantes"));
-        } 
+        }
         $this->load->view('common/header');
         $this->load->view('gestion/add/postulante',$data);
         $this->load->view('common/footer');
@@ -423,7 +424,7 @@ class Gestion extends CI_Controller {
         $motivos_no_califica = $this->MyModel->buscar_select('motivo_no_califica','id_motivo_no_califica','motivo');
         $data['motivos_no_califica'] = $motivos_no_califica;
         
-        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,postulantes.id_cargo');
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,postulantes.id_cargo,personas.email');
         $this->db->from('postulantes');
         $this->db->join('personas','postulantes.rut=personas.rut');
         $this->db->where('postulantes.id_postulante = '.$id_postulante);
@@ -439,6 +440,11 @@ class Gestion extends CI_Controller {
         $califica=$this->input->post('califica');
         $area = $this->input->post('area');
         $cartera = $this->input->post('cartera');
+        
+        $nombre = $this->input->post('nombre');
+        $rut = $this->input->post('rut');
+        $email = $this->input->post('email');
+        
         $update_postulante = array(
                 'id_cartera' => $cartera,
                 'id_area' => $area,
@@ -463,6 +469,22 @@ class Gestion extends CI_Controller {
             $this->db->update('solicitudes', $update_solicitud);
             $id_solicitud = $solicitud[0]['id_solicitud'];
             $update_postulante['id_solicitud'] = $id_solicitud;
+            
+            $password = substr ($rut, 0, -2);
+            $password = str_ireplace(".","",$password);                        
+            $passwordx = md5($password);
+            
+            $data = array(
+                'rut' => $rut ,
+                'usuario' => $password,
+                'nombre' => $nombre,
+                'id_rango' => '1',
+                'password' => $passwordx,
+                'mail' => $email,
+                'img' => 'http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar5.png'
+            );            
+            $this->db->insert('usuarios', $data); 
+            
         }
         $update_persona = array(
             'clasificado' => $califica

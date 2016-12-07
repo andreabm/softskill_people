@@ -213,6 +213,34 @@
       </div>
       <!-- /.row -->
       </div>
+      
+      <!--hobbies-->
+      <div class="row verificar">
+        <div class="col-xs-12">
+            <div class="box box-warning">
+                <div class="box-header">
+                  <h3 class="box-title">Hobbies</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">  
+                                 
+                                  
+                    <div class="col-md-3">
+                        <div class="form-group">
+                        <input type="checkbox" />
+                        <label>Media T&eacute;cnica</label>                                                      
+                    </div>
+                        
+                        
+                    </div>
+              </div>
+              
+          </div>
+            <!-- /.box-body -->
+         </div>
+    
+      <!--hobbies_fin-->
+      
        <div class="row verificar">
         <div class="col-xs-12">
             <div class="box box-primary">

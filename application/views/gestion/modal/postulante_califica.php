@@ -7,8 +7,6 @@
             <strong>Atenci&oacute;n!</strong> El Rut es Incorrecto. Favor validar.
         </div>
     </div>
-
-
     <div class="col-md-12">
         <div class="form-group">
             <label>Nombre</label>

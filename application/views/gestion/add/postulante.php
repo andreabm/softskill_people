@@ -79,8 +79,7 @@
                             <label>Edad</label>
                             <input class="form-control" type="text" name="edad" id="edad" placeholder="Edad" />                           
                         </div>
-                    </div>
-                    
+                    </div>                    
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label>Email</label>

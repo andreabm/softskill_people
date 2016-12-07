@@ -672,8 +672,7 @@ class Gestion extends CI_Controller {
             $this->db->where('hobbies="'.$hobbie.'"');
             $query = $this->db->get();
             $hobbies = $query->result_array();            
-            if (!empty($hobbies)) {            
-            
+            if (!empty($hobbies)) {
             
                 $data['guardo'] = 'NO';
             

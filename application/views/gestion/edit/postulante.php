@@ -10,6 +10,12 @@
     <section class="content">
     <br />
     <?php
+  /*
+  echo '<pre>';
+  print_r($postulante);
+  echo '</pre>';
+  */
+  
   echo form_open('Gestion/editar_postulante');
   ?>
       <div class="row">
@@ -180,6 +186,85 @@
       </div>
       <!-- /.row -->
       </div>
+      
+      
+      <!--hobbies-->
+      <div class="row">
+      
+            <div class="col-xs-8">
+        <div class="alert alert-danger alert-dismissible" id="alerta_hobbies" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El Hobbie esta vacio. Favor validar.
+        </div>
+    </div>
+    <div class="col-xs-8">
+        <div class="alert alert-danger alert-dismissible" id="alerta_hobbies_r" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El Hobbie ya se encuentra registrado o no cumple con requisitos. Favor validar
+        </div>
+    </div>
+      
+        <div class="col-xs-12">
+            <div class="box box-warning">
+                <div class="box-header">
+                  <h3 class="box-title">Hobbies</h3>
+              </div>
+              <div class="box-body">              
+                <div class="row" id="muestra_hobbies">
+                
+                        <?php
+                        foreach($hobbies_seleccionadas as $b){
+                            $check[] = $b['id_hobbies'];        
+                        }       
+                 
+                        foreach($hobbie as $k=>$a){              
+                        if (in_array($k,$check)) {
+                            $checked = 'checked';
+                        } else {
+                            $checked = '';
+                        }
+                        $app = array(      
+                            'name' => 'hobbies['.$k.']',
+                            'value' => ''.$a.'',
+                            'checked' => ''.$checked.''
+                        );
+                        echo "<div class='col-md-1'>";
+                        echo form_checkbox($app);
+                        echo $a."</div>";
+                    
+                        }
+                        ?>
+                
+                        <?php
+                            /*
+                            foreach($hobbies as $k=>$a){
+                                $app = array(
+                                'name' => 'hobbies['.$k.']',
+                                'value' => ''.$a.''
+                                );
+                                echo "<div class='col-md-1'>";
+                                echo form_checkbox($app);
+                                echo $a."</div>";
+                            }
+                            */
+                         ?>
+                    </div>
+                 <div class="row"><br />
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                          <input type="text" id="otro_hobbie" name="otro_hobbie" class="form-control" placeholder="Otro Hobbie" autocomplete="off"/>
+                          <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="agregar_hobbie(event)">Agregar Otro Hobbie</a></span>
+                        </div>
+                    </div>
+                 </div>   
+                    
+                    
+              </div>
+          </div>
+            <!-- /.box-body -->
+      <!--hobbies_fin-->
+      
+      
        <div class="row">
         <div class="col-xs-12">
             <div class="box box-primary">
@@ -499,4 +584,40 @@ $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
     });
+//agregar hobbies
+function agregar_hobbie(event){
+    event.preventDefault();
+    var ohobbie = document.getElementById("otro_hobbie");
+    var vhobbie = ohobbie.value;
+        if(vhobbie!=''){
+        $.ajax({
+          url:"<?php echo base_url('index.php/gestion/agregar_hobbie')?>",
+          type: 'POST',
+          data: {hobbie:vhobbie},
+          success: function(data){
+            
+            console.debug(data);
+            data  = JSON.parse(data);          
+            
+            if (data.guardo=='SI'){
+                $("#otro_hobbie").val("");
+                $('#muestra_hobbies').load('<?php echo base_url('index.php/gestion/mostrar_hobbies/'.$postulante[0]['id_postulante']);?>');
+
+            }else{               
+                $('#alerta_hobbies_r').fadeIn();
+                setTimeout(function(){$("#alerta_hobbies_r").fadeOut(2000);},3000);        
+            }            
+            
+          },
+          error: function(e) {
+            alert('error');
+            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
+    });
+    }else{
+        $('#alerta_hobbies').fadeIn();
+        setTimeout(function(){$("#alerta_hobbies").fadeOut(2000);},3000);
+    }
+
+}     
 </script>

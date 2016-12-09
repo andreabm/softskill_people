@@ -162,7 +162,7 @@ class Gestion extends CI_Controller {
                 'duracion2' => $duracion_e2,
                 'motivo_salida2' => $motivo_e2,
             );
-              
+                        
             $this->MyModel->agregar_model('personas',$nueva_persona);
             $postulante_id = $this->MyModel->agregar_model('postulantes',$nuevo_postulante);
             foreach ($turnos as $id => $t) {
@@ -174,6 +174,13 @@ class Gestion extends CI_Controller {
                     $this->MyModel->agregar_model('turnos_postulantes',$nuevo_turno_postulante);
                 }
             }
+            
+            $hobbies = $this->input->post('hobbies');
+            foreach($hobbies as $k=>$a){
+                $hobbie = array('id_postulante' =>$postulante_id, 'id_hobbies'=>$k);
+                $this->db->insert('hobbies_personas',$hobbie);
+            }           
+            
             $this->MyModel->agregar_model('antecedentes_academicos',$nuevo_antecedente_academico);
             $this->MyModel->agregar_model('antecedentes_laborales',$nuevo_antecedente_laboral);
             redirect(base_url("index.php/Gestion/postulantes"));
@@ -208,14 +215,26 @@ class Gestion extends CI_Controller {
         } 
         $data['turnos_seleccionados'] = $turnos_seleccionados;
         
+        //hobbies
+        $this->db->from('hobbies_personas');
+        $this->db->join('hobbies','hobbies.id_hobbies = hobbies_personas.id_hobbies');
+        $this->db->where('hobbies_personas.id_postulantes = '.$id_postulante);
+        $query = $this->db->get();
+        $hobbies_seleccionadas = $query->result_array();                
+        $data['hobbies_seleccionadas'] = $hobbies_seleccionadas;
+        //hobbies
+        
         $comunas = $this->MyModel->buscar_select('comunas','comuna','comuna');
         $cargos = $this->MyModel->buscar_select('cargos','id_cargo','cargo');
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
         $fuentes = $this->MyModel->buscar_select('fuentes','id_fuente','fuente');
+        $hobbies = $this->MyModel->buscar_select('hobbies','id_hobbies','hobbies');
+        
         $data['turnos'] = $turnos;
         $data['cargos'] = $cargos;
         $data['comunas'] = $comunas;
         $data['fuentes'] = $fuentes;
+        $data['hobbie'] = $hobbies;
         if ($this->input->post('rut')) {
             $rut = $this->input->post('rut');
             $nombre = $this->input->post('nombre');
@@ -263,6 +282,8 @@ class Gestion extends CI_Controller {
             $fecha_entrevista = date("Y-m-d", strtotime($fecha_entrevista));
             $fecha_nacimiento = date("Y-m-d", strtotime($fecha_nacimiento));
             
+
+                        
             $nueva_persona = array(
                 'rut' => $rut,
                 'nombre' => $nombre,
@@ -327,10 +348,24 @@ class Gestion extends CI_Controller {
                     $this->MyModel->agregar_model('turnos_postulantes',$nuevo_turno_postulante);
                 }
             }
+            
+               //actualizar hobbies
+                 $this->db->where('id_postulantes', $this->input->post('id_postulante'));
+                 $this->db->delete('hobbies_personas');
+               //inserto relaciones aplicaciones
+                 $valores_hobbies = $this->input->post('hobbies');
+                 foreach($valores_hobbies as $k=>$a){
+                    $hobbie = array('id_postulantes' =>$this->input->post('id_postulante'), 'id_hobbies'=>$k);                     
+                    $this->db->insert('hobbies_personas',$hobbie);
+                 }
+              //actualizar hobbies
+            
+                        
             $this->MyModel->agregar_model('antecedentes_academicos',$nuevo_antecedente_academico,'id_antecedente_academico',$this->input->post('id_antecedente_academico'));
             $this->MyModel->agregar_model('antecedentes_laborales',$nuevo_antecedente_laboral,'id_antecedente',$this->input->post('id_antecedente'));
             redirect(base_url("index.php/Gestion/postulantes"));
-        } 
+        }
+        
         $this->load->view('common/header');
         $this->load->view('gestion/edit/postulante',$data);
         $this->load->view('common/footer');
@@ -686,13 +721,22 @@ class Gestion extends CI_Controller {
                     $data['guardo'] = 'NO';
                 }
                 
-            }
-                  
+            }                  
         echo json_encode($data);       
     }
-    function mostrar_hobbies(){
+    function mostrar_hobbies($id_postulante=null){
         $hobbies = $this->MyModel->buscar_select('hobbies','id_hobbies','hobbies');
-        $data['hobbies'] = $hobbies;        
+        $data['hobbies'] = $hobbies;
+        
+        //hobbies
+        $this->db->from('hobbies_personas');
+        $this->db->join('hobbies','hobbies.id_hobbies = hobbies_personas.id_hobbies');
+        $this->db->where('hobbies_personas.id_postulantes = '.$id_postulante);
+        $query = $this->db->get();
+        $hobbies_seleccionadas = $query->result_array();                
+        $data['hobbies_seleccionadas'] = $hobbies_seleccionadas;
+        //hobbies        
+        
         $this->load->view('gestion/modal/mostrar_hobbies',$data);
     }
     

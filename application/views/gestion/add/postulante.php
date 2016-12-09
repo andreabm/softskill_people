@@ -26,18 +26,6 @@
             <strong>Atenci&oacute;n!</strong> El Rut es Incorrecto. Favor validar.
         </div>
     </div>
-    <div class="col-xs-8">
-        <div class="alert alert-danger alert-dismissible" id="alerta_hobbies" style="display: none;">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Atenci&oacute;n!</strong> El Hobbie esta vacio. Favor validar.
-        </div>
-    </div>
-    <div class="col-xs-8">
-        <div class="alert alert-danger alert-dismissible" id="alerta_hobbies_r" style="display: none;">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Atenci&oacute;n!</strong> El Hobbie ya se encuentra registrado o no cumple con requisitos. Favor validar
-        </div>
-    </div>
     
   </div>
   
@@ -228,7 +216,21 @@
       </div>
       
       <!--hobbies-->
-      <div class="row">
+      <div class="row verificar">
+      
+            <div class="col-xs-8">
+        <div class="alert alert-danger alert-dismissible" id="alerta_hobbies" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El Hobbie esta vacio. Favor validar.
+        </div>
+    </div>
+    <div class="col-xs-8">
+        <div class="alert alert-danger alert-dismissible" id="alerta_hobbies_r" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El Hobbie ya se encuentra registrado o no cumple con requisitos. Favor validar
+        </div>
+    </div>
+      
         <div class="col-xs-12">
             <div class="box box-warning">
                 <div class="box-header">
@@ -261,8 +263,6 @@
               </div>
           </div>
             <!-- /.box-body -->
-         
-    
       <!--hobbies_fin-->
       
        <div class="row verificar">

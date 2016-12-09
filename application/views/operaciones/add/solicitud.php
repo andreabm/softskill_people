@@ -91,6 +91,16 @@
                           <input type="text" class="form-control" placeholder="Observacion" name="observacion">
                         </div>
                     </div>
+                    
+                    <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Motivo</label>
+                        <?php
+                        echo form_dropdown('id_motivo',$motivo_solicitud,'',array('class' => 'form-control','id' => 'id_motivo'));
+                        ?>
+                      </div>
+                    </div>
+                    
                   </div>
                   <div class="row">
                     <div class="col-md-10"></div>

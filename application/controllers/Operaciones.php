@@ -41,7 +41,8 @@ class Operaciones extends CI_Controller {
                 'cantidad_solicitada' => $this->input->post('cantidad_solicitada'),
                 'prioridad' => $this->input->post('prioridad'),
                 'observacion' => $this->input->post('observacion'),
-                'id_usuario_solicitante' => $this->session->userdata['id_usuario']
+                'id_usuario_solicitante' => $this->session->userdata['id_usuario'],
+                'motivo_solicitud' => $this->input->post('id_motivo')
             );
             $this->MyModel->agregar_model('solicitudes',$nueva_solicitud);
             redirect('operaciones/solicitudes');
@@ -53,6 +54,10 @@ class Operaciones extends CI_Controller {
         $data['carteras'] = $carteras;
         $cargos = $this->MyModel->buscar_select('cargos','id_cargo','cargo');
         $data['cargos'] = $cargos;
+        
+        $motivo_solicitud = $this->MyModel->buscar_select('motivo_solicitud','id_motivo','motivo');
+        $data['motivo_solicitud'] = $motivo_solicitud;
+        
         $this->load->view('operaciones/add/solicitud',$data);
         $this->load->view('common/footer');
     }

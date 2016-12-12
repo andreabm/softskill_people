@@ -20,13 +20,13 @@
     <div class="col-md-4">
         <div class="form-group">
             <label>Cantidad Solicitada</label>
-            <input class="form-control" type="text" name="cant_solicitada" id="cant_solicitada" value="<?php echo $solicitud[0]['cantidad_solicitada'] ?>" disabled/>
+            <input class="form-control" type="text" name="cant_solicitada" id="cant_solicitada" value="<?php echo $solicitud[0]['cantidad_solicitada'] ?>" />
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             <label>Prioridad</label>
-            <input class="form-control" type="text" name="prioridad" id="prioridad" value="<?php echo $solicitud[0]['prioridad'] ?>" disabled/>
+            <input class="form-control" type="text" name="prioridad" id="prioridad" value="<?php echo $solicitud[0]['prioridad'] ?>" />
         </div>
     </div>
     <div class="col-md-4">
@@ -57,4 +57,5 @@
     </div>
     
     <?php echo form_hidden('id_cargo',$solicitud[0]['id_cargo']) ?>
+    <?php echo form_hidden('id_solicitud',$solicitud[0]['id_solicitud']) ?>
 </div>

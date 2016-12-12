@@ -1,4 +1,20 @@
  <div class="content-wrapper">
+ 
+    <div class="row">
+        <div class="col-xs-8">
+        
+<?php 
+            if(!empty($msje_solicitud)){
+            ?>
+            <div id="alertita" class="alert alert-<?php if($msje_solicitud[0]==1){echo 'success';}else{echo 'danger';}?> alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><?php if($msje_solicitud[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'La solicitud se ha modificado con exito';}else{echo 'La solicitud no se ha modificado';}?>
+            </div>        
+            <?php }?>
+        
+    </div>
+    </div>
+ 
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -85,13 +101,16 @@
                   <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Validar Solicitud</h4>
               </div>
+      <?php echo form_open('Operaciones/solicitud_validada');?>        
       <div class="modal-body" id="validarSolicitudBody">
         
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-     
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-outline">Validar</button>
+        
       </div>
+      </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

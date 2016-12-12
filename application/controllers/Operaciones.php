@@ -392,5 +392,50 @@ class Operaciones extends CI_Controller {
         
         $this->load->view('operaciones/modal/validar_solicitud',$data);
     }
+    public function solicitud_validada(){
+        $id_solicitud = $this->input->post('id_solicitud');
+        $cant_solicitada = $this->input->post('cant_solicitada');
+        $prioridad = $this->input->post('prioridad');
+        
+        $data = array(
+               'cantidad_solicitada' => $cant_solicitada,
+               'prioridad' => $prioridad
+            );
+        
+        /*    
+        $config = array(
+         'protocol' => 'smtp',
+         'smtp_host' => 'smtp.googlemail.com',
+         'smtp_user' => 'serbanc.desarrollo@gmail.com', //Su Correo de Gmail Aqui
+         'smtp_pass' => 'serbanc1', // Su Password de Gmail aqui
+         'smtp_port' => '587',
+         'smtp_crypto' => 'tls',
+         'mailtype' => 'html',
+         'wordwrap' => TRUE,
+         'charset' => 'utf-8'
+         );
+         $this->load->library('email', $config);
+         $this->email->set_newline("\r\n");
+         $this->email->from('archivos@serbanc.cl','Serbanc');
+         $this->email->subject('Asunto del correo');
+         $this->email->message('Se ha validado una nueva solicitud Numero :'.$id_solicitud);
+         $this->email->to('g.moya.monsalve@gmail.com');
+         $this->email->send(FALSE);    
+         */
+                        
+        $this->db->where('id_solicitud', $id_solicitud);
+        $this->db->update('solicitudes', $data); 
+        $ins_solicitud = $this->db->affected_rows();
+        
+        if($ins_solicitud==1) {
+            $this->session->set_flashdata('msje_solicitud', '1');
+            redirect(base_url().'/index.php/operaciones/solicitudes');
+        }else{
+            $this->session->set_flashdata('msje_solicitud', '2');
+            redirect(base_url().'/index.php/operaciones/solicitudes');
+        }         
+    }
+    
+    
 }
 ?>

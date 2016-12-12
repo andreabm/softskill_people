@@ -9,13 +9,7 @@
     <!-- Main content -->
     <section class="content">
     <br />
-    <?php
-  /*
-  echo '<pre>';
-  print_r($postulante);
-  echo '</pre>';
-  */
-  
+    <?php  
   echo form_open('Gestion/editar_postulante');
   ?>
       <div class="row">
@@ -30,19 +24,54 @@
                     <div class="col-md-3">
                     <div class="form-group">
                         <label>Rut</label>
-                        <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut'] ?>">
+                        <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut'];?>">
+                      </div>
+                    </div>                    
+              </div>
+              
+              <div class="row">                    
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Fecha:</label>
+        
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" class="datepicker" name="fecha" value="<?php echo date('d-m-Y') ?>" disabled="disabled" />
+                        </div>
+                        <!-- /.input group -->
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    
+                    <div class="col-md-3 ">
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" value="<?php echo $postulante[0]['nombre'] ?>">
+                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" value="<?php echo $postulante[0]['nombre'] ?>" />
                         </div>
                     </div>
-                     <div class="col-md-3">
+                    
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Edad</label>
+                            <input class="form-control" type="text" name="edad" id="edad" placeholder="Edad" value="<?php if(isset($postulante[0]['edad'])){echo $postulante[0]['edad'];}?>" />                           
+                        </div>
+                    </div>                    
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="text" name="email" id="email" placeholder="Email" value="<?php echo $postulante[0]['email'] ?>" />
+                        </div>
+                    </div>
+                    
+              </div>              
+              
+              <div class="row">
+               
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label>Fecha de Nacimiento:</label>
-        
+                    
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -52,8 +81,6 @@
                         <!-- /.input group -->
                       </div>
                     </div>
-              </div>
-              <div class="row">
                
                     <div class="col-md-3">
                     <div class="form-group">
@@ -213,9 +240,11 @@
                 <div class="row" id="muestra_hobbies">
                 
                         <?php
+                        $check = array();
                         foreach($hobbies_seleccionadas as $b){
                             $check[] = $b['id_hobbies'];        
-                        }       
+                        }
+                               
                  
                         foreach($hobbie as $k=>$a){              
                         if (in_array($k,$check)) {
@@ -233,6 +262,7 @@
                         echo $a."</div>";
                     
                         }
+                        
                         ?>
                 
                         <?php
@@ -263,7 +293,93 @@
           </div>
             <!-- /.box-body -->
       <!--hobbies_fin-->
+      </div>
       
+      <!--expectativas-->
+      <div class="col-xs-12">
+            <div class="box box-info">
+                <div class="box-header">
+                  <h3 class="box-title">Expectativas</h3>
+              </div>
+              <div class="box-body">
+                
+                <div class="row">
+                
+                <div class="col-xs-8">
+        <div class="alert alert-danger alert-dismissible" id="alerta_factor" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El Hobbie esta vacio. Favor validar.
+        </div>
+    </div>
+    <div class="col-xs-8">
+        <div class="alert alert-danger alert-dismissible" id="alerta_factor_r" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El Hobbie ya se encuentra registrado o no cumple con requisitos. Favor validar
+        </div>
+    </div>
+                    
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label>¿Qué espera de su trabajo?</label>
+                            <input class="form-control" type="text" name="espera" id="espera" value="<?php echo $postulante[0]['espera'] ?>">                           
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label>¿Qué condiciones valora en su lugar de trabajo?</label>
+                            <input class="form-control" type="text" name="valora" id="valora" value="<?php echo $postulante[0]['valora'] ?>">                           
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label>¿Qué condiciones hace que usted no decía irse de su trabajo ?</label>
+                            <input class="form-control" type="text" name="condiciones" id="condiciones" value="<?php echo $postulante[0]['condiciones'] ?>">                           
+                        </div>
+                    </div>
+                    
+                </div>
+                              
+                <div class="row" id="muestra_factor">
+                
+                        <?php
+                        $check = array();
+                        foreach($factor_seleccionadas as $b){
+                            $check[] = $b['id_factor'];        
+                        }      
+                 
+                        foreach($factor as $k=>$a){              
+                        if (in_array($k,$check)) {
+                            $checked = 'checked';
+                        } else {
+                            $checked = '';
+                        }
+                        $app = array(      
+                            'name' => 'factor['.$k.']',
+                            'value' => ''.$a.'',
+                            'checked' => ''.$checked.''
+                        );
+                        echo "<div class='col-md-1'>";
+                        echo form_checkbox($app);
+                        echo $a."</div>";
+                        }
+                        ?>
+                    </div>
+                 <div class="row"><br />
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                          <input type="text" id="otro_factor" name="otro_factor" class="form-control" placeholder="Otro Factor" autocomplete="off"/>
+                          <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="agregar_factor(event)">Agregar Otro Factor</a></span>
+                        </div>
+                    </div>
+                 </div>   
+                    
+                    
+              </div>
+          </div>
+            <!-- /.box-body -->
+      <!--expectativas_fin-->
       
        <div class="row">
         <div class="col-xs-12">
@@ -556,7 +672,7 @@
               echo form_hidden('id_postulante',$postulante[0]['id_postulante']);
               echo form_hidden('id_antecedente',$postulante[0]['id_antecedente']);
               echo form_hidden('id_antecedente_academico',$postulante[0]['id_antecedente_academico']);
-              
+              echo form_hidden('id_expectativa',$postulante[0]['id_expectativa']);
               ?>
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
@@ -584,6 +700,46 @@ $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
     });
+    
+//agregar factor
+function agregar_factor(event){
+    
+    event.preventDefault();
+    var ofactor = document.getElementById("otro_factor");
+    var vfactor = ofactor.value;
+        if(vfactor!=''){
+        $.ajax({
+          url:"<?php echo base_url('index.php/gestion/agregar_factor')?>",
+          type: 'POST',
+          data: {factor:vfactor},
+          success: function(data){
+            
+            console.debug(data);
+            data  = JSON.parse(data);          
+            
+            if (data.guardo=='SI'){
+                $("#otro_factor").val("");
+                $('#muestra_factor').load('<?php echo base_url('index.php/gestion/mostrar_factor/'.$postulante[0]['id_postulante']);?>');
+                
+
+            }else{               
+                $('#alerta_factor_r').fadeIn();
+                setTimeout(function(){$("#alerta_factor_r").fadeOut(2000);},3000);        
+            }            
+            
+          },
+          error: function(e) {
+            alert('error');
+            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
+    });
+    }else{
+        $('#alerta_factor').fadeIn();
+        setTimeout(function(){$("#alerta_factor").fadeOut(2000);},3000);
+    }
+
+}     
+    
 //agregar hobbies
 function agregar_hobbie(event){
     event.preventDefault();

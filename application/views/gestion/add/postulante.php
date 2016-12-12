@@ -264,6 +264,95 @@
           </div>
             <!-- /.box-body -->
       <!--hobbies_fin-->
+      </div>
+      
+      <!--expectativas-->
+      <div class="col-xs-12">
+            <div class="box box-info">
+                <div class="box-header">
+                  <h3 class="box-title">Expectativas</h3>
+              </div>
+              <div class="box-body">
+                
+                <div class="row">
+                    
+                <div class="col-xs-8">
+                    <div class="alert alert-danger alert-dismissible" id="alerta_factor" style="display: none;">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Atenci&oacute;n!</strong> El Hobbie esta vacio. Favor validar.
+                    </div>
+                </div>
+                <div class="col-xs-8">
+                    <div class="alert alert-danger alert-dismissible" id="alerta_factor_r" style="display: none;">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Atenci&oacute;n!</strong> El Hobbie ya se encuentra registrado o no cumple con requisitos. Favor validar
+                    </div>
+                </div>
+                    
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label>¿Qué espera de su trabajo?</label>
+                            <input class="form-control" type="text" name="espera" id="espera" />                           
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label>¿Qué condiciones valora en su lugar de trabajo?</label>
+                            <input class="form-control" type="text" name="valora" id="valora" />                         
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label>¿Qué condiciones hace que usted no decía irse de su trabajo ?</label>
+                            <input class="form-control" type="text" name="condiciones" id="condiciones" />                         
+                        </div>
+                    </div>
+                    
+                </div>
+                              
+                <div class="row" id="muestra_factor">
+                
+                        <?php
+                        $check = array();
+                        $factor_seleccionadas = array();
+                        foreach($factor_seleccionadas as $b){
+                            $check[] = $b['id_factor'];        
+                        }
+                               
+                 
+                        foreach($factor as $k=>$a){              
+                        if (in_array($k,$check)) {
+                            $checked = 'checked';
+                        } else {
+                            $checked = '';
+                        }
+                        $app = array(      
+                            'name' => 'factor['.$k.']',
+                            'value' => ''.$a.'',
+                            'checked' => ''.$checked.''
+                        );
+                        echo "<div class='col-md-1'>";
+                        echo form_checkbox($app);
+                        echo $a."</div>";
+                    
+                        }
+                        ?>  
+                    </div>
+                 <div class="row"><br />
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                          <input type="text" id="otro_factor" name="otro_factor" class="form-control" placeholder="Otro Factor" autocomplete="off"/>
+                          <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="agregar_factor(event)">Agregar Otro Factor</a></span>
+                        </div>
+                    </div>
+                 </div>   
+                    
+                    
+              </div>
+          </div>
+      <!--expectativas_fin-->
       
        <div class="row verificar">
         <div class="col-xs-12">
@@ -605,6 +694,43 @@ $('#rut').Rut({
 setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
 setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
 
+function agregar_factor(event){
+    
+    event.preventDefault();
+    var ofactor = document.getElementById("otro_factor");
+    var vfactor = ofactor.value;
+        if(vfactor!=''){
+        $.ajax({
+          url:"<?php echo base_url('index.php/gestion/agregar_factor')?>",
+          type: 'POST',
+          data: {factor:vfactor},
+          success: function(data){
+            
+            console.debug(data);
+            data  = JSON.parse(data);          
+            
+            if (data.guardo=='SI'){
+                $("#otro_factor").val("");
+                $('#muestra_factor').load('<?php echo base_url('index.php/gestion/mostrar_factor');?>');
+
+            }else{               
+                $('#alerta_factor_r').fadeIn();
+                setTimeout(function(){$("#alerta_factor_r").fadeOut(2000);},3000);        
+            }            
+            
+          },
+          error: function(e) {
+            alert('error');
+            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
+    });
+    }else{
+        $('#alerta_factor').fadeIn();
+        setTimeout(function(){$("#alerta_factor").fadeOut(2000);},3000);
+    }
+
+} 
+
 function agregar_hobbie(event){
     event.preventDefault();
     var ohobbie = document.getElementById("otro_hobbie");
@@ -639,7 +765,9 @@ function agregar_hobbie(event){
         setTimeout(function(){$("#alerta_hobbies").fadeOut(2000);},3000);
     }
 
-}       
+}  
+
+    
         
 function validar_rut(event){
     event.preventDefault();

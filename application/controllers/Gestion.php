@@ -57,11 +57,14 @@ class Gestion extends CI_Controller {
         $fuentes = $this->MyModel->buscar_select('fuentes','id_fuente','fuente');
         $hobbies = $this->MyModel->buscar_select('hobbies','id_hobbies','hobbies');
       
+        $factor = $this->MyModel->buscar_select('factor','id_factor','factor');
+      
         $data['turnos'] = $turnos;
         $data['cargos'] = $cargos;
         $data['comunas'] = $comunas;
         $data['fuentes'] = $fuentes;
         $data['hobbies'] = $hobbies;
+        $data['factor'] = $factor;
         if ($this->input->post('rut')) {
             $rut = $this->input->post('rut');
             $nombre = $this->input->post('nombre');
@@ -74,6 +77,7 @@ class Gestion extends CI_Controller {
             $celular = $this->input->post('celular');
             $fono = $this->input->post('estado_civil');
             $hijos = $this->input->post('hijos');
+            $edad = $this->input->post('edad');
             $edades_hijos = $this->input->post('edades_hijos');
             $discapacidad = $this->input->post('discapacidad');
             $familiar = $this->input->post('familiar');
@@ -110,6 +114,10 @@ class Gestion extends CI_Controller {
             $fecha_nacimiento = date("Y-m-d", strtotime($fecha_nacimiento));
             $email = $this->input->post('email');
             
+            $espera = $this->input->post('espera');
+            $valora = $this->input->post('valora');
+            $condiciones = $this->input->post('condiciones');
+            
             $nueva_persona = array(
                 'rut' => $rut,
                 'nombre' => $nombre,
@@ -126,7 +134,8 @@ class Gestion extends CI_Controller {
                 'discapacidad' => $discapacidad,
                 'enfermedad' => $enfermedad,
                 'contacto_familiar' => $familiar,
-                'email' => $email
+                'email' => $email,
+                'edad' => $edad
             ); 
             $nuevo_postulante = array(
                 'rut' => $rut,
@@ -162,6 +171,13 @@ class Gestion extends CI_Controller {
                 'duracion2' => $duracion_e2,
                 'motivo_salida2' => $motivo_e2,
             );
+            $encuesta_expectativas = array(
+                'rut' => $rut,
+                'espera' => $espera,
+                'valora' => $valora,
+                'condiciones' => $condiciones
+            );
+            
                         
             $this->MyModel->agregar_model('personas',$nueva_persona);
             $postulante_id = $this->MyModel->agregar_model('postulantes',$nuevo_postulante);
@@ -177,12 +193,19 @@ class Gestion extends CI_Controller {
             
             $hobbies = $this->input->post('hobbies');
             foreach($hobbies as $k=>$a){
-                $hobbie = array('id_postulante' =>$postulante_id, 'id_hobbies'=>$k);
+                $hobbie = array('id_postulantes' =>$postulante_id, 'id_hobbies'=>$k);
                 $this->db->insert('hobbies_personas',$hobbie);
+            }
+            
+            $factor = $this->input->post('factor');
+            foreach($factor as $k=>$a){
+                $factor = array('id_postulantes' =>$postulante_id, 'id_factor'=>$k);
+                $this->db->insert('factor_personas',$factor);
             }           
             
             $this->MyModel->agregar_model('antecedentes_academicos',$nuevo_antecedente_academico);
             $this->MyModel->agregar_model('antecedentes_laborales',$nuevo_antecedente_laboral);
+            $this->MyModel->agregar_model('expectativas',$encuesta_expectativas);
             redirect(base_url("index.php/Gestion/postulantes"));
         }
         $this->load->view('common/header');
@@ -192,12 +215,14 @@ class Gestion extends CI_Controller {
     }
     
     public function editar_postulante($id_postulante){
+        //$id_postulante = $this->input->post('id_postulante');
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');
         $this->db->join('cargos','postulantes.id_cargo = cargos.id_cargo', 'left');
         $this->db->join('comunas','personas.comuna = comunas.comuna', 'left');
         $this->db->join('antecedentes_academicos','antecedentes_academicos.rut = personas.rut','left');
         $this->db->join('antecedentes_laborales','antecedentes_laborales.rut = personas.rut','left');
+        $this->db->join('expectativas','expectativas.rut = personas.rut','left');
         $this->db->where('postulantes.id_postulante = '.$id_postulante);
         
         $query = $this->db->get();
@@ -224,17 +249,28 @@ class Gestion extends CI_Controller {
         $data['hobbies_seleccionadas'] = $hobbies_seleccionadas;
         //hobbies
         
+        //factor
+        $this->db->from('factor_personas');
+        $this->db->join('factor','factor.id_factor = factor_personas.id_factor');
+        $this->db->where('factor_personas.id_postulantes = '.$id_postulante);
+        $query = $this->db->get();
+        $factor_seleccionadas = $query->result_array();                
+        $data['factor_seleccionadas'] = $factor_seleccionadas;
+        //factor
+        
         $comunas = $this->MyModel->buscar_select('comunas','comuna','comuna');
         $cargos = $this->MyModel->buscar_select('cargos','id_cargo','cargo');
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
         $fuentes = $this->MyModel->buscar_select('fuentes','id_fuente','fuente');
         $hobbies = $this->MyModel->buscar_select('hobbies','id_hobbies','hobbies');
+        $factor = $this->MyModel->buscar_select('factor','id_factor','factor');
         
         $data['turnos'] = $turnos;
         $data['cargos'] = $cargos;
         $data['comunas'] = $comunas;
         $data['fuentes'] = $fuentes;
         $data['hobbie'] = $hobbies;
+        $data['factor'] = $factor;
         if ($this->input->post('rut')) {
             $rut = $this->input->post('rut');
             $nombre = $this->input->post('nombre');
@@ -245,7 +281,9 @@ class Gestion extends CI_Controller {
             $direccion = $this->input->post('direccion');
             $comuna = $this->input->post('comuna');
             $celular = $this->input->post('celular');
+            $email = $this->input->post('email');
             $fono = $this->input->post('fono');
+            $edad = $this->input->post('edad');
             $hijos = $this->input->post('hijos');
             $edades_hijos = $this->input->post('edades_hijos');
             $discapacidad = $this->input->post('discapacidad');
@@ -282,7 +320,9 @@ class Gestion extends CI_Controller {
             $fecha_entrevista = date("Y-m-d", strtotime($fecha_entrevista));
             $fecha_nacimiento = date("Y-m-d", strtotime($fecha_nacimiento));
             
-
+            $espera = $this->input->post('espera');
+            $valora = $this->input->post('valora');
+            $condiciones = $this->input->post('condiciones');
                         
             $nueva_persona = array(
                 'rut' => $rut,
@@ -300,7 +340,8 @@ class Gestion extends CI_Controller {
                 'discapacidad' => $discapacidad,
                 'enfermedad' => $enfermedad,
                 'contacto_familiar' => $familiar,
-               
+                'edad' => $edad,
+                'email' => $email
             ); 
             $nuevo_postulante = array(
                 'rut' => $rut,
@@ -323,6 +364,13 @@ class Gestion extends CI_Controller {
                 'educacion_superior' => $educacion_superior,
                 'carrera' => $carrera,
                 'otro' => $otro_educacion
+            );
+            
+            $encuesta_expectativas = array(
+                'rut' => $rut,
+                'espera' => $espera,
+                'valora' => $valora,
+                'condiciones' => $condiciones
             );
             
             $nuevo_antecedente_laboral = array(
@@ -359,7 +407,19 @@ class Gestion extends CI_Controller {
                     $this->db->insert('hobbies_personas',$hobbie);
                  }
               //actualizar hobbies
+              
+              //actualizar factor
+                 $this->db->where('id_postulantes', $this->input->post('id_postulante'));
+                 $this->db->delete('factor_personas');
+               //inserto relaciones aplicaciones
+                 $valores_hobbies = $this->input->post('factor');
+                 foreach($valores_hobbies as $k=>$a){
+                    $factor = array('id_postulantes' =>$this->input->post('id_postulante'), 'id_factor'=>$k);                     
+                    $this->db->insert('factor_personas',$factor);
+                 }
+              //actualizar factor
             
+            $this->MyModel->agregar_model('expectativas',$encuesta_expectativas,'id_expectativa',$this->input->post('id_expectativa'));
                         
             $this->MyModel->agregar_model('antecedentes_academicos',$nuevo_antecedente_academico,'id_antecedente_academico',$this->input->post('id_antecedente_academico'));
             $this->MyModel->agregar_model('antecedentes_laborales',$nuevo_antecedente_laboral,'id_antecedente',$this->input->post('id_antecedente'));
@@ -738,6 +798,50 @@ class Gestion extends CI_Controller {
         //hobbies        
         
         $this->load->view('gestion/modal/mostrar_hobbies',$data);
+    }
+    
+    function agregar_factor(){
+        $factor = $this->input->post('factor');        
+            $dato = array(
+               'factor' => $factor
+            );            
+            
+            $this->db->select('*');        
+            $this->db->from('factor');
+            $this->db->where('factor="'.$factor.'"');
+            $query = $this->db->get();
+            $factor = $query->result_array();            
+            if (!empty($factor)) {
+            
+                $data['guardo'] = 'NO';
+            
+            }else{
+                
+                $this->db->insert('factor', $dato); 
+                $ins_factor = $this->db->affected_rows();                        
+                if ($ins_factor==1) {
+                    $data['guardo'] = 'SI';
+                }else{
+                    $data['guardo'] = 'NO';
+                }
+                
+            }                  
+        echo json_encode($data);       
+    }
+    function mostrar_factor($id_postulante=null){
+        $factor = $this->MyModel->buscar_select('factor','id_factor','factor');
+        $data['factor'] = $factor;
+        
+        //factor
+        $this->db->from('factor_personas');
+        $this->db->join('factor','factor.id_factor = factor_personas.id_factor');
+        $this->db->where('factor_personas.id_postulantes = '.$id_postulante);
+        $query = $this->db->get();
+        $factor_seleccionadas = $query->result_array();                
+        $data['factor_seleccionadas'] = $factor_seleccionadas;
+        //factor        
+        
+        $this->load->view('gestion/modal/mostrar_factor',$data);
     }
     
 }

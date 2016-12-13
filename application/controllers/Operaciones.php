@@ -42,7 +42,8 @@ class Operaciones extends CI_Controller {
                 'prioridad' => $this->input->post('prioridad'),
                 'observacion' => $this->input->post('observacion'),
                 'id_usuario_solicitante' => $this->session->userdata['id_usuario'],
-                'motivo_solicitud' => $this->input->post('id_motivo')
+                'motivo_solicitud' => $this->input->post('id_motivo'),
+                'cantidad_aprobada' => $this->input->post('cantidad_solicitada')
             );
             $this->MyModel->agregar_model('solicitudes',$nueva_solicitud);
             redirect('operaciones/solicitudes');
@@ -395,14 +396,19 @@ class Operaciones extends CI_Controller {
     public function solicitud_validada(){
         $id_solicitud = $this->input->post('id_solicitud');
         $cant_solicitada = $this->input->post('cant_solicitada');
-        $prioridad = $this->input->post('prioridad');
+        $prioridad = $this->input->post('prioridad');        
+        $rechazado = $this->input->post('rechazado');
+        $observacion = $this->input->post('observacion');
+        $observacion_aprobada = $this->input->post('observacion_aprobada');
         
         $data = array(
-               'cantidad_solicitada' => $cant_solicitada,
-               'prioridad' => $prioridad
+               'cantidad_aprobada' => $cant_solicitada,
+               'prioridad' => $prioridad,
+               'validado' => $rechazado,
+               //'observacion' => $observacion,
+               'observacion_aprobada' => $observacion_aprobada
             );
-        
-        /*    
+          /*  
         $config = array(
          'protocol' => 'smtp',
          'smtp_host' => 'smtp.googlemail.com',
@@ -422,18 +428,19 @@ class Operaciones extends CI_Controller {
          $this->email->to('g.moya.monsalve@gmail.com');
          $this->email->send(FALSE);    
          */
-                        
+                       
         $this->db->where('id_solicitud', $id_solicitud);
         $this->db->update('solicitudes', $data); 
         $ins_solicitud = $this->db->affected_rows();
         
-        if($ins_solicitud==1) {
+        if($ins_solicitud==1){
             $this->session->set_flashdata('msje_solicitud', '1');
             redirect(base_url().'/index.php/operaciones/solicitudes');
         }else{
             $this->session->set_flashdata('msje_solicitud', '2');
             redirect(base_url().'/index.php/operaciones/solicitudes');
-        }         
+        }      
+                 
     }
     
     

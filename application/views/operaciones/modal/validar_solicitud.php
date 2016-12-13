@@ -1,5 +1,12 @@
 <div class="row">
     <div class="col-md-4">
+    <?php 
+    /*
+    echo '<pre>';
+    print_r($solicitud);
+    echo '</pre>';
+    */
+    ?>
         <div class="form-group">
             <label>Area</label>
             <input class="form-control" type="text" name="area" id="area" value="<?php echo $solicitud[0]['area'] ?>" disabled />
@@ -52,7 +59,7 @@
     <div class="col-md-8">
         <div class="form-group">
             <label>Observaci&oacute;n Aprobada</label>
-            <input class="form-control" type="text" name="observacion" id="observacion" />
+            <input class="form-control" type="text" name="observacion_aprobada" id="observacion_aprobada" value="<?php echo $solicitud[0]['observacion_aprobada'] ?>" />
         </div>
     </div>
     

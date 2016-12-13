@@ -1,19 +1,5 @@
  <div class="content-wrapper">
  
-    <div class="row">
-        <div class="col-xs-8">
-        
-<?php 
-            if(!empty($msje_solicitud)){
-            ?>
-            <div id="alertita" class="alert alert-<?php if($msje_solicitud[0]==1){echo 'success';}else{echo 'danger';}?> alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong><?php if($msje_solicitud[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'La solicitud se ha modificado con exito';}else{echo 'La solicitud no se ha modificado';}?>
-            </div>        
-            <?php }?>
-        
-    </div>
-    </div>
  
  <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -24,9 +10,25 @@
     </section>
     <!-- Main content -->
     <section class="content">
+    
+    <div class="row">
+        <div class="col-xs-12">        
+        <?php 
+        $msje_solicitud = $this->session->flashdata('msje_solicitud');
+            if(!empty($msje_solicitud)){
+            ?>
+            <div id="alertita" class="alert alert-<?php if($msje_solicitud[0]==1){echo 'success';}else{echo 'danger';}?> alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><?php if($msje_solicitud[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'La solicitud se ha modificado con exito';}else{echo 'La solicitud no se ha modificado';}?>
+            </div>        
+            <?php }?>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-md-9"></div>
         <form action="<?php echo base_url("/index.php/operaciones/agregar_solicitud"); ?>">
+        
         <div class="col-md-3">
             <button type="submit" class="btn btn-block btn-info" >Agregar Solicitud</button>
         </div>
@@ -107,6 +109,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+        
+        <input type="hidden" id="rechazado" name="rechazado" value="" />        
+        <button type="submit" class="btn btn-outline" onclick="rechazar();">Rechazar</button>        
         <button type="submit" class="btn btn-outline">Validar</button>
         
       </div>
@@ -115,7 +120,7 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script>
-$(document).ready(function(){
+$(document).ready(function(){    
     $('#solicitudes').DataTable({
        "language": {
                 "url": '<?php echo base_url("/js/bootstrap-dataTables-Spanish.json") ?>',
@@ -123,7 +128,11 @@ $(document).ready(function(){
                 "thousands": "."
             },
     });
+    setTimeout(function(){ $("#alertita").fadeOut(4000);}, 5000);
 });
+function rechazar(){
+    $('#rechazado').val('0');    
+}
 function validarSolicitud(id_solicitud){
     $.ajax({
           url:"<?php echo base_url('index.php/operaciones/validar_solicitud')?>",

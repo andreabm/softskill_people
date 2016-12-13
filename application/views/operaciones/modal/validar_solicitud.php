@@ -27,7 +27,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label>Cantidad Solicitada</label>
-            <input class="form-control" type="text" name="cant_solicitada" id="cant_solicitada" value="<?php echo $solicitud[0]['cantidad_solicitada'] ?>" />
+            <input class="form-control" type="text" name="cant_solicitada" id="cant_solicitada" value="<?php echo $solicitud[0]['cantidad_solicitada'] ?>" disabled/>
         </div>
     </div>
     <div class="col-md-4">

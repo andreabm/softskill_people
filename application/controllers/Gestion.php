@@ -215,6 +215,9 @@ class Gestion extends CI_Controller {
     }
     
     public function editar_postulante($id_postulante){
+    	if(empty($id_postulante)){
+           $id_postulante = $this->input->post('id_postulante');
+        }
         //$id_postulante = $this->input->post('id_postulante');
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');

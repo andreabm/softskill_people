@@ -189,24 +189,65 @@
               <label>COMPETENCIAS DE EVALUACIÓN FORMAL PARA EJECUTIVO DE CALL CENTER</label>
               <?php 
               echo '<table class="table" style="width:50%">';
+              
+                  
               foreach ($competencias as $comp) {
                 echo '<tr>';
                 echo '<th colspan="2">'.$comp['competencia'].'<th>';
-                echo '</tr>';
-                foreach($competencias_item as $c) {
+                echo '</tr>'; 
+                
+                $valor_ponderacion = 0;
+                $vponderacion = 0;
+                $resultado_test = 0;
+                $otro_result = 0;
+                
+                foreach($competencias_item as $c){
                     if ($c['id_competencia'] == $comp['id_competencia']) {
                         echo '<tr>';
                         echo '<td>';
-                        echo $c['descripcion'];
+                            echo $c['descripcion'];
                         echo '</td>';
                         if (empty($resultado_competencia[$c['id_competencias_item']])) {
                             $resultado_competencia[$c['id_competencias_item']] = '';
                         }
-                        echo '<td><input class="form-control" name="calificacion['.$c['id_competencias_item'].']" placeholder="calificación" style="width:100px" value="'.$resultado_competencia[$c['id_competencias_item']].'"><td>';
-                        echo '</tr>';
+                        
+                        $var_1 = trim('calificacion['.$c['id_competencias_item'].']');
+                        $var_2 = 'ponderacion['.$c['id_competencias_item'].']';
+                                                
+                        ?>
+                        <td>
+                        <input class="form-control" onkeyup="calcula('<?php echo 'calificacion['.$c['id_competencias_item'].']'?>','<?php echo 'ponderacion['.$c['id_competencias_item'].']'?>','<?php echo 'total'.$comp['id_competencia'].''?>','<?php echo 'ritem'.$c['id_competencias_item'].'';?>','<?php echo 'grupo'.$comp['id_competencia']?>');" name="<?php echo 'calificacion['.$c['id_competencias_item'].']'?>" id="<?php echo 'calificacion['.$c['id_competencias_item'].']'?>" placeholder="calificación" style="width:100px" value="<?php echo $resultado_competencia[$c['id_competencias_item']]?>" />
+                        <td>
+                        <?php
+                        echo '<td><input class="form-control" name="ponderacion['.$c['id_competencias_item'].']" id="ponderacion['.$c['id_competencias_item'].']" placeholder="ponderación" style="width:100px" value="'.$c['ponderacion'].'" disabled><td>';
+                        
+                        $resultado_test = $resultado_competencia[$c['id_competencias_item']]*$c['ponderacion'];
+                        
+                        ?>
+                        <td>
+                        <input type="hidden" class="form-control grupo<?=$comp['id_competencia']?>" name="<?php echo 'ritem'.$c['id_competencias_item'].'';?>" id="<?php echo 'ritem'.$c['id_competencias_item'].'';?>" placeholder="<?php echo 'ritem'.$c['id_competencias_item'].'';?>" value="<?php echo $resultado_test?>" style="width:100px" disabled/>
+                        <td>
+                        <?php
+                        echo '</tr>';                        
+                        $vponderacion = $vponderacion + $c['ponderacion'];
+                        $otro_result = $otro_result + $resultado_test;                     
                     }
                 }
+                $valor_ponderacion = $vponderacion*100;
+                
+                
+                echo '<tr>';
+                echo '<th>Resultado<th>';
+                echo '<th>
+                <input class="form-control" type="hidden" name="grupo" id="grupo" value="grupo'.$comp['id_competencia'].'" style="width:70px;" disabled/>
+                <input type="hidden" class="form-control" name="resultado'.$comp['id_competencia'].'" id="resultado'.$comp['id_competencia'].'" placeholder="Resultado" style="width:100px" value="" disabled>
+                </th>';
+                echo '<th>
+                <input class="form-control" name="total'.$comp['id_competencia'].'" id="total'.$comp['id_competencia'].'" placeholder="total'.$comp['id_competencia'].'" value="'.$otro_result.'" style="width:100px" disabled>
+                </tr>';         
               }
+              
+              
               echo '</table>';
               ?>
             </div>
@@ -223,7 +264,7 @@
                   <h3 class="box-title" name="resultado_psicologica">COMENTARIOS DE LA EVALUACIÓN PSICOLOGICA Y RESULTADO FINAL</h3>
               </div>
               <div class="box-body">
-              <textarea class="form-control"></textarea>
+                <textarea class="form-control" ></textarea>
               </div>
             <!-- /.box-body -->
             </div>
@@ -263,11 +304,43 @@
 <script>
 $('.datepicker').datepicker({
       autoclose: true
-    });
+});
 $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
     });
+       
+var vcalificacion = document.getElementById('#calificacion').value;
+//var vponderacion = document.getElementById(ponderacion).value;     
+
+$("."+grupo).each(
+		function(index, value) {
+			cantidad = cantidad + eval($(this).val());
+		}
+);
+     
+   
+function calcula(calificacion,ponderacion,resultado_final,ritem,grupo){
+    var vcalificacion = document.getElementById(calificacion).value;
+    var vponderacion = document.getElementById(ponderacion).value;
+    var resultadoi = Number(vcalificacion)*Number(vponderacion);
+    
+    $("#"+ritem).val(resultadoi.toFixed(1));    
+    var resultadoj = Number(ritem);
+    //$("#"+resultado_final).val(resultadoi.toFixed(1));
+    calcula_grupo(grupo,resultado_final);
+}
+function calcula_grupo(grupo,resultado_final){    
+    cantidad = 0
+	$("."+grupo).each(
+		function(index, value) {
+			cantidad = cantidad + eval($(this).val());
+		}
+	);
+    valor_final = cantidad/100;
+	$("#"+resultado_final).val(valor_final);    
+}
+
 </script>
 <script>
   $(function () {

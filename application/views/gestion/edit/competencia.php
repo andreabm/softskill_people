@@ -26,8 +26,8 @@
                     <?php echo form_hidden('id_competencia',$id);?>
                     <div class="col-md-5">  
                         <div class="form-group">
-                            <input class="form-control" type="text" name="competencia" id="competencia" value="<?php echo $competencias[0]['competencia'] ?>" >
-                            <br /><input class="form-control" type="text" name="ponderacion_competencia" id="ponderacion_competencia" value="<?php echo $competencias[0]['ponderacion'] ?>" >
+                            <input class="form-control" type="text" name="competencia" id="competencia" value="<?php echo $competencias[0]['competencia'] ?>" />
+                            <br /><input class="form-control" type="text" name="ponderacion_competencia" id="ponderacion_competencia" value="<?php echo $competencias[0]['c_ponderacion'] ?>" >
                         </div>
                     </div>
                     <div class="col-md-2">

@@ -8,6 +8,21 @@
     </section>
     <!-- Main content -->
     <section class="content">
+    
+    <div class="row">
+        <div class="col-xs-12">        
+        <?php 
+        $msje_eliminar = $this->session->flashdata('msje_eliminar');
+            if(!empty($msje_eliminar)){
+            ?>
+            <div id="alertita" class="alert alert-<?php if($msje_eliminar[0]==1){echo 'success';}else{echo 'danger';}?> alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><?php if($msje_eliminar[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_eliminar[0]==1){echo 'El postulante se ha eliminado.';}else{echo 'No se ha podido eliminar el postulante.';}?>
+            </div>        
+            <?php }?>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-md-9"></div>
         <form action="<?php echo base_url("/index.php/gestion/agregar_postulante"); ?>">
@@ -68,6 +83,7 @@
                               <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/gestion/editar_postulante/'.$p['id_postulante'])?>">Editar</a>
                               <a class="btn btn-xs btn-primary" href="<?php echo base_url('index.php/gestion/postulante_prueba/'.$p['id_postulante'])?>">Evaluacion</a>
                               <a class="btn btn-xs btn-info" data-toggle="modal" data-target="#postulanteCalifica" onclick = "postulanteCalifica(<?php echo $p['id_postulante'];  ?>)">Califica</a>                  
+                              <a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#eliminarPostulante" onclick = "eliminarPostulante(<?php echo $p['id_postulante'];  ?>)">Eliminar</a>
                           </td>
                         </tr>
                         <?php
@@ -143,6 +159,7 @@
 
 <script>
 $(document).ready(function(){
+    setTimeout(function(){ $("#alertita").fadeOut(4000);}, 5000);
     $('#postulantes').DataTable({
        "language": {
                 "url": '<?php echo base_url("/js/bootstrap-dataTables-Spanish.json") ?>',
@@ -165,6 +182,22 @@ function verPostulante(id_postulante){
           }
     });
 }
+function eliminarPostulante(id_postulante){
+    $.ajax({
+          url:"<?php echo base_url('index.php/gestion/eliminar_postulante')?>",
+          type: 'POST',
+          data: {id_postulante:id_postulante},
+          success: function(data) {
+          $('#verPostulanteBody').html(data);
+          $('#alertita').fadeIn();
+          setTimeout(function(){ $("#alertita").fadeOut(4000);}, 5000);
+          },
+          error: function(e) {
+            $('#verPostulanteBody').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
+    });
+}
+
 function postulanteCalifica(id_postulante){
     $.ajax({
           url:"<?php echo base_url('index.php/gestion/postulante_califica')?>",

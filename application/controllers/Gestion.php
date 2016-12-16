@@ -444,6 +444,7 @@ class Gestion extends CI_Controller {
         foreach ($resultado_competencia_array as $r) {
             $resultado_competencia[$r['id_competencia_item']] = $r['calificacion'];
         }
+        $this->db->select('competencias_item.id_competencia, competencias_item.id_competencias_item, competencias_item.descripcion, competencias_item.ponderacion');
         $this->db->from('competencias_item');
         $this->db->join('competencias','competencias.id_competencia = competencias_item.id_competencia');
         $this->db->where('competencias_item.activo = 1 and competencias_item.id_cargo = 1');
@@ -456,6 +457,7 @@ class Gestion extends CI_Controller {
         $data['resultado_competencia'] = $resultado_competencia;
         
         $usuarios = $this->MyModel->buscar_select('usuarios','id_usuario','nombre'); //FALTA FILTRAR POR PERFILES
+        
         $data['usuarios'] = $usuarios;
         if ($this->input->post('rut')) {
             $rut = $this->input->post('rut');
@@ -531,6 +533,29 @@ class Gestion extends CI_Controller {
         $data['postulante']=$postulante;
         
         $this->load->view('gestion/modal/postulante_califica',$data);
+    }
+    public function eliminar_postulante(){
+        $id_postulante =$this->input->post('id_postulante');
+        //postulantes
+        $this->db->where('id_postulante',$id_postulante);
+        $this->db->delete('postulantes');
+        $ins_solicitud = $this->db->affected_rows();        
+        //factor
+        $this->db->where('id_postulantes',$id_postulante);
+        $this->db->delete('factor_personas');
+        //hobbies
+        $this->db->where('id_postulantes',$id_postulante);
+        $this->db->delete('hobbies_personas');        
+        
+                
+        if($ins_solicitud==1){
+            $this->session->set_flashdata('msje_eliminar', '1');
+            redirect(base_url().'/index.php/gestion/postulantes','refresh');
+        }else{
+            $this->session->set_flashdata('msje_eliminar', '2');
+            redirect(base_url().'/index.php/gestion/postulantes','refresh');
+        }
+         
     }
     
     public function postulante_califica_guardar(){
@@ -657,7 +682,7 @@ class Gestion extends CI_Controller {
             }
             redirect(base_url("index.php/Gestion/competencias"));
         }
-        $this->db->select('competencias_item.descripcion,competencias_item.peso,competencias_item.ponderacion, competencias.competencia, competencias.ponderacion');
+        $this->db->select('competencias_item.descripcion,competencias_item.peso,competencias_item.ponderacion, competencias.competencia, competencias.ponderacion as c_ponderacion');
         $this->db->from('competencias');
         $this->db->join('competencias_item','competencias.id_competencia = competencias_item.id_competencia','left');
         $this->db->where('competencias.id_competencia = '.$id);

@@ -77,6 +77,81 @@ class Operaciones extends CI_Controller {
         $this->load->view('operaciones/ejecutivos',$data);
         $this->load->view('common/footer');
     }
+    public function documentacion($id_ejecutivo){
+        $this->output->set_header('Cache-Control: post-check=0, pre-check=0');
+        $this->db->select('personas.nombre as nombre_ejecutivo, documentacion_ejecutivo.archivo, documentacion_ejecutivo.estado,documentacion_ejecutivo.nombre,id_documentacion');
+        $this->db->from('personas');
+        $this->db->join('documentacion_ejecutivo','personas.id_persona=id_ejecutivo');
+        $this->db->where('personas.id_persona ='.$id_ejecutivo);
+        $query = $this->db->get();
+        $documentos = $query->result_array();
+        $data['documentos'] = $documentos;        
+        $data['id_ejecutivo'] = $id_ejecutivo;
+        $this->load->view('common/header');
+        $this->load->view('operaciones/documentacion',$data);
+        $this->load->view('common/footer');
+    }
+    public function ingresar_documento(){
+        $data['id_solicitud'] = $this->input->post('id_solicitud');
+        $this->load->view('operaciones/modal/ingresar_documento',$data);
+    }
+    public function insert_documento(){
+        
+        $id_ejecutivo = $this->input->post('id_ejecutivo');
+        //guardo en tabla
+        $data = array(
+           'nombre' => $this->input->post('nombre'), 
+           'estado' => $this->input->post('estado'),
+           'id_ejecutivo' => $id_ejecutivo
+        );        
+        $this->db->insert('documentacion_ejecutivo', $data);
+        $ultima_id = $this->db->insert_id();
+        
+        
+        // Cargamos la libreria Upload
+        $this->load->library('upload');
+        /*
+         * Revisamos si el archivo fue subido
+         * Comprobamos si existen errores en el archivo subido
+         */
+        if (!empty($_FILES['archivo']['name'])){
+            // Configuración para el Archivo 1
+            $config['upload_path'] = APPPATH . 'uploads/documentacion/';
+            //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size'] = '3000';
+            $config['max_width']  = '3000';
+            $config['max_height']  = '2500';
+            
+            $ext = end(explode(".", $_FILES['archivo']['name']));
+            //update
+            $data = array('archivo' => $ultima_id.'.'.$ext);
+            $this->db->where('id_documentacion', $ultima_id);
+            $this->db->update('documentacion_ejecutivo', $data);
+            
+            //cambiar nombre archivo, dos formas
+            //$config['encrypt_name'] = TRUE;            
+            //$new_name = $_FILES["archivo"]['name'];
+            $config['file_name'] = $ultima_id;      
+
+            // Cargamos la configuración del Archivo 1
+            $this->upload->initialize($config);
+            // Subimos archivo 1
+            if ($this->upload->do_upload('archivo')){
+                $data = $this->upload->data();
+            }else{
+                echo $this->upload->display_errors();
+            }
+            redirect(base_url('/index.php/operaciones/documentacion/'.$id_ejecutivo));            
+        }
+    }
+    public function eliminar_documento($id_documentacion){        
+    $this->db->delete('documentacion_ejecutivo', array('id_documentacion' => $id_documentacion));
+    $row = $this->db->where('id_documentacion',$id_documentacion)->get('documentacion_ejecutivo')->row();
+        unlink(APPPATH.'uploads/documentacion/'.$row->archivo);  
+     
+    redirect(base_url('/index.php/operaciones/documentacion/'.$row->archivo));        
+    }
     
     public function ficha_contratacion($id_ejecutivo = null){
         if (empty($id_ejecutivo)) {
@@ -155,8 +230,7 @@ class Operaciones extends CI_Controller {
         $this->load->view('common/footer');
     }
 
-    function imprimir_ficha($id_ejecutivo){
-        
+    function imprimir_ficha($id_ejecutivo){        
         $data['id_ejecutivo'] = $id_ejecutivo;
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');

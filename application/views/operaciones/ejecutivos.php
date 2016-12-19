@@ -51,12 +51,7 @@
                             <td><?php echo $t['nombre'] ?></td>
                             <td></td>
                             <td>
-                            <?php echo form_open('operaciones/documentacion');?>
-                            <input type="hidden" name="id_ejecutivo" id="id_ejecutivo" value="<?php echo $t['id_postulante'];?>" />
-                            <button type="submit" class="btn btn-xs btn-warning">Documentacion</button>
-                            <?php echo form_close();?>
-                            <a href="<?php echo base_url('/index.php/operaciones/documentacion/'.$t['id_postulante']);?>">Documentos</a>
-                            
+                            <a href="<?php echo base_url('/index.php/operaciones/documentacion/'.$t['id_postulante']);?>" class="btn btn-xs btn-warning">Documentos</a>
                             </td>
                     </tr>
                             

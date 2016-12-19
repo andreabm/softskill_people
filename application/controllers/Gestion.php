@@ -545,8 +545,7 @@ class Gestion extends CI_Controller {
         $this->db->delete('factor_personas');
         //hobbies
         $this->db->where('id_postulantes',$id_postulante);
-        $this->db->delete('hobbies_personas');        
-        
+        $this->db->delete('hobbies_personas');
                 
         if($ins_solicitud==1){
             $this->session->set_flashdata('msje_eliminar', '1');

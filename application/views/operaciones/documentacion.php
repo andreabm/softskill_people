@@ -46,7 +46,6 @@
                 <thead>
                 <tr>
                   <th>Archivo</th>
-                  <th>Img Archivo</th>
                   <th>Estado</th>
                   <th>Opciones</th>
                 </tr>
@@ -62,11 +61,11 @@
                 if(!empty($documentos)) {
                     foreach($documentos as $p){?>
                     <tr>
-                      <td><?php echo $p['nombre'] ?></td>
-                      <td><?php echo $p['archivo'] ?></td>
+                      <td><?php echo $p['nombre'];?></td>  
                       <td><?php echo $p['estado'] ?></td>
                       <td>
-                          <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/gestion/editar_postulante/'.$p['id_documentacion'])?>">Editar</a>
+                          <a class="btn btn-xs btn-warning" href="#" data-toggle="modal" data-target="#editarDocumento" onclick = "editarDocumento(<?php echo $p['id_documentacion'];?>)">Editar</a>  
+                          <!--<a class="btn btn-xs btn-warning" href="<?php //echo base_url('index.php/gestion/editar_postulante/'.$p['id_documentacion'])?>">Editar</a>-->
                           <a class="btn btn-xs btn-danger"  href="<?php echo base_url('index.php/operaciones/eliminar_documento/'.$p['id_documentacion']);?>">Eliminar</a>
                       </td>
                     </tr>
@@ -88,7 +87,7 @@
     </section>
 
 
-<!--MODAL VER EJECUTIVO-->
+<!--MODAL INGRESO IMAGEN-->
 <div class="modal modal-success fade" id="ingresarDocumento">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -110,7 +109,31 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!--MODAL VER EJECUTIVO FIN-->
+<!--MODAL INGRESO IMAGEN FIN-->
+
+<!--MODAL EDITAR IMAGEN-->
+<div class="modal modal-success fade" id="editarDocumento">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Validar Solicitud</h4>
+              </div>
+      <?php echo form_open_multipart('Operaciones/update_documento');?>        
+      <div class="modal-body" id="editarDocumentoBody">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>     
+        <button type="submit" class="btn btn-outline">Guardar</button>
+        
+      </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--MODAL EDITAR IMAGEN FIN-->
 
 </div>
 
@@ -125,6 +148,19 @@ $(document).ready(function(){
             },
     });
 });
+function editarDocumento(id_solicitud){
+    $.ajax({
+          url:"<?php echo base_url('index.php/operaciones/editar_documento')?>",
+          type: 'POST',
+          data: {id_documento:id_solicitud},
+          success: function(data) {
+          $('#editarDocumentoBody').html(data);
+          },
+          error: function(e) {
+            $('#editarDocumentoBody').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
+    });
+}
 function ingresarDocumento(id_solicitud){
     $.ajax({
           url:"<?php echo base_url('index.php/operaciones/ingresar_documento')?>",

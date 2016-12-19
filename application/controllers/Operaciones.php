@@ -95,8 +95,20 @@ class Operaciones extends CI_Controller {
         $data['id_solicitud'] = $this->input->post('id_solicitud');
         $this->load->view('operaciones/modal/ingresar_documento',$data);
     }
-    public function insert_documento(){
-        
+    
+    public function editar_documento(){
+        $documento = $this->input->post('id_documento');
+        //SELECT * from documentacion_ejecutivo where id_documentacion=20
+        $this->db->from('documentacion_ejecutivo');
+        $this->db->where('id_documentacion='.$documento);
+        $query = $this->db->get();
+        $documento = $query->result_array();
+        $data['documento'] = $documento;
+        $data['prueba'] = 'test';
+        $this->load->view('operaciones/modal/editar_documento',$data);
+    }
+    
+    public function insert_documento(){        
         $id_ejecutivo = $this->input->post('id_ejecutivo');
         //guardo en tabla
         $data = array(
@@ -106,8 +118,6 @@ class Operaciones extends CI_Controller {
         );        
         $this->db->insert('documentacion_ejecutivo', $data);
         $ultima_id = $this->db->insert_id();
-        
-        
         // Cargamos la libreria Upload
         $this->load->library('upload');
         /*
@@ -145,12 +155,68 @@ class Operaciones extends CI_Controller {
             redirect(base_url('/index.php/operaciones/documentacion/'.$id_ejecutivo));            
         }
     }
-    public function eliminar_documento($id_documentacion){        
-    $this->db->delete('documentacion_ejecutivo', array('id_documentacion' => $id_documentacion));
+    
+    public function update_documento(){
+        // Cargamos la libreria Upload
+        $this->load->library('upload');
+        $id_documentacion = $this->input->post('id_documento');
+        $id_ejecutivo = $this->input->post('id_ejecutivo');
+                
+        //echo base_url().'assets/uploads/documentacion/';        
+                        
+        $data = array(
+               'estado' => $this->input->post('estado'),
+               'nombre' => $this->input->post('nombre')
+            );
+        $this->db->where('id_documentacion', $id_documentacion);
+        $this->db->update('documentacion_ejecutivo', $data);
+        
+        //editar archivo
+        /*
+         * Revisamos si el archivo fue subido
+         * Comprobamos si existen errores en el archivo subido
+         */
+        if (!empty($_FILES['archivo']['name'])){
+            //elimino el documento
+            $row = $this->db->where('id_documentacion',$id_documentacion)->get('documentacion_ejecutivo')->row();
+            unlink(APPPATH.'uploads/documentacion/'.$row->archivo); 
+            //$this->db->delete('documentacion_ejecutivo', array('id_documentacion' => $id_documentacion));            
+            
+            // Configuración para el Archivo 1
+            $config['upload_path'] = APPPATH . 'uploads/documentacion/';
+            //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size'] = '3000';
+            $config['max_width']  = '3000';
+            $config['max_height']  = '2500';
+            $ext = end(explode(".", $_FILES['archivo']['name']));
+            //update
+            $data = array('archivo' => $id_documentacion.'.'.$ext);
+            $this->db->where('id_documentacion', $id_documentacion);
+            $this->db->update('documentacion_ejecutivo', $data);            
+            //cambiar nombre archivo, dos formas
+            //$config['encrypt_name'] = TRUE;            
+            //$new_name = $_FILES["archivo"]['name'];
+            $config['file_name'] = $id_documentacion;
+            // Cargamos la configuración del Archivo 1
+            $this->upload->initialize($config);
+            // Subimos archivo 1
+            if ($this->upload->do_upload('archivo')){
+                $data = $this->upload->data();
+            }else{
+                echo $this->upload->display_errors();
+            }
+            redirect(base_url('/index.php/operaciones/documentacion/'.$id_ejecutivo));
+                      
+        }
+        
+    }
+    
+    public function eliminar_documento($id_documentacion){
     $row = $this->db->where('id_documentacion',$id_documentacion)->get('documentacion_ejecutivo')->row();
-        unlink(APPPATH.'uploads/documentacion/'.$row->archivo);  
-     
-    redirect(base_url('/index.php/operaciones/documentacion/'.$row->archivo));        
+        unlink(APPPATH.'uploads/documentacion/'.$row->archivo); 
+        $this->db->delete('documentacion_ejecutivo', array('id_documentacion' => $id_documentacion));
+        redirect(base_url('/index.php/operaciones/documentacion/'.$row->id_ejecutivo));        
     }
     
     public function ficha_contratacion($id_ejecutivo = null){

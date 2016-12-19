@@ -338,7 +338,7 @@ function calcula_grupo(grupo,resultado_final){
 		}
 	);
     valor_final = cantidad/100;
-	$("#"+resultado_final).val(valor_final);    
+	$("#"+resultado_final).val(valor_final.toFixed(2));    
 }
 
 </script>

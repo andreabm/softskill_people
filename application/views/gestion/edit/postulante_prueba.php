@@ -189,17 +189,28 @@
               <label>COMPETENCIAS DE EVALUACIÓN FORMAL PARA EJECUTIVO DE CALL CENTER</label>
               <?php 
               echo '<table class="table" style="width:50%">';
+              $total_cat = 0;
+              /*
+              echo '<pre>';
+              print_r($competencias);
+              echo '</pre>';
+              */
               
-                  
               foreach ($competencias as $comp) {
                 echo '<tr>';
-                echo '<th colspan="2">'.$comp['competencia'].'<th>';
+                echo '<th>'.$comp['competencia'].': '.$comp['ponderacion'].'%<th>';
+                echo '<th><input type="hidden" class="form-control" name="ponderacion_categoria'.$comp['id_competencia'].'" id="ponderacion_categoria'.$comp['id_competencia'].'" value="'.$comp['ponderacion'].'" readonly disabled/><th>';
                 echo '</tr>'; 
                 
                 $valor_ponderacion = 0;
                 $vponderacion = 0;
                 $resultado_test = 0;
                 $otro_result = 0;
+                
+                $color = '';  
+                if($comp['peso_prioridad']==1){
+                   $color = 'style="background-color: #ffffcc; max-width:100px;"';  
+                }
                 
                 foreach($competencias_item as $c){
                     if ($c['id_competencia'] == $comp['id_competencia']) {
@@ -213,13 +224,13 @@
                         
                         $var_1 = trim('calificacion['.$c['id_competencias_item'].']');
                         $var_2 = 'ponderacion['.$c['id_competencias_item'].']';
-                                                
+                                                             
                         ?>
                         <td>
-                        <input class="form-control" onkeyup="calcula('<?php echo 'calificacion['.$c['id_competencias_item'].']'?>','<?php echo 'ponderacion['.$c['id_competencias_item'].']'?>','<?php echo 'total'.$comp['id_competencia'].''?>','<?php echo 'ritem'.$c['id_competencias_item'].'';?>','<?php echo 'grupo'.$comp['id_competencia']?>');" name="<?php echo 'calificacion['.$c['id_competencias_item'].']'?>" id="<?php echo 'calificacion['.$c['id_competencias_item'].']'?>" placeholder="calificación" style="width:100px" value="<?php echo $resultado_competencia[$c['id_competencias_item']]?>" />
+                        <input class="form-control" <?php echo $color;?> onkeyup="calcula('<?php echo 'calificacion['.$c['id_competencias_item'].']'?>','<?php echo 'ponderacion['.$c['id_competencias_item'].']'?>','<?php echo 'total'.$comp['id_competencia'].''?>','<?php echo 'ritem'.$c['id_competencias_item'].'';?>','<?php echo 'grupo'.$comp['id_competencia']?>','<?php echo 'total_cat'.$comp['id_competencia'].''?>','<?php echo 'ponderacion_categoria'.$comp['id_competencia'].''?>');" name="<?php echo 'calificacion['.$c['id_competencias_item'].']'?>" id="<?php echo 'calificacion['.$c['id_competencias_item'].']'?>" placeholder="calificación" style="width:100px" value="<?php echo $resultado_competencia[$c['id_competencias_item']]?>" />
                         <td>
                         <?php
-                        echo '<td><input class="form-control" name="ponderacion['.$c['id_competencias_item'].']" id="ponderacion['.$c['id_competencias_item'].']" placeholder="ponderación" style="width:100px" value="'.$c['ponderacion'].'" disabled><td>';
+                        echo '<td><input type="hidden" class="form-control" name="ponderacion['.$c['id_competencias_item'].']" id="ponderacion['.$c['id_competencias_item'].']" placeholder="ponderación" style="width:100px" value="'.$c['ponderacion'].'" disabled><td>';
                         
                         $resultado_test = $resultado_competencia[$c['id_competencias_item']]*$c['ponderacion'];
                         
@@ -234,19 +245,34 @@
                     }
                 }
                 $valor_ponderacion = $vponderacion*100;
+
+                //$resultado_final = $otro_result/100;
+                $resultado_final = number_format((float)$otro_result/100, 2, '.', '');
                 
+                $por_cat = number_format((float)$resultado_final*$comp['ponderacion'], 1, '.', '');
+                
+                $total_cat = $total_cat + $por_cat/100;
+                $total_cat = number_format((float)$total_cat, 1, '.', '');
                 
                 echo '<tr>';
-                echo '<th>Resultado<th>';
+                echo '<th>Resultado</th>';
                 echo '<th>
+                <input class="form-control" name="total'.$comp['id_competencia'].'" id="total'.$comp['id_competencia'].'" placeholder="total'.$comp['id_competencia'].'" value="'.$resultado_final.'" style="width:100px" disabled>
                 <input class="form-control" type="hidden" name="grupo" id="grupo" value="grupo'.$comp['id_competencia'].'" style="width:70px;" disabled/>
                 <input type="hidden" class="form-control" name="resultado'.$comp['id_competencia'].'" id="resultado'.$comp['id_competencia'].'" placeholder="Resultado" style="width:100px" value="" disabled>
+                
                 </th>';
                 echo '<th>
-                <input class="form-control" name="total'.$comp['id_competencia'].'" id="total'.$comp['id_competencia'].'" placeholder="total'.$comp['id_competencia'].'" value="'.$otro_result.'" style="width:100px" disabled>
+                <input type="hidden" class="form-control agrupado" name="total_cat'.$comp['id_competencia'].'" id="total_cat'.$comp['id_competencia'].'" placeholder="total_cat'.$comp['id_competencia'].'" value="'.$por_cat.'" style="width:100px" disabled>
                 </tr>';         
               }
               
+              echo '<tr>';
+                echo '<th><label>APROBACI&Oacute;N</label></th>';
+                echo '<th>
+                      <input class="form-control" name="aprobacion" id="aprobacion" value="'.$total_cat.'" disabled readonly />  
+                </th>';
+
               
               echo '</table>';
               ?>
@@ -256,6 +282,22 @@
             </div>
         <!-- /.col -->
       </div>
+      
+    <div class="alert alert-success alert-dismissible" id="califica">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Califica</strong> Logra obtener 5.5 o superior.
+    </div>
+    <div class="alert alert-warning alert-dismissible" id="aprueba">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Aprueba</strong> Tiene aprobacion igual o superior a 5.5.
+    </div>  
+    
+    <div class="alert alert-danger alert-dismissible" id="noaprueba">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>No Aprueba</strong> No alcanza a tener aprobación 5.
+    </div>
+    
+
       <!-- /.row -->
       <div class="row">
         <div class="col-xs-12">
@@ -309,6 +351,9 @@ $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
     });
+$('#califica').hide();
+$('#aprueba').hide(); 
+$('#noaprueba').hide();    
        
 var vcalificacion = document.getElementById('#calificacion').value;
 //var vponderacion = document.getElementById(ponderacion).value;     
@@ -318,9 +363,10 @@ $("."+grupo).each(
 			cantidad = cantidad + eval($(this).val());
 		}
 );
-     
    
-function calcula(calificacion,ponderacion,resultado_final,ritem,grupo){
+   
+function calcula(calificacion,ponderacion,resultado_final,ritem,grupo,total_cat,ponderacion_cat){
+    var vponcat = document.getElementById(ponderacion_cat).value;    
     var vcalificacion = document.getElementById(calificacion).value;
     var vponderacion = document.getElementById(ponderacion).value;
     var resultadoi = Number(vcalificacion)*Number(vponderacion);
@@ -328,19 +374,49 @@ function calcula(calificacion,ponderacion,resultado_final,ritem,grupo){
     $("#"+ritem).val(resultadoi.toFixed(1));    
     var resultadoj = Number(ritem);
     //$("#"+resultado_final).val(resultadoi.toFixed(1));
-    calcula_grupo(grupo,resultado_final);
+    calcula_grupo(grupo,resultado_final,total_cat,vponcat);
 }
-function calcula_grupo(grupo,resultado_final){    
-    cantidad = 0
+function calcula_grupo(grupo,resultado_final,total_cat,vponcat){
+    //alert(vponcat);
+    cantidad = 0;
 	$("."+grupo).each(
 		function(index, value) {
 			cantidad = cantidad + eval($(this).val());
 		}
 	);
     valor_final = cantidad/100;
-	$("#"+resultado_final).val(valor_final.toFixed(2));    
-}
+	$("#"+resultado_final).val(valor_final.toFixed(2));
+    
+    //alert(valor_final);
+    valor_aprobacion = valor_final*vponcat;
+    $("#"+total_cat).val(valor_aprobacion.toFixed(1));
 
+    totalizar = 0;
+	$(".agrupado").each(
+		function(index, value) {
+			totalizar = totalizar + eval($(this).val());
+		}
+	);
+    total_aprobacion = totalizar/100;
+    
+    if(total_aprobacion>=5.5){
+        $('#califica').fadeIn();
+        $('#aprueba').hide(); 
+        $('#noaprueba').hide();
+        setTimeout(function(){$('#califica').fadeOut();},4000);
+    }else if(total_aprobacion<5.5 && total_aprobacion>=5){
+        $('#aprueba').fadeIn();
+        $('#califica').hide(); 
+        $('#noaprueba').hide();
+        setTimeout(function(){$('#aprueba').fadeOut();},4000);
+    }else{
+        $('#noaprueba').fadeIn();
+        $('#califica').hide(); 
+        $('#aprueba').hide();
+        setTimeout(function(){$('#noaprueba').fadeOut();},4000);
+    }    
+    $("#aprobacion").val(total_aprobacion.toFixed(1));
+}
 </script>
 <script>
   $(function () {

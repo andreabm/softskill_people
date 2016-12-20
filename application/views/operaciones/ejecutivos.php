@@ -51,7 +51,9 @@
                             <td><?php echo $t['nombre'] ?></td>
                             <td></td>
                             <td>
-                            <a href="<?php echo base_url('/index.php/operaciones/documentacion/'.$t['id_postulante']);?>" class="btn btn-xs btn-warning">Documentos</a>
+                            <a class="btn btn-xs btn-warning" href="<?php echo base_url('/index.php/operaciones/documentacion/'.$t['id_postulante']);?>">Documentos</a>
+                            <a class="btn btn-xs btn-success" href="#" data-toggle="modal" data-target="#verPostulante" onclick = "verPostulante(<?php echo $t['id_postulante'];  ?>)">Ver</a>
+                             <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/operaciones/ficha_contratacion/'.$t['id_postulante'])?>">Ficha </a>
                             </td>
                     </tr>
                             

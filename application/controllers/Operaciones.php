@@ -128,7 +128,7 @@ class Operaciones extends CI_Controller {
             // Configuración para el Archivo 1
             $config['upload_path'] = APPPATH . 'uploads/documentacion/';
             //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
             $config['max_size'] = '3000';
             $config['max_width']  = '3000';
             $config['max_height']  = '2500';
@@ -163,7 +163,7 @@ class Operaciones extends CI_Controller {
         $id_ejecutivo = $this->input->post('id_ejecutivo');
                 
         //echo base_url().'assets/uploads/documentacion/';        
-                        
+                                                        
         $data = array(
                'estado' => $this->input->post('estado'),
                'nombre' => $this->input->post('nombre')
@@ -185,8 +185,8 @@ class Operaciones extends CI_Controller {
             // Configuración para el Archivo 1
             $config['upload_path'] = APPPATH . 'uploads/documentacion/';
             //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
-            $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size'] = '3000';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
+            $config['max_size'] = '2048000';
             $config['max_width']  = '3000';
             $config['max_height']  = '2500';
             $ext = end(explode(".", $_FILES['archivo']['name']));
@@ -206,10 +206,8 @@ class Operaciones extends CI_Controller {
             }else{
                 echo $this->upload->display_errors();
             }
-            redirect(base_url('/index.php/operaciones/documentacion/'.$id_ejecutivo));
-                      
-        }
-        
+            redirect(base_url('/index.php/operaciones/documentacion/'.$id_ejecutivo));                      
+        }                
     }
     
     public function eliminar_documento($id_documentacion){

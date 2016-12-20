@@ -247,7 +247,7 @@
                 $valor_ponderacion = $vponderacion*100;
 
                 //$resultado_final = $otro_result/100;
-                $resultado_final = number_format((float)$otro_result/100, 2, '.', '');
+                $resultado_final = number_format((float)$otro_result/100, 1, '.', '');
                 
                 $por_cat = number_format((float)$resultado_final*$comp['ponderacion'], 1, '.', '');
                 
@@ -385,7 +385,7 @@ function calcula_grupo(grupo,resultado_final,total_cat,vponcat){
 		}
 	);
     valor_final = cantidad/100;
-	$("#"+resultado_final).val(valor_final.toFixed(2));
+	$("#"+resultado_final).val(valor_final.toFixed(1));
     
     //alert(valor_final);
     valor_aprobacion = valor_final*vponcat;

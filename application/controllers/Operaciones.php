@@ -249,6 +249,8 @@ class Operaciones extends CI_Controller {
             $fecha_nacimiento = date("Y-m-d", strtotime($this->input->post('fecha_nacimiento')));
             $update_persona = array(
                 'nombre' => $this->input->post('nombre'),
+                'paterno' => $this->input->post('paterno'),
+                'materno' => $this->input->post('materno'),
                 'rut' => $this->input->post('rut'),
                 'fecha_nacimiento' => $fecha_nacimiento,
                 'direccion' => $this->input->post('direccion'),
@@ -257,7 +259,7 @@ class Operaciones extends CI_Controller {
                 'fono_fijo' => $this->input->post('fijo'),
                 'edo_civil' => $edo_civil,
                 'afp' => $this->input->post('afp'),
-                'salud' => $this->input->post('salud'),
+                'salud' => $this->input->post('salud')
             );
             $this->MyModel->agregar_model('personas',$update_persona,'id_persona',$this->input->post('id_persona'));
             $motivo = $this->input->post('motivo_contrato');

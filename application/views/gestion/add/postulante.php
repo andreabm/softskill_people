@@ -53,6 +53,27 @@
               </div>  
               
                 <div class="row verificar">                
+                  <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Nombres</label>
+                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Apellido Paterno</label>
+                            <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Apellido Materno</label>
+                            <input class="form-control" type="text" name="materno" id="materno" placeholder="Apellido Materno" />
+                        </div>
+                    </div>
+                </div>
+                    
+                <div class="row verificar">                
                 
                 <div class="col-md-3">
                       <div class="form-group">
@@ -67,14 +88,7 @@
                         <!-- /.input group -->
                       </div>
                     </div>
-                    
-                    <div class="col-md-3 ">
-                        <div class="form-group">
-                            <label>Nombre</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" />
-                        </div>
-                    </div>
-                    
+                                        
                     <div class="col-md-3 ">
                         <div class="form-group">
                             <label>Edad</label>

@@ -9,9 +9,7 @@
     <!-- Main content -->
     <section class="content">
     <br />
-    <?php
-  echo form_open('Gestion/postulante_prueba');
-  ?>
+    <?php echo form_open('Gestion/postulante_prueba');?>
       <div class="row">
         <div class="col-xs-12">
             <div class="box box-success">

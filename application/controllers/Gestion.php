@@ -113,7 +113,10 @@ class Gestion extends CI_Controller {
             $fecha_entrevista = date("Y-m-d", strtotime($fecha_entrevista));
             $fecha_nacimiento = date("Y-m-d", strtotime($fecha_nacimiento));
             $email = $this->input->post('email');
-            
+                        
+            $paterno = $this->input->post('paterno');
+            $materno = $this->input->post('materno');
+
             $espera = $this->input->post('espera');
             $valora = $this->input->post('valora');
             $condiciones = $this->input->post('condiciones');
@@ -135,7 +138,9 @@ class Gestion extends CI_Controller {
                 'enfermedad' => $enfermedad,
                 'contacto_familiar' => $familiar,
                 'email' => $email,
-                'edad' => $edad
+                'edad' => $edad,
+                'paterno' => $paterno,
+                'materno' => $materno
             ); 
             $nuevo_postulante = array(
                 'rut' => $rut,

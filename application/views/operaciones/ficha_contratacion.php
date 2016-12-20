@@ -10,6 +10,22 @@
     ?>
     <section class="content">
         <br />
+
+          <div class="row">
+            <div class="col-xs-8">
+                <div class="alert alert-danger alert-dismissible" id="alerta" style="display: none;">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Atenci&oacute;n!</strong> El Rut ya se encuentra ingresado anteriormente.
+                </div>
+            </div><br />
+            <div class="col-xs-8">
+                <div class="alert alert-danger alert-dismissible" id="alerta_rut" style="display: none;">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Atenci&oacute;n!</strong> El Rut es Incorrecto. Favor validar.
+                </div>
+            </div>            
+          </div>
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-info">
@@ -25,14 +41,28 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Nombre Completo</label>                                   
+                                    <label>Nombres</label>                                   
                                     <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $ejecutivo[0]['nombre'] ?>"/>                           
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Apellido Paterno</label>                                   
+                                    <input class="form-control" type="text" name="paterno" id="paterno" value="<?php echo $ejecutivo[0]['paterno'] ?>"/>                           
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Apellido Materno</label>                                   
+                                    <input class="form-control" type="text" name="materno" id="materno" value="<?php echo $ejecutivo[0]['materno'] ?>"/>                           
+                                </div>
+                            </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -98,7 +128,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Con Hijos</label>
-                                    <input class="form-control" type="text" name="con_hijos" id="con_hijos" value="<?php if($ejecutivo[0]['num_hijos']>0){  echo "X";}else{ echo " ";} ?>"/>
+                                    <input class="form-control" type="text" name="con_hijos" id="con_hijos" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{ echo "0";} ?>"/>
                                 </div>
                             </div>
                         </div>
@@ -225,14 +255,14 @@
                                 <span class="input-group-addon">
                                       <input type="radio" name="motivo_contrato" value="cargo_nuevo" <?php if ($motivo_contrato == 'cargo_nuevo') { echo 'checked' ;} ?>> Cargo nuevo (especif&iacute;que):
                                     </span>
-                                <input type="text" class="form-control" name="cargo_nuevo" <?php if ($motivo_contrato == 'cargo_nuevo') { echo 'value = "'.$obs.'"' ;} ?>">
+                                <input type="text" class="form-control" name="cargo_nuevo" <?php if($motivo_contrato=='cargo_nuevo') { echo 'value = "'.$obs.'"';} ?>>
                               </div>
                                 <!-- /input-group -->
                             </div>
                         </div>
                         
                        
-                    </div>
+                    
                     <div class="row">
                     <div class="col-md-3"> <h4>Nivel de aprobacion</h4></div>
                     </div>
@@ -262,13 +292,14 @@
                         </div>
                     </div>
                     </div>
-                </div>
+                
                 <div class="row">
                 <div class="col-md-10"></div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-info pull-right">Guardar</button>
                 </div>       
                 </div>
+
             </div>
         </div>
     </section>
@@ -284,10 +315,55 @@ $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
     });
+$('#rut').Rut({
+  on_error: function(){ 
+    $('#alerta_rut').fadeIn();
+    $('.verificar').fadeOut();
+    setTimeout(function(){
+        $("#alerta_rut").fadeOut(2000);},3000);
+    },
+  format_on: 'keyup'
+});
 </script>
 <script>
   $(function () {
     //Initialize Select2 Elements
     $(".select2").select2();
   });
+
+  function validar_rut(event){
+    event.preventDefault();
+    var edValue = document.getElementById("rut");
+    var rut = edValue.value;    
+    
+    var muestra = document.getElementById("muestra");
+    //muestra.innerText = "Campo rut ingresado: "+rut;
+        
+    var respuesta = document.getElementById("respuesta");
+    $.ajax({
+          url:"<?php echo base_url('index.php/gestion/valida_rut')?>",
+          type: 'POST',
+          data: {rut:rut},
+          success: function(data){
+            
+            console.debug(data);
+            data  = JSON.parse(data);          
+            
+            if (data.existe=='SI'){
+                $('.verificar').hide();
+                $('#alerta').fadeIn();
+                setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
+                return false;
+            } else {                
+                $('.verificar').fadeIn();
+                //respuesta.innerText = "Exito";
+            }            
+            
+          },
+          error: function(e) {
+            alert('error');
+            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
+    });
+}
 </script>

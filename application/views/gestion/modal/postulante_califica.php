@@ -1,5 +1,12 @@
 <div class="row">
 
+    <?php 
+    /*
+    echo '<pre>';
+        print_r($areas);
+    echo '</pre>';
+    */
+    ?>
 
     <div class="col-xs-8">
         <div class="alert alert-danger alert-dismissible" id="alerta_rut" style="display: none;">
@@ -29,7 +36,7 @@
         <label>Area</label>
         <select class="form-control" name="area" id="area">
         <?php foreach($areas as $a){?>         
-            <option value="<?php echo $a['id_area'] ?>"><?php echo $a['area'] ?></option>
+            <option value="<?php echo $a['id_area'];?>"><?php echo $a['area'] ?></option>
         <?php }?>
         </select> 
     </div>
@@ -57,6 +64,32 @@
     <?php echo form_hidden('id_cargo',$postulante[0]['id_cargo']) ?>
 </div>
 <script>
+
+ $( "#area" ).change(function() {
+    //alert($('#producto').val());
+    cargar_carteras();
+});
+function cargar_carteras(){    
+    $.ajax({
+      url:"<?php echo base_url('/index.php/index/cargar_carteras')?>",
+      type:'POST',
+      data: {area:$('#area').val()},
+      success: function(data) {        
+      options_p = "<option selected>Seleccione area</option>";
+        data = JSON.parse(data);
+        //console.debug(data);
+        $.each(data.carteras,function(i,v){
+             options_p +="<option value='"+v.id_cartera+"'>"+v.cartera+"</option>";
+            
+        });
+        $("#cartera").html(options_p);
+      },
+      error: function(e) {
+        console.debug('error');
+      }
+   }); 
+}
+
 $('#califica').change(function(){
    if ($(this).val() == '1') {
         $('#div_motivo_no_califica').hide();
@@ -64,5 +97,4 @@ $('#califica').change(function(){
         $('#div_motivo_no_califica').show();
     }
 });
-
 </script>

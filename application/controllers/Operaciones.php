@@ -222,22 +222,36 @@ class Operaciones extends CI_Controller {
             $id_ejecutivo = $this->input->post('id_ejecutivo');
         }
         $data['id_ejecutivo'] = $id_ejecutivo;
+
         $this->db->from('postulantes');
-        $this->db->join('personas','personas.rut = postulantes.rut','left');
+        $this->db->join('personas','personas.rut = postulantes.rut');
+        $this->db->join('contratados','contratados.rut = postulantes.rut','left');
         $this->db->join('areas','areas.id_area= postulantes.id_area','left');
         $this->db->join('pms','pms.id_area= areas.id_area','left');
         $this->db->join('sucursales','sucursales.id_sucursal = postulantes.sucursal_id','left');
         $this->db->join('turnos_postulantes','turnos_postulantes.id_postulante = postulantes.id_postulante','left');
-        $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno','left');   
-        $this->db->join('contratados','contratados.rut = postulantes.rut','left');
+        $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno','left');
         $this->db->where('postulantes.id_postulante = '.$id_ejecutivo);
         $query = $this->db->get();
         $ejecutivo = $query->result_array();
-                
+        
+        echo '<br/>';
+        /*
+        echo '<pre>';
+        print_r($ejecutivo);
+        echo '</pre>';
+        */
+
+        //mostrar query      
+        //echo $this->db->last_query();        
+
         $data['ejecutivo'] = $ejecutivo;
         
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
         $data['turnos'] = $turnos;
+
+        $sucursales = $this->MyModel->buscar_select('sucursales','id_sucursal','sucursal');
+        $data['sucursales'] = $sucursales;
         
         if ($this->input->post('nombre')) {
             $es_soltero = $this->input->post('soltero');
@@ -259,7 +273,7 @@ class Operaciones extends CI_Controller {
                 'fono_fijo' => $this->input->post('fijo'),
                 'edo_civil' => $edo_civil,
                 'afp' => $this->input->post('afp'),
-                'salud' => $this->input->post('salud')
+                'salud' => $this->input->post('salud'),
             );
             $this->MyModel->agregar_model('personas',$update_persona,'id_persona',$this->input->post('id_persona'));
             $motivo = $this->input->post('motivo_contrato');
@@ -296,7 +310,7 @@ class Operaciones extends CI_Controller {
         $this->load->view('common/footer');
     }
 
-    function imprimir_ficha($id_ejecutivo){        
+    function imprimir_ficha($id_ejecutivo){
         $data['id_ejecutivo'] = $id_ejecutivo;
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');
@@ -308,10 +322,14 @@ class Operaciones extends CI_Controller {
         $this->db->join('contratados','contratados.rut = postulantes.rut','left');
         $this->db->where('postulantes.id_postulante = '.$id_ejecutivo);
         $query = $this->db->get();
+
+        //imprime query
+        //echo $this->db->last_query();
+
         $ejecutivo = $query->result_array();
                 
         $data['ejecutivo'] = $ejecutivo;
-        
+
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
         $data['turnos'] = $turnos;
         //importante el slash del final o no funcionará correctamente
@@ -324,6 +342,7 @@ class Operaciones extends CI_Controller {
         {
             $this->show();
         }
+        
     }
      public function show()
     {
@@ -582,7 +601,108 @@ class Operaciones extends CI_Controller {
         }      
                  
     }
-    
-    
+
+    public function pms(){        
+        $this->db->from('pms');
+        $this->db->join('areas','areas.id_area = pms.id_area');      
+        $query = $this->db->get();
+        $pms = $query->result_array();
+        $data['pms'] = $pms;
+        $this->load->view('common/header');
+        $this->load->view('operaciones/pms',$data);
+        $this->load->view('common/footer');
+    }
+        public function agregar_pms(){
+            $areas = $this->MyModel->buscar_select('areas','id_area','area');      
+            $data['areas'] = $areas;
+
+            if($this->input->post('nombre_pm')) {
+                $nombre = $this->input->post('nombre_pm');
+                $id_area = $this->input->post('id_area');
+
+                 $nuevo_pm = array(
+                        'nombre_pm' => $nombre,
+                        'id_area' => $id_area
+                    );   
+
+                $this->db->insert('pms', $nuevo_pm);
+                redirect(base_url("index.php/Operaciones/pms"));
+            }
+            $this->load->view('common/header');
+            $this->load->view('operaciones/add/pms',$data);
+            $this->load->view('common/footer');
+        }
+        public function editar_pm($id_pms){ 
+            if(empty($id_pms)){
+               $id_pms = $this->input->post('id_postulante');
+            }
+            $areas = $this->MyModel->buscar_select('areas','id_area','area');      
+            $data['areas'] = $areas;
+            //consulto por pm
+            $this->db->from('pms');
+            $this->db->where('pms.id_pm = '.$id_pms);
+        
+            $query = $this->db->get();
+            $pm = $query->result_array();
+            $data['pm'] = $pm;
+
+            if($this->input->post('nombre_pm')) {
+                $nombre = $this->input->post('nombre_pm');
+                $id_area = $this->input->post('id_area');
+                 $actualiza_pm = array(
+                        'nombre_pm' => $nombre,
+                        'id_area' => $id_area
+                    );
+                print_r($actualiza_pm);
+                $this->MyModel->agregar_model('pms',$actualiza_pm,'id_pm',$this->input->post('id_pm'));
+                
+                redirect(base_url("index.php/Operaciones/pms"));
+            }
+
+            $this->load->view('common/header');
+            $this->load->view('operaciones/edit/pms',$data);
+            $this->load->view('common/footer');
+        }
+        public function sucursales(){        
+        $this->db->from('sucursales');      
+        $query = $this->db->get();
+        $sucursales = $query->result_array();
+        $data['sucursales'] = $sucursales;
+        $this->load->view('common/header');
+        $this->load->view('operaciones/sucursales',$data);
+        $this->load->view('common/footer');
+    }
+        public function agregar_sucursal(){
+            if($this->input->post('nombre')) {
+                $nombre = $this->input->post('nombre');
+                $nuevo_sucursal = array('sucursal' => $nombre);   
+                $this->db->insert('sucursales', $nuevo_sucursal);
+                redirect(base_url("index.php/Operaciones/sucursales"));
+            }
+            $this->load->view('common/header');
+            $this->load->view('operaciones/add/sucursales');
+            $this->load->view('common/footer');
+        }
+        public function editar_sucursal($id_sucursal){ 
+            if(empty($id_sucursal)){
+               $id_sucursal = $this->input->post('id_sucursal');
+            }
+            //consulto por pm
+            $this->db->from('sucursales');
+            $this->db->where('sucursales.id_sucursal = '.$id_sucursal);        
+            $query = $this->db->get();
+            $sucursales = $query->result_array();
+            $data['sucursales'] = $sucursales;
+
+            if($this->input->post('nombre')) {
+                 $nombre = $this->input->post('nombre');
+                 $actualiza_sucursales = array('sucursal' => $nombre);
+                 $this->MyModel->agregar_model('sucursales',$actualiza_sucursales,'id_sucursal',$this->input->post('id_sucursal'));                
+                redirect(base_url("index.php/Operaciones/sucursales"));
+            }
+            $this->load->view('common/header');
+            $this->load->view('operaciones/edit/sucursales',$data);
+            $this->load->view('common/footer');
+        }
 }
 ?>

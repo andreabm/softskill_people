@@ -182,7 +182,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Departamento (&Aacute;rea de Apoyo)</label>
-                                    <input class="form-control" type="text" name="apoyo" id="apoyo" value="<?php echo $ejecutivo[0]['gerencia'] ?>"/>
+                                    <input class="form-control" type="text" name="apoyo" id="apoyo" value="<?php if(!empty($ejecutivo[0]['gerencia'])){echo $ejecutivo[0]['gerencia'];}else{echo '&nbsp';}?>"/>
                                 </div>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                                 <div class="form-group">
                                     <label>Horario de Trabajo</label>
                                     <?php
-                                    echo form_dropdown('turno_id',$turnos,$ejecutivo[0]['id_turno'],array('class' => 'form-control'));
+                                    echo form_dropdown('turno_id',$turnos,$ejecutivo[0]['id_sucursal'],array('class' => 'form-control'));
                                     ?>
         
                                 </div>
@@ -217,6 +217,17 @@
                                 <input class="form-control" type="text" name="sueldo_liquido" id="sueldo_liquido" value="<?php echo $ejecutivo[0]['sueldo_liquido'] ?>"/>
                             </div>
                         </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Sucursal</label>
+                                <?php
+                                    echo form_dropdown('turno_id',$sucursales,$ejecutivo[0]['id_turno'],array('class' => 'form-control'));
+                                    ?>
+                            </div>
+                        </div>
+
                         </div>
                         <div class="row">
                             <div class="col-md-3"> <h4>Motivo de la Contrataci&oacute;n:</h4></div>

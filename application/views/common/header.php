@@ -219,7 +219,7 @@
                 <li><a href="<?php echo base_url('/index.php/gestion/motivo_no_califica');?>"><i class="fa fa-circle-o"></i> Motivo No Califica</a></li>
               </ul>
             </li>
-            
+            <li><a href="<?php echo base_url('/index.php/gestion/exejecutivos');?>"><i class="fa fa-circle-o"></i> Ex Ejecutivos</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -279,12 +279,12 @@
                 <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/continuidad_laboral');?>"><i class="fa fa-circle-o"></i> Continuidad Laboral</a></li>
               </ul>
             </li>
+            <li><a href="<?php echo base_url('/index.php/operaciones/pms');?>"><i class="fa fa-circle-o"></i> PMS</a></li>
+            <li><a href="<?php echo base_url('/index.php/operaciones/sucursales');?>"><i class="fa fa-circle-o"></i> Sucursales</a></li>
           </ul>
         </li>
       </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
-    <!-- Content Wrapper. Contains page content -->
-
-   
+    <!-- Content Wrapper. Contains page content -->   

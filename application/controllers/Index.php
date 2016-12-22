@@ -28,6 +28,5 @@ class Index extends CI_Controller {
         $data['carteras'] = $carteras;
         print_r(json_encode($data));
     }
-
 }
 ?>

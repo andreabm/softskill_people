@@ -65,7 +65,7 @@ class Gestion extends CI_Controller {
         $data['fuentes'] = $fuentes;
         $data['hobbies'] = $hobbies;
         $data['factor'] = $factor;
-        if ($this->input->post('rut')) {
+        if($this->input->post('rut')) {
             $rut = $this->input->post('rut');
             $nombre = $this->input->post('nombre');
             $sexo = $this->input->post('sexo');
@@ -876,5 +876,6 @@ class Gestion extends CI_Controller {
         $this->load->view('gestion/modal/mostrar_factor',$data);
     }
     
+
 }
 ?>

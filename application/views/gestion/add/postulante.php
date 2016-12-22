@@ -9,6 +9,15 @@
     <!-- Main content -->
     <section class="content">
     <br />
+    <script type="text/javascript">
+$(document).ready(function() {
+    $("form").keypress(function(e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+});
+    </script>
     <?php
   echo form_open('Gestion/agregar_postulante');
   ?>

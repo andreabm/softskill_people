@@ -7,7 +7,8 @@
       </h1>
     </section>
     <!-- Main content -->
-    <section class="content">
+    <section class="content"> 
+
     <br />
       <div class="row">
         <div class="col-xs-12">

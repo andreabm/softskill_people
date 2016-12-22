@@ -8,6 +8,15 @@
     </section>
     <!-- Main content -->
     <section class="content">
+
+      <?php 
+      /*
+      echo '<pre>';
+      print_r($postulante);
+      echo '</pre>';
+      */
+      ?>
+
     <br />
     <?php  
   echo form_open('Gestion/editar_postulante');

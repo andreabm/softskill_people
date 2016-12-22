@@ -4,7 +4,7 @@
  echo '<pre>';
  print_r($ejecutivo);
  echo '</pre>';
- */
+*/
  ?>
 
  <div class="content-wrapper">
@@ -29,17 +29,17 @@
         <th>Nombres</th>
     </tr>
     <tr>
-        <td><?php echo $ejecutivo[0]['paterno'] ?></td>
-        <td><?php echo $ejecutivo[0]['materno'] ?></td>
-        <td><?php echo $ejecutivo[0]['nombre'] ?></td>
+        <td><?php if(!empty($ejecutivo[0]['paterno'])){echo $ejecutivo[0]['paterno'];} ?></td>
+        <td><?php if(!empty($ejecutivo[0]['materno'])){echo $ejecutivo[0]['materno'];} ?></td>
+        <td><?php if(!empty($ejecutivo[0]['nombre'])){echo $ejecutivo[0]['nombre'];} ?></td>
     </tr>
    </table>
     <table style="width:100%;">  
     <tr>
         <th>Rut</th>
-        <td><?php echo $ejecutivo[0]['rut'] ?></td>
+        <td><?php if(!empty($ejecutivo[0]['rut'])){echo $ejecutivo[0]['rut'];}?></td>
         <th>Fecha nacimiento</th>
-        <td><?php echo $ejecutivo[0]['fecha_nacimiento'];?></td>
+        <td><?php if(!empty($ejecutivo[0]['fecha_nacimiento'])){echo $ejecutivo[0]['fecha_nacimiento'];}?></td>
     </tr>
    </table>
 
@@ -49,8 +49,8 @@
         <th>Comuna/Ciudad</th>
     </tr>
     <tr>
-        <td><?php echo $ejecutivo[0]['direccion'] ?></td>
-        <td><?php echo $ejecutivo[0]['comuna'] ?></td>
+        <td><?php if(!empty($ejecutivo[0]['direccion'])){echo $ejecutivo[0]['direccion'];}?></td>
+        <td><?php if(!empty($ejecutivo[0]['comuna'])){echo $ejecutivo[0]['comuna'];}?></td>
     </tr>
     <tr>
         <td colspan="2">&nbsp;</td>
@@ -61,9 +61,9 @@
     <tr>
         <td>Tel&eacute;fonos</td>
         <td>Casa</td>
-        <td><input class="form-control" type="text" name="tcasa" id="tcasa" value="<?php echo $ejecutivo[0]['fono_fijo'] ?>"/></td>
+        <td><input class="form-control" type="text" name="tcasa" id="tcasa" value="<?php if(!empty($ejecutivo[0]['fono_fijo'])){echo $ejecutivo[0]['fono_fijo'];}?>"/></td>
         <td>Celular</td>
-        <td><input class="form-control" type="text" name="tcelular" id="tcelular" value="<?php echo $ejecutivo[0]['fono_movil'] ?>"/></td>
+        <td><input class="form-control" type="text" name="tcelular" id="tcelular" value="<?php if(!empty($ejecutivo[0]['fono_movil'])){echo $ejecutivo[0]['fono_movil'];}?>"/></td>
     </tr>
     </table>
 
@@ -197,7 +197,7 @@
       <tr>
         <td colspan="2">&nbsp;</td>     
       </tr>
-    </table><br><br>
+    </table><br/><br/><br/>
 
    <table style="width:100%;" cellspacing="0">
     <tr>    

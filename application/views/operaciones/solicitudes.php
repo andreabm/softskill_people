@@ -54,6 +54,7 @@
                   <th>Cantidad Entregada</th>
                   <th>Prioridad</th>
                   <th>Observacion</th>
+                  <th>Validado</th>                  
                   <th>Opciones</th> <!-- Mostrar solo si es coordinador operativo -->
                 </tr>
                 </thead>
@@ -71,7 +72,8 @@
                             }?>
                             <td><?php echo $s['cantidad_entregada']?></td>
                             <td><?php echo $s['prioridad']?></td>
-                            <td><?php echo $s['observacion']?></td>
+                            <td><?php echo $s['observacion']?></td>  
+                            <td><?php echo $s['validado']?></td>                            
                             <td><a class="btn btn-xs btn-success" href="#" data-toggle="modal" data-target="#validarSolicitud" onclick = "validarSolicitud(<?php echo $s['id_solicitud'];  ?>)">Validar</a></td>
                         </tr>
                     <?php }
@@ -112,7 +114,7 @@
         
         <input type="hidden" id="rechazado" name="rechazado" value="" />        
         <button type="submit" class="btn btn-outline" onclick="rechazar();">Rechazar</button>        
-        <button type="submit" class="btn btn-outline">Validar</button>
+        <button type="submit" class="btn btn-outline" onclick="validar();">Validar</button>
         
       </div>
       </form>
@@ -132,6 +134,9 @@ $(document).ready(function(){
 });
 function rechazar(){
     $('#rechazado').val('0');    
+}
+function validar(){
+    $('#rechazado').val('1');    
 }
 function validarSolicitud(id_solicitud){
     $.ajax({

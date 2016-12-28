@@ -505,8 +505,7 @@ class Gestion extends CI_Controller {
                );
                $this->db->insert('resultado_competencias', $nuevo_resultado);
             }
-            redirect(base_url().'index.php/Gestion/postulantes');
-            
+            redirect(base_url().'index.php/Gestion/postulantes');            
         }
         $this->load->view('common/header');
         $this->load->view('gestion/edit/postulante_prueba',$data);
@@ -539,7 +538,12 @@ class Gestion extends CI_Controller {
         $query = $this->db->get();
         $postulante = $query->result_array();       
         $data['postulante']=$postulante;
-        
+
+        $this->db->from('sucursales');
+        $query = $this->db->get();
+        $sucu = $query->result_array();       
+        $data['sucu']=$sucu;
+
         $this->load->view('gestion/modal/postulante_califica',$data);
     }
     public function eliminar_postulante(){
@@ -574,10 +578,12 @@ class Gestion extends CI_Controller {
         $nombre = $this->input->post('nombre');
         $rut = $this->input->post('rut');
         $email = $this->input->post('email');
+        $id_sucursal = $this->input->post('id_sucursal');
         
         $update_postulante = array(
                 'id_cartera' => $cartera,
                 'id_area' => $area,
+                'sucursal_id' => $id_sucursal
             );
         if ($califica == 0) {
             $update_postulante['id_motivo_no_califica'] = $this->input->post('id_motivo_no_califica');

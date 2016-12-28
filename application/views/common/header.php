@@ -255,6 +255,9 @@
             <li ><a href="<?php echo base_url('/index.php/operaciones/solicitudes');?>"><i class="fa fa-circle-o"></i> Solicitudes</a></li>
             <li><a href="<?php echo base_url('/index.php/operaciones/ejecutivos');?>"><i class="fa fa-circle-o"></i> Validar Solicitudes</a></li>
             <li><a href="<?php echo base_url('/index.php/operaciones/ejecutivos');?>"><i class="fa fa-circle-o"></i> Ejecutivos</a></li>
+
+            <li><a href="<?php echo base_url('/index.php/operaciones/inducciones');?>"><i class="fa fa-circle-o"></i> Ev. Inducci&oacute;n</a></li>
+
             <li>
               <a href="#"><i class="fa fa-circle-o"></i> Asistencia
                 <span class="pull-right-container">
@@ -274,6 +277,7 @@
                 </span>
               </a>
               <ul class="treeview-menu">
+                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/induccion');?>"><i class="fa fa-circle-o"></i>Inducci&oacute;n</a></li>
                 <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/escuchas');?>"><i class="fa fa-circle-o"></i>Escuchas </a></li>
                 <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/desempeño');?>"><i class="fa fa-circle-o"></i>Desempe&ntilde;o </a></li>
                 <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/continuidad_laboral');?>"><i class="fa fa-circle-o"></i> Continuidad Laboral</a></li>

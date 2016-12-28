@@ -218,30 +218,28 @@ class Operaciones extends CI_Controller {
     }
     
     public function ficha_contratacion($id_ejecutivo = null){
-        if (empty($id_ejecutivo)) {
+        if (empty($id_ejecutivo)){
             $id_ejecutivo = $this->input->post('id_ejecutivo');
         }
         $data['id_ejecutivo'] = $id_ejecutivo;
-
+        
+        $this->db->select('postulantes.id_postulante,postulantes.rut,postulantes.id_fuente,postulantes.referencia_empresa,postulantes.nombre_referencia,postulantes.contacto_referencia,postulantes.manejo_pc,postulantes.acepta_condicion,postulantes.pretension_renta,postulantes.fecha_entrevista,postulantes.prefiltro,postulantes.evaluador_id,postulantes.sucursal_id,postulantes.id_solicitud,personas.id_persona,personas.nombre,personas.fecha_nacimiento,personas.sexo,personas.edo_civil,personas.direccion,personas.comuna,personas.fono_movil,personas.fono_fijo,personas.nacionalidad,personas.num_hijos,personas.edad_hijos,personas.discapacidad,personas.enfermedad,personas.nombre_familiar,personas.contacto_familiar,personas.clasificado,personas.afp,personas.salud,personas.email,personas.edad,personas.paterno,personas.materno,areas.area,areas.gerencia,areas.id_sucursal,pms.id_pm,pms.nombre_pm,pms.id_area,sucursales.id_sucursal,sucursales.sucursal,turnos_postulantes.id_postulante,turnos_postulantes.id_turno,turnos.id_turno,turnos.turno,contratados.id_contratado,contratados.fecha_ingreso,contratados.fecha_retiro,contratados.id_area,contratados.id_cartera,contratados.activo,contratados.cod_sap,contratados.id_turno,contratados.motivo_contrato,contratados.jefe_directo,contratados.encargado_area,contratados.coordinadora_operativa,contratados.gerente_adm,contratados.sueldo_liquido,contratados.id_cargo,contratados.ultima_asistencia,contratados.ultima_observacion_asistencia');
         $this->db->from('postulantes');
-        $this->db->join('personas','personas.rut = postulantes.rut');
-        $this->db->join('contratados','contratados.rut = postulantes.rut','left');
+        $this->db->join('personas','personas.rut = postulantes.rut');        
         $this->db->join('areas','areas.id_area= postulantes.id_area','left');
         $this->db->join('pms','pms.id_area= areas.id_area','left');
         $this->db->join('sucursales','sucursales.id_sucursal = postulantes.sucursal_id','left');
         $this->db->join('turnos_postulantes','turnos_postulantes.id_postulante = postulantes.id_postulante','left');
         $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno','left');
+        $this->db->join('contratados','contratados.rut = postulantes.rut','left');
         $this->db->where('postulantes.id_postulante = '.$id_ejecutivo);
         $query = $this->db->get();
         $ejecutivo = $query->result_array();
-        
-        echo '<br/>';
         /*
         echo '<pre>';
         print_r($ejecutivo);
         echo '</pre>';
         */
-
         //mostrar query      
         //echo $this->db->last_query();        
 
@@ -704,5 +702,116 @@ class Operaciones extends CI_Controller {
             $this->load->view('operaciones/edit/sucursales',$data);
             $this->load->view('common/footer');
         }
+        public function inducciones(){
+        $this->db->from('evaluacion_induccion');
+        $query = $this->db->get();
+        $inducciones = $query->result();
+        $data['inducciones'] = $inducciones;
+        $data['promedio'] = $this->db->query("SELECT SUM(peso) as promedio from evaluacion_induccion where activo='1'");
+
+        $this->load->view('common/header');
+        $this->load->view('operaciones/inducciones',$data);
+        $this->load->view('common/footer');
+        }
+        public function agregar_inducciones(){
+            $this->load->view('common/header');
+            $this->load->view('operaciones/add/inducciones');
+            $this->load->view('common/footer');
+        }
+        public function guardar_induccion(){
+            $evaluacion = $this->input->post('evaluacion');
+            $peso = $this->input->post('peso');
+            $activo = $this->input->post('activo');
+            $data = array('evaluacion' => $evaluacion, 'peso' => $peso,'activo' => $activo);        
+            $this->db->insert('evaluacion_induccion', $data);
+            redirect(base_url("index.php/operaciones/inducciones"));
+
+        }
+        public function editar_inducciones($id = null){
+
+        if ($this->input->post('inducciones')) {
+            $update_competencia = array(
+                'evaluacion' => $this->input->post('inducciones'),
+                'peso' => $this->input->post('peso_inducciones')
+            );
+            //actualizo evaluacion
+            $this->db->where('id_evaluacion_induccion',$this->input->post('id_inducciones'));
+            $this->db->update('evaluacion_induccion', $update_competencia); 
+            
+            //Elimino los items para volverlos a agregar
+            $this->db->delete('evaluacion_induccion_item', array('id_evaluacion_induccion' => $this->input->post('id_inducciones')));
+                   
+            $items = $this->input->post('item_opcion');
+            $activo = $this->input->post('activo');
+            $correcto = $this->input->post('correcto');
+            $id_item = $this->input->post('id_item');
+            $id_item = $this->input->post('id_item');
+            $tipo = $this->input->post('tipo');
+
+            $i_compara = 1;
+            foreach ($items as $key => $i){
+
+                if (!empty($i)){
+                    if($tipo =='T'){
+                        echo $radio_activo = '1';    
+                    }elseif($correcto == $i_compara){
+                        echo $radio_activo = '1';
+                    }else{
+                        echo $radio_activo = '0';
+                    }
+                    $nuevo_item_competencia = array(                        
+                        'id_evaluacion_induccion' => $this->input->post('id_inducciones'),
+                        'activo' => $activo[$key],
+                        'opcion' => $i,                        
+                        'correcto' => $radio_activo,
+                        'tipo' => $tipo
+                    );  
+                    $this->db->insert('evaluacion_induccion_item', $nuevo_item_competencia);                    
+                } 
+                
+                $i_compara = $i_compara + 1;
+            }
+            //$this->db->where('id_evaluacion_induccion_item', $id_item);
+            //$this->db->update('evaluacion_induccion_item', $nuevo_item_competencia);
+
+            //actualizo la que corresponde
+            $this->db->where('id_evaluacion_induccion',$this->input->post('id_inducciones'));        
+            $this->db->where('opcion',$correcto);
+            $update_correcto = array('correcto' => '1');
+            $this->db->update('evaluacion_induccion_item', $update_correcto);            
+                        
+            redirect(base_url("index.php/operaciones/inducciones"));
+        }
+        $this->db->select('evaluacion_induccion_item.id_evaluacion_induccion_item,evaluacion_induccion.id_evaluacion_induccion,evaluacion_induccion.evaluacion,evaluacion_induccion.peso,evaluacion_induccion.activo,evaluacion_induccion_item.opcion,evaluacion_induccion_item.correcto,evaluacion_induccion_item.activo,evaluacion_induccion_item.tipo');
+        $this->db->from('evaluacion_induccion');
+        $this->db->join('evaluacion_induccion_item','evaluacion_induccion.id_evaluacion_induccion = evaluacion_induccion_item.id_evaluacion_induccion','left');
+        $this->db->where('evaluacion_induccion.id_evaluacion_induccion = '.$id);
+        $query = $this->db->get();
+        $inducciones_item = $query->result_array();
+        $data['inducciones_item'] = $inducciones_item;
+
+        $data['id'] = $id;
+        $this->load->view('common/header');
+        $this->load->view('operaciones/edit/inducciones',$data);
+        $this->load->view('common/footer');
+    }
+
+        public function induccion(){        
+            $this->db->from('evaluacion_induccion');        
+            $query = $this->db->get();
+            $evaluacion = $query->result();
+            $data['evaluacion'] = $evaluacion;
+
+            $this->db->from('evaluacion_induccion_item');
+            $query = $this->db->get();
+            $data['evaluacion_items'] = $query->result();
+
+            $rut = $this->MyModel->buscar_select('postulantes','id_postulante','rut');
+            $data['rut'] = $rut;
+
+            $this->load->view('common/header');
+            $this->load->view('operaciones/induccion',$data);
+            $this->load->view('common/footer');
+    }        
 }
 ?>

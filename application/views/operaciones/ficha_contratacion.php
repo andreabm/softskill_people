@@ -9,8 +9,6 @@
     echo form_hidden('id_persona', $ejecutivo[0]['id_persona']);
     ?>
     <section class="content">
-        <br />
-
           <div class="row">
             <div class="col-xs-8">
                 <div class="alert alert-danger alert-dismissible" id="alerta" style="display: none;">
@@ -46,19 +44,19 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Nombres</label>                                   
-                                    <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $ejecutivo[0]['nombre'] ?>"/>                           
+                                    <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $ejecutivo[0]['nombre'] ?>" required/>                           
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Apellido Paterno</label>                                   
-                                    <input class="form-control" type="text" name="paterno" id="paterno" value="<?php echo $ejecutivo[0]['paterno'] ?>"/>                           
+                                    <input class="form-control" type="text" name="paterno" id="paterno" value="<?php echo $ejecutivo[0]['paterno'] ?>" required/>                           
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Apellido Materno</label>                                   
-                                    <input class="form-control" type="text" name="materno" id="materno" value="<?php echo $ejecutivo[0]['materno'] ?>"/>                           
+                                    <input class="form-control" type="text" name="materno" id="materno" value="<?php echo $ejecutivo[0]['materno'] ?>" required/>                           
                                 </div>
                             </div>
                         </div>
@@ -67,13 +65,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>R.U.T</label>
-                                    <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $ejecutivo[0]['rut'] ?>" />
+                                    <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $ejecutivo[0]['rut'] ?>" required/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Fecha de nacimiento</label>
-                                    <input class="form-control datepicker" type="text" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo $ejecutivo[0]['fecha_nacimiento'] ?>" />
+                                    <input class="form-control datepicker" type="text" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo $ejecutivo[0]['fecha_nacimiento'] ?>" required/>
                                 </div>
                             </div>
                         </div>
@@ -81,13 +79,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Direcci&oacute;n</label>
-                                    <input class="form-control" type="text" name="direccion" id="direccion" value="<?php echo $ejecutivo[0]['direccion'] ?>"/>
+                                    <input class="form-control" type="text" name="direccion" id="direccion" value="<?php echo $ejecutivo[0]['direccion'] ?>" required/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Comuna</label>
-                                    <input class="form-control" type="text" name="comuna" id="comuna" value="<?php echo $ejecutivo[0]['comuna'] ?>" />
+                                    <input class="form-control" type="text" name="comuna" id="comuna" value="<?php echo $ejecutivo[0]['comuna'] ?>" required/>
                                 </div>
                             </div>
                         </div>
@@ -98,13 +96,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>M&oacute;vil</label>
-                                    <input class="form-control" type="text" name="movil" id="movil" value="<?php echo $ejecutivo[0]['fono_movil'] ?>" />
+                                    <input class="form-control" type="text" name="movil" id="movil" value="<?php echo $ejecutivo[0]['fono_movil'] ?>" required/>
                                 </div>
                             </div>  
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Fijo</label>
-                                    <input class="form-control" type="text" name="fijo" id="fijo" value="<?php echo $ejecutivo[0]['fono_fijo'] ?>" />
+                                    <input class="form-control" type="text" name="fijo" id="fijo" value="<?php echo $ejecutivo[0]['fono_fijo'] ?>" required/>
                                 </div>
                             </div>                      
                         </div>
@@ -116,19 +114,19 @@
                                 <div class="form-group">
                               
                                     <label>Soltero</label>
-                                    <input class="form-control" type="text" name="soltero" id="soltero" value="<?php if($ejecutivo[0]['edo_civil']== 'Soltero'){  echo "X";}else{ echo " ";} ?>" />
+                                    <input class="form-control" type="text" name="soltero" id="soltero" value="<?php if($ejecutivo[0]['edo_civil']== 'Soltero'){  echo "X";}else{ echo " ";} ?>" required/>
                                 </div>
                             </div> 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Casado</label>
-                                    <input class="form-control" type="text" name="casado" id="casado" value="<?php if($ejecutivo[0]['edo_civil']== 'Casado'){  echo "X";}else{ echo " ";} ?>" />
+                                    <input class="form-control" type="text" name="casado" id="casado" value="<?php if($ejecutivo[0]['edo_civil']== 'Casado'){  echo "X";}else{ echo " ";} ?>" required/>
                                 </div>
                             </div> 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Con Hijos</label>
-                                    <input class="form-control" type="text" name="con_hijos" id="con_hijos" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{ echo "0";} ?>"/>
+                                    <input class="form-control" type="text" name="con_hijos" id="con_hijos" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{ echo "0";} ?>" required/>
                                 </div>
                             </div>
                         </div>
@@ -136,19 +134,19 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>AFP</label>
-                                    <input class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['afp'] ?>" />
+                                    <input class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['afp'] ?>" required/>
                                 </div>
                             </div> 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Sistema de Salud</label>
-                                    <input class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['salud'] ?>" />
+                                    <input class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['salud'] ?>" required/>
                                 </div>
                             </div> 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Fecha de Contrato</label>
-                                    <input class="form-control datepicker" type="text" name="fecha_contrato" id="fecha_contrato" value="<?php echo $ejecutivo[0]['fecha_ingreso'] ?>" />
+                                    <input class="form-control datepicker" type="text" name="fecha_contrato" id="fecha_contrato" value="<?php echo $ejecutivo[0]['fecha_ingreso'] ?>" required/>
                                 </div>
                             </div> 
                         </div>
@@ -156,13 +154,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>PM/ROL</label>
-                                    <input class="form-control" type="text" name="pm" id="pm" disabled value="<?php echo $ejecutivo[0]['nombre_pm'] ?>" />
+                                    <input class="form-control" type="text" name="pm" id="pm" disabled value="<?php echo $ejecutivo[0]['nombre_pm'] ?>" required/>
                                 </div>
                             </div> 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Industria</label>
-                                    <input class="form-control" type="text" name="centro_costo" disabled id="centro_costo" value="<?php echo $ejecutivo[0]['area'] ?>" />
+                                    <input class="form-control" type="text" name="centro_costo" disabled id="centro_costo" value="<?php echo $ejecutivo[0]['area'] ?>" required/>
                                 </div>
                             </div> 
                         </div>
@@ -170,19 +168,19 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>C&oacute;digo de Proyecto (COD SAP)</label>
-                                    <input class="form-control" type="text" name="sap" id="sap" value="<?php echo $ejecutivo[0]['cod_sap'] ?>"/>
+                                    <input class="form-control" type="text" name="sap" id="sap" value="<?php echo $ejecutivo[0]['cod_sap'] ?>" required/>
                                 </div>
                             </div> 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Direcci&oacute;n Sucursal</label>
-                                    <input class="form-control" type="text" name="sucursal" id="sucursal" disabled value="<?php echo $ejecutivo[0]['sucursal'] ?>" />
+                                    <input class="form-control" type="text" name="sucursal" id="sucursal" disabled value="<?php echo $ejecutivo[0]['sucursal'] ?>" required/>
                                 </div>
                             </div> 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Departamento (&Aacute;rea de Apoyo)</label>
-                                    <input class="form-control" type="text" name="apoyo" id="apoyo" value="<?php if(!empty($ejecutivo[0]['gerencia'])){echo $ejecutivo[0]['gerencia'];}else{echo '&nbsp';}?>"/>
+                                    <input class="form-control" type="text" name="apoyo" id="apoyo" value="<?php if(!empty($ejecutivo[0]['gerencia'])){echo $ejecutivo[0]['gerencia'];}else{echo '&nbsp';}?>" required/>
                                 </div>
                             </div>
                         </div>
@@ -200,31 +198,18 @@
                         <?php
                         if (!empty($ejecutivo[0]['motivo_contrato'])){
                             $motivo_contrato1 = explode(' ',$ejecutivo[0]['motivo_contrato'],2);
-                            //print_r($motivo_contrato1);
                             $motivo_contrato = $motivo_contrato1[0];
                             $obs = $motivo_contrato1[1];
                         } else {
                             $motivo_contrato = ''; 
                             $obs = '';
                         }
-                        
-                        
                         ?>
                         <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Sueldo Líquido</label>
-                                <input class="form-control" type="text" name="sueldo_liquido" id="sueldo_liquido" value="<?php echo $ejecutivo[0]['sueldo_liquido'] ?>"/>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Sucursal</label>
-                                <?php
-                                    echo form_dropdown('turno_id',$sucursales,$ejecutivo[0]['id_turno'],array('class' => 'form-control'));
-                                    ?>
+                                <input class="form-control" type="text" name="sueldo_liquido" id="sueldo_liquido" value="<?php echo $ejecutivo[0]['sueldo_liquido'] ?>" required/>
                             </div>
                         </div>
 
@@ -252,7 +237,7 @@
                               </div><br />
                               <div class="input-group">
                                     <span class="input-group-addon" >
-                                      <input type="radio" name="motivo_contrato"  value="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'checked' ;} ?>> Aumento de Dotaci&oacute;n:
+                                      <input type="radio" name="motivo_contrato" value="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'checked' ;} ?>> Aumento de Dotaci&oacute;n:
                                     </span>
                                 <input type="text" class="form-control" name="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'value = "'.$obs.'"' ;} ?>>
                               </div><br />

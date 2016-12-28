@@ -42,14 +42,19 @@
     </div>
     <div class="col-md-4">
         <label>Cartera</label>
+
+        <input type="hidden" name="sucu" id="sucu" class="form-control">
+        
         <select class="form-control" name="cartera" id="cartera">
         <?php foreach($carteras as $a){?>         
             <option value="<?php echo $a['id_cartera'] ?>"><?php echo $a['cartera'] ?></option>
         <?php }?>
         </select> 
     </div>
+
     <div class="col-md-4">
         <label>Califica</label>
+        <span id="suc"></span>
         <select class="form-control" name="califica" id="califica">   
             <option value="1" selected >Califica</option>
              <option value="0">No Califica</option>        
@@ -64,9 +69,15 @@
     <?php echo form_hidden('id_cargo',$postulante[0]['id_cargo']) ?>
 </div>
 <script>
+$('#califica').change(function(){
+   if ($(this).val() == '1') {
+        $('#div_motivo_no_califica').hide();
+    } else {
+        $('#div_motivo_no_califica').show();
+    }
+});
 
  $( "#area" ).change(function() {
-    //alert($('#producto').val());
     cargar_carteras();
 });
 function cargar_carteras(){    
@@ -76,25 +87,25 @@ function cargar_carteras(){
       data: {area:$('#area').val()},
       success: function(data) {        
       options_p = "<option selected>Seleccione area</option>";
+      options_s = "";
         data = JSON.parse(data);
         //console.debug(data);
         $.each(data.carteras,function(i,v){
-             options_p +="<option value='"+v.id_cartera+"'>"+v.cartera+"</option>";
-            
+             options_p +="<option value='"+v.id_cartera+"'>"+v.cartera+"</option>";            
         });
         $("#cartera").html(options_p);
+        $.each(data.sucursales,function(i,v){
+            $('#sucu').val(v.id_sucursal);
+             options_s +="<input type='hidden' name='id_sucursal' id='id_sucursal' value='"+v.id_sucursal+"' >";            
+        });
+        $("#suc").html(options_s);
       },
+      
       error: function(e) {
         console.debug('error');
       }
    }); 
 }
 
-$('#califica').change(function(){
-   if ($(this).val() == '1') {
-        $('#div_motivo_no_califica').hide();
-    } else {
-        $('#div_motivo_no_califica').show();
-    }
-});
+
 </script>

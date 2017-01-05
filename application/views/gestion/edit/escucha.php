@@ -77,12 +77,7 @@
                         <input class="form-control" type="text" name="item_aspectos[]" class="item_aspectos" value="<?php echo $c['item_aspecto'] ?>"><br />
                     </div>
                     </div>  
-                    <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Peso<?php echo $i?></label>
-                        <input class="form-control" type="text" name="peso_item[]" class="peso_item" value=""><br/>
-                    </div>
-                    </div>
+                    
                     <div class="col-md-3">
                     <div class="form-group">
                         <label>Ponderacion<?php echo $i?></label>
@@ -127,10 +122,7 @@
         form += '<div class="form-group">';
         form+= '<label>Item'+(contador)+'</label><input class="form-control" type="text" name="item_aspectos[]"><br />';
         form += '</div></div>';
-        form += '<div class="col-md-3">';
-        form += '<div class="form-group">';
-        form+= '<label>Peso'+(contador)+'</label><input class="form-control" type="text" name="peso_item[]"><b><br/>';
-        form += '</div></div>';
+        
         form += '<div class="col-md-3">';
         form += '<div class="form-group">';
         form += '<label>Ponderacion'+(contador)+'</label><input class="form-control" type="text" name="ponderacion_item[]"><b><br/>'

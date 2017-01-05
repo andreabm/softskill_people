@@ -48,7 +48,24 @@
     </section>
 
 </div>
-
+<div class="modal modal-success fade" id="verPostulante">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Postulante</h4>
+              </div>
+      <div class="modal-body" id="verPostulanteBody">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+     
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script>
   $(function () {
     var date = new Date();
@@ -68,9 +85,25 @@
         week: 'Semana',
         day: 'Dia'
       },
+	  
       events: <?php echo json_encode($array_entrevistas)?>,
       editable: false,
       droppable: false, 
+	  eventClick: function(calEvent, jsEvent, view) {
+		$.ajax({
+          url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
+          type: 'POST',
+          data: {id_postulante:calEvent.id},
+          success: function(data) {
+			$('#verPostulanteBody').html(data);
+          },
+          error: function(e) {
+            $('#verPostulanteBody').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
+		  
+		});
+        $("#verPostulante").modal('show'); 
+    }
     });
   });
 </script>

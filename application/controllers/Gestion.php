@@ -753,6 +753,7 @@ class Gestion extends CI_Controller {
         foreach($entrevistas as $a) {
             $array_entrevistas[$i]['title'] = $a['nombre'].'-'.$a['hora'];
             $array_entrevistas[$i]['start'] = $a['fecha'];
+			$array_entrevistas[$i]['id'] = $a['id_postulante'];
             $array_entrevistas[$i]['url'] = '';
             $i++;
         }

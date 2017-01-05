@@ -1,5 +1,23 @@
 <table class="table">
 <?php //var_dump($postulante); ?>
+	<tr>
+		<th>STATUS</TH>
+		<td>
+		<?php 
+		if (!empty($postulante[0]['id_contratado'])) {
+			if (empty($postulante[0]['fecha_retiro'])) {
+				echo 'Contratado. Fecha de ingreso: '.$postulante[0]['fecha_ingreso'];
+			} else {
+				echo 'Persona desvinculada. Fecha de ingreso: '.$postulante[0]['fecha_ingreso'].' fecha de retiro: '.$postulante[0]['fecha_retiro'].'
+				por motivo: '.$postulante[0]['motivo_retiro'];
+			}
+			
+		} else {
+			echo 'Postulante registrado no contratado. ';
+		}
+		?>
+		</td>
+	</tr>
     <tr>
         <th>RUT</th>
         <td><?php echo $postulante[0]['rut']?></td>

@@ -6,6 +6,54 @@
         <small> de Inducci&oacute;n</small>
       </h1>
     </section>
+
+    <script>
+    //paso a paso ini
+$(document).ready(function () {
+  var navListItems = $('div.setup-panel div a'),
+          allWells = $('.setup-content'),
+          allNextBtn = $('.nextBtn');
+
+  allWells.hide();
+
+  navListItems.click(function (e) {
+      e.preventDefault();
+      var $target = $($(this).attr('href')),
+              $item = $(this);
+
+      if (!$item.hasClass('disabled')) {
+          navListItems.removeClass('btn-primary').addClass('btn-default');
+          $item.addClass('btn-primary');
+          allWells.hide();
+          $target.show();
+          $target.find('input:eq(0)').focus();
+      }
+  });
+
+  allNextBtn.click(function(){
+      var curStep = $(this).closest(".setup-content"),
+          curStepBtn = curStep.attr("id"),
+          nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+          curInputs = curStep.find("input[type='text'],input[type='url']"),
+          isValid = true;
+
+      $(".form-group").removeClass("has-error");
+      for(var i=0; i<curInputs.length; i++){
+          if (!curInputs[i].validity.valid){
+              isValid = false;
+              $(curInputs[i]).closest(".form-group").addClass("has-error");
+          }
+      }
+
+      if (isValid)
+          nextStepWizard.removeAttr('disabled').trigger('click');
+  });
+
+  $('div.setup-panel div a.btn-primary').trigger('click');
+});
+//paso a paso fin
+    </script>
+
     <!-- Main content -->
     <section class="content">
 
@@ -25,8 +73,9 @@
 
     <?php 
         $attributes = array('id' => 'form1');
-        echo form_open('operaciones/guardar_einduccion', $attributes);
-        ?><br />
+        echo form_open('operaciones/update_einduccion', $attributes);
+        ?>
+        <input class="form-control" type="hidden" name="id" id="id" value="<?php echo $id;?>" readonly/><br />
       <div class="row">
         <div class="col-xs-12">
             <div class="box box-success">
@@ -38,25 +87,25 @@
                         <div class="col-md-3">
                         <div class="form-group">
                         <label>RUT</label>                            
-                        <?php echo form_dropdown('rut',$rut,'',array('class' => 'form-control','id' => 'rut'));?>                           
+                        <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $persona[0]['rut'];?>" readonly/>                           
                         </div>
                     </div>
                         <div class="col-md-3">
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" readonly/>
+                            <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $persona[0]['nombre'];?>" readonly/>
                           </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Apellido Paterno</label>
-                                <input class="form-control" type="text" name="paterno" id="paterno" readonly/>
+                                <input class="form-control" type="text" name="paterno" id="paterno" value="<?php echo $persona[0]['paterno'];?>" readonly/>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Apellido Materno</label>
-                                <input class="form-control" type="text" name="materno" id="materno" readonly/>                           
+                                <input class="form-control" type="text" name="materno" id="materno" value="<?php echo $persona[0]['materno'];?>" readonly/>                           
                             </div>
                         </div>
                     </div>
@@ -65,7 +114,7 @@
                     <div class="form-group">
                         <label>Area</label>
                         <?php
-                        echo form_dropdown('area_id',$areas,'',array('class' => 'form-control','id' => 'select_area'));
+                        echo form_dropdown('area_id',$areas,$nota[0]['id_area'],array('class' => 'form-control','id' => 'select_area'));
                         ?>
                       </div>
                     </div>
@@ -73,7 +122,7 @@
                         <div class="form-group">
                             <label>Cartera</label>
                             <?php
-                            echo form_dropdown('cartera_id',$carteras,'',array('class' => 'form-control', 'id' => 'select_cartera'));
+                            echo form_dropdown('cartera_id',$carteras,$nota[0]['id_cartera'],array('class' => 'form-control', 'id' => 'select_cartera'));
                             ?>
                         </div>
                     </div>
@@ -82,7 +131,7 @@
                             <div class="form-group">
                                 <label>Supervisor</label>
                                 <?php
-                                echo form_dropdown('supervisor',$supervisores,'',array('class' => 'form-control','id' => 'supervisor'));
+                                echo form_dropdown('supervisor',$supervisores,$nota[0]['id_supervisor'],array('class' => 'form-control','id' => 'supervisor'));
                                 ?>                           
                             </div>
                         </div>
@@ -93,7 +142,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_evaluacion" value="<?php echo date('d-m-Y') ?>" disabled="disabled">
+                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_evaluacion" value="<?=$nota[0]['fecha_evaluacion'];?>" disabled="disabled">
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -105,7 +154,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_audio" value="<?php echo date('d-m-Y');?>">
+                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_audio" value="<?=$nota[0]['fecha_audio'];?>">
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -113,20 +162,22 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Evaluador</label>
-                                <input class="form-control" type="evaluador" name="evaluador" id="evaluador" required>                           
+                                <?php
+                                echo form_dropdown('evaluador',$evaluadores,$nota[0]['evaluador'],array('class' => 'form-control','id' => 'evaluador'));
+                                ?>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Rut del Audio</label>
-                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio" required>                           
+                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio" value="<?php echo $nota[0]['rut_audio'];?>" required>                           
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Cargo a Postular</label>
-                                <input class="form-control" type="text" name="cargo" id="cargo" readonly>
-                                <input class="form-control" type="hidden" name="id_cargo" id="id_cargo" readonly>                                                           
+                                <input class="form-control" type="text" name="cargo" id="cargo" value="<?php echo $cargo[0]['cargo'];?>" readonly>
+                                <input class="form-control" type="hidden" name="id_cargo" id="id_cargo" value="<?php echo $cargo[0]['id_cargo'];?>" readonly>                                                           
                             </div>
                         </div>
                   </div>
@@ -136,50 +187,107 @@
         <!-- /.col -->
         </div>
       <!-- /.row -->
+    </div>
+
+<div class="row">
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header">
+                  <h3 class="box-title">El resultado de su Evaluaci&oacute;n fue:</h3>
+                </div>
+                <div class="box-body">                    
+                    <div class="form-group has-success">
+                      <label class="control-label" for="inputWarning"></i> Nota Obtenida</label>
+                      <input type="text" class="form-control" id="resultado" name="resultado" value="<?php echo $nota[0]['resultado_final']?>" readonly required/>
+                    </div>
+                    <div class="form-group has-success">
+                      <label class="control-label" for="inputWarning"></i> Suma de Puntos</label>
+                      <input type="text" class="form-control" id="resultado2" name="resultado2" value="" readonly required/>
+                    </div>
+
+                </div>
+            <!-- /.box-body -->
+            </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
       </div>
 
-      <?php 
-      foreach($evaluacion as $a){
-        ?>
+<?php 
+      array_unshift($respondido_q,'');
+      $contador = 0;
+      foreach($evaluacion as $a){?>
        <div class="row">
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title"><?= $a->evaluacion;?> / id: <?= $a->id_evaluacion_induccion;?></h3>
+                  <h3 class="box-title"><?= $a->evaluacion;?></h3>
                 </div>
                 <div class="box-body">
-                    <input type="text" name="id_evaluacion" id="id_evaluacion" value="<?php echo $a->id_evaluacion_induccion;?>" />
-                    <input type="text" name="peso_grupo" id="peso_grupo" value="<?= $a->peso;?>" /> 
-                    <input type="text" style="width:100px;" class="form-control" name="item_sel<?=$a->id_evaluacion_induccion;?>" id="item_sel<?=$a->id_evaluacion_induccion;?>" value="" readonly/>    
+                    <input type="hidden" name="id_evaluacion<?=$contador?>" id="id_evaluacion<?php echo $a->id_evaluacion_induccion;?>" value="<?php echo $a->id_evaluacion_induccion;?>" />
+                    <input type="hidden" name="peso_grupo" id="peso_grupo" value="<?= $a->peso;?>" /> 
+                    <input type="hidden" style="width:100px;" class="form-control" name="item_sel<?=$a->id_evaluacion_induccion;?>" id="item_sel<?=$a->id_evaluacion_induccion;?>" value="" readonly/>    
                     
                     <table class="table table-condensed">
                     <tr>
                         <th>Item</th>
                         <th></th>
                         <th>Opcion</th>
-                    </tr>
+                    </tr>                    
+                    <?php 
+                    foreach($evaluacion_items as $i){ 
+                    ?>
                     <?php
-                    foreach($evaluacion_items as $i){
-
                             if($i->id_evaluacion_induccion == $a->id_evaluacion_induccion){?>                            
-                            <tr>
+                            <tr 
+                            <?php 
+                                if($i->tipo!='T'){
+                                  if($i->correcto==1){
+                                    echo 'bgcolor="#40bf40"';
+                                  }
+                                }  
+
+                                $checked = 0;
+                                $color = 0;
+                                //pregunta correcta
+                                if($respondido_q[$a->id_evaluacion_induccion]['id_evaluacion']==$a->id_evaluacion_induccion){
+                                  //item de la pregunta  
+                                  if($respondido_q[$a->id_evaluacion_induccion]['id_evaluacion_item']==$i->id_evaluacion_induccion_item){
+                                         $checked = 'checked';
+                                         $color = 'bgcolor="#ff6666"';
+                                  } else {
+                                     $checked = '';
+                                     $color = '';
+                                  }
+                                }
+
+                                echo $color;?> >
                               <?php if($i->tipo=='T'){?>
-                              <td width="5%"><input type="radio" name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" onclick="seleccionado('item_sel<?=$a->id_evaluacion_induccion;?>','<?= $i->id_evaluacion_induccion_item;?>');" value="<?php if($i->correcto==1){echo $a->peso;}else{echo '0';}?>" required>Si</td>
-                              <td width="5%"><input type="radio" name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" onclick="seleccionado('item_sel<?=$a->id_evaluacion_induccion;?>','<?= $i->id_evaluacion_induccion_item;?>');"value="0">No</td>
+
+                              <td width="5%"><input type="radio" <?php if($respondido[$contador]['id_evaluacion_item']==$i->id_evaluacion_induccion_item){echo 'checked';}?> name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" onclick="seleccionado('item_sel<?=$a->id_evaluacion_induccion;?>','<?= $i->id_evaluacion_induccion_item;?>');" value="<?php if($i->correcto==1){echo $a->peso;}else{echo '0';}?>" required>Si</td>
+                              <td width="5%"><input type="radio" <?php if($respondido[$contador]['id_evaluacion_item']==$i->id_evaluacion_induccion_item){echo 'checked';}?> name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" onclick="seleccionado('item_sel<?=$a->id_evaluacion_induccion;?>','<?= $i->id_evaluacion_induccion_item;?>');" value="0">No</td>
+                              
                               <?php }else{?>
-                              <td width="10%">
-                                <input type="radio" name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" onclick="seleccionado('item_sel<?=$a->id_evaluacion_induccion;?>','<?= $i->id_evaluacion_induccion_item;?>');" value="<?php if($i->correcto==1){echo $a->peso;}else{echo '0';}?>" required>
+
+                              <td width="10%"><?php //echo $respondido[$a->id_evaluacion_induccion]['id_evaluacion'];?>
+                                <input type="radio" disabled <?php echo $checked ?> name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" onclick="seleccionado('item_sel<?=$a->id_evaluacion_induccion;?>','<?=$i->id_evaluacion_induccion_item;?>');" value="<?php if($i->correcto==1){echo $a->peso;}else{echo '0';}?>" required>
                               </td>
+
                               <?php }?>
+
                               <td width="10%">
                                 <input type="hidden" style="width:100px;" class="form-control" name="correcto<?= $i->id_evaluacion_induccion_item;?>" id="correcto<?= $i->id_evaluacion_induccion_item;?>" value="<?= $i->correcto;?>" readonly/>
                                 <input type="hidden" class="form-control" name="tipo<?= $i->id_evaluacion_induccion;?>" id="tipo<?= $i->id_evaluacion_induccion;?>" value="<?= $i->tipo;?>" />
                               </td>
                               <td width="80%">
                               <?php if($i->tipo=='T'){?>
-                              <textarea class="form-control" name="observacion<?= $i->id_evaluacion_induccion;?>" row="5" id="observacion<?= $i->id_evaluacion_induccion;?>" required>&nbsp;</textarea>
+
+                              <textarea class="form-control" name="observacion<?= $i->id_evaluacion_induccion;?>" row="5" id="observacion<?=$i->id_evaluacion_induccion;?>" required>&nbsp;<?php echo $respondido[$contador]['observacion'];?></textarea>
+                              
                               <?php }else{
+
                                 echo $i->opcion;
+
                               }?>
                               </td>
                             </tr>                                
@@ -193,55 +301,19 @@
       </div>
       <!-- /.row -->
       </div>
-      <?php } ?>
+      <?php 
+      $contador = $contador + 1;
+    } ?>
 
-      <div class="row">
-        <div class="col-xs-12">
-            <div class="box box-warning">
-                <div class="box-header">
-                  <h3 class="box-title">Total Evaluacion</h3>
-                </div>
-                <div class="box-body">
-                    
-                    <div class="form-group has-warning">
-                      <label class="control-label" for="inputWarning"></i> Suma de Puntos</label>
-                      <input type="text" class="form-control" id="resultado" name="resultado" readonly required/>
-                    </div>
+<div class="row">
+  <div class="col-md-10"></div>
+      <div class="col-md-2">
+           <button type="submit" class="btn btn-info pull-right">Guardar</button>
+      </div>
+ </div>
 
-                </div>
-            <!-- /.box-body -->
-            </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-            <div class="box box-danger">
-                <div class="box-header">
-                  <h3 class="box-title">Observaciones Generales</h3>
-                </div>
-                <div class="box-body">
-                     <div class="form-group has-error">
-                      <label class="control-label" for="inputError"></i> Observaciones</label>
-                      <textarea class="form-control" rows="3" id="observacion_general" name="observacion_general" required></textarea>
-                    </div> 
-                </div>
-            <!-- /.box-body -->
-            </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-      </div>
-             <div class="row">
-                    <div class="col-md-10"></div>
-                        <div class="col-md-2">
-                             <button type="submit" class="btn btn-info pull-right">Guardar</button>
-                        </div>
-                   </div>
-            </div>
     <?php echo form_close();?>
-    </section>
+    </section> </div>
 
 <script>
 $('.datepicker').datepicker({
@@ -262,13 +334,17 @@ $('#rut_audio').Rut({
   format_on: 'keyup'
 });
 
-$(document).ready(function() {
+
+
+$(document).ready(function(){
+    //$('#suma_de_puntos').hide();
     cargar_datos();
     setTimeout(function(){ $("#alertita").fadeOut(4000);}, 5000);
 
     //calculo de correctos
     var $inRadio = $("#form1").find("input[type='radio']");
-    var $inResultado = $("#form1").find("#resultado");
+    //var $inResultado = $("#form1").find("#resultado");
+    var $inResultado = $("#form1").find("#resultado2");
     var $valores = {};
     
     $inRadio.on("change", function(){
@@ -293,8 +369,10 @@ $(document).ready(function() {
     cargar_datos();
     prueba();
 });
-function seleccionado(id,valor){
+function seleccionado(id,valor,btn){
   var valor = $('#'+id).val(valor);
+  //alert(btn);
+  $('#'+btn).prop('disabled', false);
 }
 function cargar_datos(){    
     $.ajax({

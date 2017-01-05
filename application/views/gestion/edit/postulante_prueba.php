@@ -353,8 +353,7 @@ $('#califica').hide();
 $('#aprueba').hide(); 
 $('#noaprueba').hide();    
        
-var vcalificacion = document.getElementById('#calificacion').value;
-//var vponderacion = document.getElementById(ponderacion).value;     
+var vcalificacion = document.getElementById('#calificacion').value;    
 
 $("."+grupo).each(
 		function(index, value) {

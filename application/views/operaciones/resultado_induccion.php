@@ -8,21 +8,6 @@
     </section>
     <!-- Main content -->
     <section class="content">
-
-    <div class="row">
-        <div class="col-xs-12">        
-        <?php 
-        $msje_solicitud = $this->session->flashdata('msje_evaluacion');
-            if(!empty($msje_solicitud)){
-            ?>
-            <div id="alertita" class="alert alert-<?php if($msje_solicitud[0]==1){echo 'success';}else{echo 'danger';}?> alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong><?php if($msje_solicitud[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'Se ha registrado con exito';}else{echo 'La solicitud no se ha modificado';}?>
-            </div>        
-            <?php }?>
-        </div>
-    </div>
-
     <?php 
         $attributes = array('id' => 'form1');
         echo form_open('operaciones/guardar_einduccion', $attributes);
@@ -44,19 +29,19 @@
                         <div class="col-md-3">
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" readonly/>
+                            <input class="form-control" type="text" name="nombre" id="nombre"/>
                           </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Apellido Paterno</label>
-                                <input class="form-control" type="text" name="paterno" id="paterno" readonly/>
+                                <input class="form-control" type="text" name="paterno" id="paterno"/>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Apellido Materno</label>
-                                <input class="form-control" type="text" name="materno" id="materno" readonly/>                           
+                                <input class="form-control" type="text" name="materno" id="materno"/>                           
                             </div>
                         </div>
                     </div>
@@ -93,7 +78,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_evaluacion" value="<?php echo date('d-m-Y') ?>" disabled="disabled">
+                              <input type="text" class="form-control pull-right" class="" name="fecha_evaluacion" value="<?php echo date('d-m-Y') ?>" disabled="disabled">
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -105,7 +90,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_audio" value="<?php echo date('d-m-Y');?>">
+                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_audio" value="<?php echo date('d-m-Y') ?>">
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -113,20 +98,13 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Evaluador</label>
-                                <input class="form-control" type="evaluador" name="evaluador" id="evaluador" required>                           
+                                <input class="form-control" type="evaluador" name="evaluador" id="evaluador">                           
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Rut del Audio</label>
-                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio" required>                           
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Cargo a Postular</label>
-                                <input class="form-control" type="text" name="cargo" id="cargo" readonly>
-                                <input class="form-control" type="hidden" name="id_cargo" id="id_cargo" readonly>                                                           
+                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio">                           
                             </div>
                         </div>
                   </div>
@@ -145,13 +123,12 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                  <h3 class="box-title"><?= $a->evaluacion;?> / id: <?= $a->id_evaluacion_induccion;?></h3>
+                  <h3 class="box-title"><?= $a->evaluacion;?></h3>
                 </div>
                 <div class="box-body">
-                    <input type="text" name="id_evaluacion" id="id_evaluacion" value="<?php echo $a->id_evaluacion_induccion;?>" />
-                    <input type="text" name="peso_grupo" id="peso_grupo" value="<?= $a->peso;?>" /> 
-                    <input type="text" style="width:100px;" class="form-control" name="item_sel<?=$a->id_evaluacion_induccion;?>" id="item_sel<?=$a->id_evaluacion_induccion;?>" value="" readonly/>    
                     
+                    <input type="hidden" name="peso_grupo" id="peso_grupo" value="<?= $a->peso;?>" /> 
+
                     <table class="table table-condensed">
                     <tr>
                         <th>Item</th>
@@ -160,28 +137,11 @@
                     </tr>
                     <?php
                     foreach($evaluacion_items as $i){
-
-                            if($i->id_evaluacion_induccion == $a->id_evaluacion_induccion){?>                            
+                            if($i->id_evaluacion_induccion == $a->id_evaluacion_induccion){ ?>                            
                             <tr>
-                              <?php if($i->tipo=='T'){?>
-                              <td width="5%"><input type="radio" name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" onclick="seleccionado('item_sel<?=$a->id_evaluacion_induccion;?>','<?= $i->id_evaluacion_induccion_item;?>');" value="<?php if($i->correcto==1){echo $a->peso;}else{echo '0';}?>" required>Si</td>
-                              <td width="5%"><input type="radio" name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" onclick="seleccionado('item_sel<?=$a->id_evaluacion_induccion;?>','<?= $i->id_evaluacion_induccion_item;?>');"value="0">No</td>
-                              <?php }else{?>
-                              <td width="10%">
-                                <input type="radio" name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" onclick="seleccionado('item_sel<?=$a->id_evaluacion_induccion;?>','<?= $i->id_evaluacion_induccion_item;?>');" value="<?php if($i->correcto==1){echo $a->peso;}else{echo '0';}?>" required>
-                              </td>
-                              <?php }?>
-                              <td width="10%">
-                                <input type="hidden" style="width:100px;" class="form-control" name="correcto<?= $i->id_evaluacion_induccion_item;?>" id="correcto<?= $i->id_evaluacion_induccion_item;?>" value="<?= $i->correcto;?>" readonly/>
-                                <input type="hidden" class="form-control" name="tipo<?= $i->id_evaluacion_induccion;?>" id="tipo<?= $i->id_evaluacion_induccion;?>" value="<?= $i->tipo;?>" />
-                              </td>
-                              <td width="80%">
-                              <?php if($i->tipo=='T'){?>
-                              <textarea class="form-control" name="observacion<?= $i->id_evaluacion_induccion;?>" row="5" id="observacion<?= $i->id_evaluacion_induccion;?>" required>&nbsp;</textarea>
-                              <?php }else{
-                                echo $i->opcion;
-                              }?>
-                              </td>
+                              <td width="10%"><input type="radio" name="opcion<?=$a->id_evaluacion_induccion;?>" id="opcion" value="<?php if($i->correcto==1){echo $a->peso;}else{echo '0';}?>"></td>
+                              <td width="10%"><input type="hidden" class="form-control" name="correcto<?= $i->id_evaluacion_induccion_item;?>" id="correcto<?= $i->id_evaluacion_induccion_item;?>" value="<?= $i->correcto;?>" readonly/></td>
+                              <td width="80%"><?= $i->opcion;?></td>
                             </tr>                                
                            <?php  }
                            }?>
@@ -195,6 +155,7 @@
       </div>
       <?php } ?>
 
+
       <div class="row">
         <div class="col-xs-12">
             <div class="box box-warning">
@@ -205,9 +166,9 @@
                     
                     <div class="form-group has-warning">
                       <label class="control-label" for="inputWarning"></i> Suma de Puntos</label>
-                      <input type="text" class="form-control" id="resultado" name="resultado" readonly required/>
+                      <input type="text" class="form-control" id="resultado" name="resultado" />
                     </div>
-
+                    
                 </div>
             <!-- /.box-body -->
             </div>
@@ -224,7 +185,7 @@
                 <div class="box-body">
                      <div class="form-group has-error">
                       <label class="control-label" for="inputError"></i> Observaciones</label>
-                      <textarea class="form-control" rows="3" id="observacion_general" name="observacion_general" required></textarea>
+                      <textarea class="form-control" rows="3" ></textarea>
                     </div> 
                 </div>
             <!-- /.box-body -->
@@ -233,13 +194,15 @@
       </div>
       <!-- /.row -->
       </div>
-             <div class="row">
+        <div class="row">
                     <div class="col-md-10"></div>
-                        <div class="col-md-2">
-                             <button type="submit" class="btn btn-info pull-right">Guardar</button>
-                        </div>
-                   </div>
-            </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-info pull-right">Guardar</button>
+                    </div>
+                         
+                  </div>
+
+      </div>
     <?php echo form_close();?>
     </section>
 
@@ -250,21 +213,13 @@ $('.datepicker').datepicker({
 $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
-});
+    });
+</script>
 
-$('#rut_audio').Rut({
-  on_error: function(){ 
-    $('#alerta_rut').fadeIn();
-    $('.verificar').fadeOut();
-    setTimeout(function(){
-        $("#alerta_rut").fadeOut(2000);},3000);
-    },
-  format_on: 'keyup'
-});
 
+<script>
 $(document).ready(function() {
     cargar_datos();
-    setTimeout(function(){ $("#alertita").fadeOut(4000);}, 5000);
 
     //calculo de correctos
     var $inRadio = $("#form1").find("input[type='radio']");
@@ -291,11 +246,8 @@ $(document).ready(function() {
 <script>
  $( "#rut" ).change(function() {
     cargar_datos();
-    prueba();
 });
-function seleccionado(id,valor){
-  var valor = $('#'+id).val(valor);
-}
+
 function cargar_datos(){    
     $.ajax({
       url:"<?php echo base_url('/index.php/index/test')?>",
@@ -307,27 +259,18 @@ function cargar_datos(){
              p_nombre = v.nombre;
              p_paterno = v.paterno;
              p_materno = v.materno;
-             //p_cargo = v.id_cargo;
-        });
-        $.each(data.postulante,function(i,w){
-             p_id_cargo = w.id_cargo;
-             p_cargo = w.cargo;
         });
         $("#nombre").val(p_nombre);
         $("#paterno").val(p_paterno);
         $("#materno").val(p_materno);
-        $("#cargo").val(p_cargo);
-        $("#id_cargo").val(p_id_cargo);
-
-        $("#select_cartera").html(options_p);
-
       },
       error: function(e) {
         console.debug('error');
       }
    });
 }
-$("#select_area" ).change(function(){
+ $( "#select_area" ).change(function() {
+    //alert($('#producto').val());
     cargar_carteras();
 });
 function cargar_carteras(){    

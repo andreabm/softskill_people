@@ -36,11 +36,11 @@ class Index extends CI_Controller {
 
     public function test(){
         $rut = $this->input->post('rut');
-        $query = $this->db->query("select personas.nombre from postulantes INNER JOIN personas on (personas.rut = postulantes.rut) where postulantes.id_postulante=".$rut);
-            foreach ($query->result() as $row){        
-                $postulantes = $this->MyModel->buscar_model('personas','rut ='.$row->rut);
-                $data['postulante'] = $postulantes;
-            }
+        $persona = $this->MyModel->buscar_model('personas','id_persona ='.$rut);
+        $data['persona'] = $persona;
+        $postulante = $this->MyModel->buscar_model('postulantes','id_postulante ='.$rut);        
+        $cargos = $this->MyModel->buscar_model('cargos','id_cargo ='.$postulante[0]['id_cargo']);
+        $data['postulante'] = $cargos;
         print_r(json_encode($data));
     }
 }

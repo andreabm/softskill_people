@@ -125,7 +125,7 @@ class Operaciones extends CI_Controller {
          * Comprobamos si existen errores en el archivo subido
          */
         if (!empty($_FILES['archivo']['name'])){
-            // Configuración para el Archivo 1
+            // ConfiguraciÃ³n para el Archivo 1
             $config['upload_path'] = APPPATH . 'uploads/documentacion/';
             //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
@@ -144,7 +144,7 @@ class Operaciones extends CI_Controller {
             //$new_name = $_FILES["archivo"]['name'];
             $config['file_name'] = $ultima_id;      
 
-            // Cargamos la configuración del Archivo 1
+            // Cargamos la configuraciÃ³n del Archivo 1
             $this->upload->initialize($config);
             // Subimos archivo 1
             if ($this->upload->do_upload('archivo')){
@@ -182,7 +182,7 @@ class Operaciones extends CI_Controller {
             unlink(APPPATH.'uploads/documentacion/'.$row->archivo); 
             //$this->db->delete('documentacion_ejecutivo', array('id_documentacion' => $id_documentacion));            
             
-            // Configuración para el Archivo 1
+            // ConfiguraciÃ³n para el Archivo 1
             $config['upload_path'] = APPPATH . 'uploads/documentacion/';
             //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
@@ -198,7 +198,7 @@ class Operaciones extends CI_Controller {
             //$config['encrypt_name'] = TRUE;            
             //$new_name = $_FILES["archivo"]['name'];
             $config['file_name'] = $id_documentacion;
-            // Cargamos la configuración del Archivo 1
+            // Cargamos la configuraciÃ³n del Archivo 1
             $this->upload->initialize($config);
             // Subimos archivo 1
             if ($this->upload->do_upload('archivo')){
@@ -330,7 +330,7 @@ class Operaciones extends CI_Controller {
 
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
         $data['turnos'] = $turnos;
-        //importante el slash del final o no funcionará correctamente
+        //importante el slash del final o no funcionarÃ¡ correctamente
         $this->html2pdf->folder('./files/pdfs/');
         $this->html2pdf->paper('a4', 'portrait');
         //establecemos el nombre del archivo
@@ -796,7 +796,14 @@ class Operaciones extends CI_Controller {
         $this->load->view('common/footer');
     }
 
-        public function induccion(){        
+        public function induccion(){
+            $areas = $this->MyModel->buscar_select('areas','id_area','area');
+            $data['areas'] = $areas;
+            $carteras = $this->MyModel->buscar_select('carteras','id_cartera','cartera',array('id_area = 5'));
+            $data['carteras'] = $carteras;
+            $supervisores = $this->MyModel->buscar_select('supervisores','id_supervisor','nombre_supervisor');
+            $data['supervisores'] = $supervisores;
+
             $this->db->from('evaluacion_induccion');        
             $query = $this->db->get();
             $evaluacion = $query->result();
@@ -807,11 +814,347 @@ class Operaciones extends CI_Controller {
             $data['evaluacion_items'] = $query->result();
 
             $rut = $this->MyModel->buscar_select('postulantes','id_postulante','rut');
+            
             $data['rut'] = $rut;
 
             $this->load->view('common/header');
             $this->load->view('operaciones/induccion',$data);
             $this->load->view('common/footer');
-    }        
+    }
+    public function guardar_einduccion(){
+            $rut = $this->input->post('rut');            
+            $resultado = $this->input->post('resultado');
+            $observacion_general = $this->input->post('observacion_general');     
+            $area_id = $this->input->post('area_id');          
+            $cartera_id = $this->input->post('cartera_id');            
+            $supervisor_id = $this->input->post('supervisor');
+            $id_cargo = $this->input->post('id_cargo');
+            $rut_audio = $this->input->post('rut_audio');
+            $evaluador = $this->input->post('evaluador');
+
+            $fecha_evaluacion = $this->input->post('fecha_evaluacion');
+            $fecha_audio = $this->input->post('fecha_audio');
+
+            $persona = $this->MyModel->buscar_model('personas','id_persona ="'.$rut.'"');
+            $nueva_evaluacion = array(
+                    'rut' => $rut,
+                    'observacion_general' => $observacion_general,
+                    'resultado_final' => $resultado,
+                    'id_area' => $area_id,
+                    'id_cartera' => $cartera_id,
+                    'id_supervisor' => $supervisor_id,
+                    'resultado_final' => $resultado,
+                    'id_cargo' => $id_cargo,
+                    'rut_audio' => $rut_audio,
+                    'fecha_evaluacion' => $fecha_evaluacion,
+                    'fecha_audio' => $fecha_audio,
+                    'estado' => '1',
+                    'evaluador' => $evaluador
+                );
+            $this->db->insert('evaluacion_induccion_resultados', $nueva_evaluacion);
+
+            //inicio
+            $this->db->from('evaluacion_induccion');        
+            $query = $this->db->get();
+            $evaluacion = $query->result();
+            $data['evaluacion'] = $evaluacion;
+
+            $contador = 1;
+            foreach($data['evaluacion'] as $row){
+                $opcion = $this->input->post('opcion'.$row->id_evaluacion_induccion);                
+                $id_evaluacion = $this->input->post('id_evaluacion'.$contador);
+                $opt = $this->input->post('item_sel'.$row->id_evaluacion_induccion);
+                $tipo = $this->input->post('tipo'.$row->id_evaluacion_induccion);
+
+                $observacion = '';
+                if($tipo=='T'){
+                    $opt = '';
+                    $observacion = $this->input->post('observacion'.$row->id_evaluacion_induccion);   
+                }
+                $opcion_escogida = array(
+                        'rut' => $rut,
+                        'id_evaluacion' => $id_evaluacion,                        
+                        'id_evaluacion_item' => $opt,
+                        'observacion' => $observacion
+                    );
+
+                $this->db->insert('evaluacion_induccion_respondido', $opcion_escogida);
+                $contador = $contador + 1;
+            }
+            $this->session->set_flashdata('msje_evaluacion', '1');
+                redirect('operaciones/induccion_ejecutivos');
+            //fin 
+
+            //muestra ini
+            $this->db->from('evaluacion_induccion_respondido');
+            $this->db->where('evaluacion_induccion_respondido.id_evaluacion ='.$id_evaluacion);                    
+            $query = $this->db->get();
+            $respondido = $query->result();
+            $data['respondido'] = $respondido;
+
+            $this->db->from('evaluacion_induccion_resultados');        
+            $query = $this->db->get();
+            $resultado = $query->result();
+            $data['resultado'] = $resultado;
+            //muestra fin
+
+            $this->load->view('common/header');
+            $this->load->view('operaciones/resultado_induccion',$data);
+            $this->load->view('common/footer');
+    }     
+    //EVALUACION INDUCCION 2 INI                         
+    public function induccion_ejecutivos(){
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,evaluacion_induccion_resultados.resultado_final');
+        $this->db->from('personas');
+        $this->db->join('postulantes','personas.rut = postulantes.rut');
+        $this->db->join('areas','areas.id_area = postulantes.id_area');
+        $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+        $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo', 'left');
+        $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+        $this->db->where('personas.clasificado = 1');
+        $query = $this->db->get();
+        $ejecutivos = $query->result_array();
+        $data['ejecutivos'] = $ejecutivos;
+
+        $this->load->view('common/header');
+        $this->load->view('operaciones/induccion_ejecutivos',$data);
+        $this->load->view('common/footer');
+    }
+    public function evaluacion_induccion($id=null){
+            //postulante
+            $postulante = $this->MyModel->buscar_model('postulantes','id_postulante ='.$id);
+            $data['postulante'] = $postulante;
+            //datos persona
+            $persona = $this->MyModel->buscar_model('personas','rut ="'.$postulante[0]['rut'].'"');
+            $data['persona'] = $persona;
+
+            
+            //busca si ya respondio la encuesta
+            $evaluacion_resp = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');
+            $data['evaluacion_resp'] = $evaluacion_resp;
+
+            $cargos = $this->MyModel->buscar_model('cargos','id_cargo ='.$postulante[0]['id_cargo']);
+            $data['cargo'] = $cargos;
+
+            $areas = $this->MyModel->buscar_select('areas','id_area','area');
+            $data['areas'] = $areas;
+            $carteras = $this->MyModel->buscar_select('carteras','id_cartera','cartera',array('id_area = 5'));
+            $data['carteras'] = $carteras;
+            $supervisores = $this->MyModel->buscar_select('supervisores','id_supervisor','nombre_supervisor');
+            $data['supervisores'] = $supervisores;
+            $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre');
+            $data['evaluadores'] = $evaluadores;
+
+            $this->db->from('evaluacion_induccion');        
+            $query = $this->db->get();
+            $evaluacion = $query->result();
+            $data['evaluacion'] = $evaluacion;
+
+            $this->db->from('evaluacion_induccion_item');
+            $query = $this->db->get();
+            $data['evaluacion_items'] = $query->result();
+
+            $rut = $this->MyModel->buscar_select('postulantes','id_postulante','rut');
+            
+            $data['rut'] = $rut;
+
+            $this->load->view('common/header');
+            $this->load->view('operaciones/add/evaluacion_induccion',$data);
+            $this->load->view('common/footer');
+    }
+    public function evaluacion_induccion_calidad($id=null){
+        //postulante
+            $data['id'] = $id;
+            $postulante = $this->MyModel->buscar_model('postulantes','id_postulante ='.$id);
+            $data['postulante'] = $postulante;
+            //datos persona
+            $persona = $this->MyModel->buscar_model('personas','rut ="'.$postulante[0]['rut'].'"');
+            $data['persona'] = $persona;
+
+            //desde aqui
+            $cargos = $this->MyModel->buscar_model('cargos','id_cargo ='.$postulante[0]['id_cargo']);
+            $data['cargo'] = $cargos;
+
+            $areas = $this->MyModel->buscar_select('areas','id_area','area');
+            $data['areas'] = $areas;
+            $carteras = $this->MyModel->buscar_select('carteras','id_cartera','cartera',array('id_area = 5'));
+            $data['carteras'] = $carteras;
+
+            $supervisores = $this->MyModel->buscar_select('supervisores','id_supervisor','nombre_supervisor');
+            $data['supervisores'] = $supervisores;
+            $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre');
+            $data['evaluadores'] = $evaluadores;
+            //hasta aqui
+            
+            //evaluacion_items ini
+            $nota = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');
+            $data['nota'] = $nota;
+            //lo que respondio            
+
+
+            //$respondido_q= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
+
+            $this->db->select('id_evaluacion,id_evaluacion_item');
+            $this->db->from('evaluacion_induccion_respondido');
+            $this->db->where('rut = "'.$postulante[0]['rut'].'"');
+            $query = $this->db->get();
+            $respondido_q = $query->result_array();
+            $data['respondido_q'] = $respondido_q;
+
+
+            $respondido= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
+            //print_r($respondido);
+            $data['respondido'] = $respondido;
+
+            $this->db->from('evaluacion_induccion');        
+            $query = $this->db->get();
+            $evaluacion = $query->result();
+            $data['evaluacion'] = $evaluacion;
+
+            $this->db->from('evaluacion_induccion_item');
+            $query = $this->db->get();
+            $data['evaluacion_items'] = $query->result();
+            //evaluacion_items fin
+
+
+        $this->load->view('common/header');
+        $this->load->view('operaciones/edit/evaluacion_induccion_calidad',$data);
+        $this->load->view('common/footer');
+    }
+    public function update_einduccion(){
+        $id = $this->input->post('evaluador');
+        $rut = $this->input->post('rut');
+        $resultado = $this->input->post('resultado');
+        $resultado2 = $this->input->post('resultado2');
+        $resultado_final = $resultado + $resultado2;
+        //borro info
+        if(!empty($resultado_final)){
+        //updeteo resultado
+        $data = array('resultado_final' => $resultado_final);
+        $this->db->where('rut', $rut);
+        $this->db->update('evaluacion_induccion_resultados', $data);
+
+        $this->session->set_flashdata('msje_evaluacion', '1');
+        redirect('operaciones/induccion_ejecutivos');
+        }
+
+    }
+    public function escuchas_ejecutivos(){
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,evaluacion_induccion_resultados.resultado_final');
+        $this->db->from('personas');
+        $this->db->join('postulantes','personas.rut = postulantes.rut');
+        $this->db->join('areas','areas.id_area = postulantes.id_area');
+        $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+        $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo', 'left');
+        $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+        $this->db->where('personas.clasificado = 1');
+        $query = $this->db->get();
+        $ejecutivos = $query->result_array();
+        $data['ejecutivos'] = $ejecutivos;
+
+        $this->load->view('common/header');
+        $this->load->view('operaciones/escuchas_ejecutivos',$data);
+        $this->load->view('common/footer');
+    }
+    public function evaluacion_escuchas($id=null){
+            //postulante
+            $data['id'] = $id;
+            $postulante = $this->MyModel->buscar_model('postulantes','id_postulante ='.$id);
+            $data['postulante'] = $postulante;
+            //datos persona
+            $persona = $this->MyModel->buscar_model('personas','rut ="'.$postulante[0]['rut'].'"');
+            $data['persona'] = $persona;
+
+            //desde aqui
+            $cargos = $this->MyModel->buscar_model('cargos','id_cargo ='.$postulante[0]['id_cargo']);
+            $data['cargo'] = $cargos;
+
+            $areas = $this->MyModel->buscar_select('areas','id_area','area');
+            $data['areas'] = $areas;
+            $carteras = $this->MyModel->buscar_select('carteras','id_cartera','cartera',array('id_area = 5'));
+            $data['carteras'] = $carteras;
+
+            $supervisores = $this->MyModel->buscar_select('supervisores','id_supervisor','nombre_supervisor');
+            $data['supervisores'] = $supervisores;
+            //hasta aqui
+            
+            //evaluacion_items ini
+            $nota = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');
+            $data['nota'] = $nota;
+            //lo que respondio
+
+            //$respondido_q= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
+
+
+
+            $respondido= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
+            //print_r($respondido);
+            $data['respondido'] = $respondido;
+
+            $this->db->from('evaluacion_induccion');        
+            $query = $this->db->get();
+            $evaluacion = $query->result();
+            $data['evaluacion'] = $evaluacion;
+
+            $this->db->from('evaluacion_induccion_item');
+            $query = $this->db->get();
+            $data['evaluacion_items'] = $query->result();
+            //evaluacion_items fin
+
+                    $this->db->from('aspectos_escucha');
+            $query = $this->db->get();
+            $data['aspectos_escuchas'] = $query->result_array();
+            
+            $this->db->from('aspecto_escucha_items');
+            $query = $this->db->get();
+            $data['aspectos_escuchas_items'] = $query->result_array();
+
+
+        $this->load->view('common/header');
+        $this->load->view('operaciones/add/evaluacion_escuchas',$data);
+        $this->load->view('common/footer');
+    }
+
+        public function evaluadores(){        
+        $this->db->from('evaluadores');
+        $query = $this->db->get();
+        $evaluadores = $query->result_array();
+        $data['evaluadores'] = $evaluadores;
+        $this->load->view('common/header');
+        $this->load->view('operaciones/evaluadores',$data);
+        $this->load->view('common/footer');
+    }
+        public function agregar_evaluador(){
+            if($this->input->post('nombre_evaluador')) {
+                $nombre = $this->input->post('nombre_evaluador');
+                 $nuevo_evaluador = array('nombre' => $nombre);   
+
+                 $this->db->insert('evaluadores', $nuevo_evaluador);
+                 redirect(base_url("index.php/operaciones/evaluadores"));
+            }
+            $this->load->view('common/header');
+            $this->load->view('operaciones/add/evaluadores');
+            $this->load->view('common/footer');
+        }
+        public function editar_evaluador($id_evaluador){
+            //consulto por pm
+            $this->db->from('evaluadores');
+            $this->db->where('evaluadores.id_evaluador = '.$id_evaluador);        
+            $query = $this->db->get();
+            $evaluador = $query->result_array();
+            $data['evaluador'] = $evaluador;
+
+            if($this->input->post('nombre_evaluador')) {
+                $nombre = $this->input->post('nombre_evaluador');
+                 $actualiza_evaluador = array('nombre' => $nombre);
+                $this->MyModel->agregar_model('evaluadores',$actualiza_evaluador,'id_evaluador',$this->input->post('id_evaluador'));                
+                redirect(base_url("index.php/operaciones/evaluadores"));
+            }
+
+            $this->load->view('common/header');
+            $this->load->view('operaciones/edit/evaluadores',$data);
+            $this->load->view('common/footer');
+        }
+
 }
 ?>

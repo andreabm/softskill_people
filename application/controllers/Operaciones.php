@@ -519,6 +519,7 @@ class Operaciones extends CI_Controller {
         $this->db->join('personas','personas.rut = postulantes.rut');
         $this->db->join('fuentes','postulantes.id_fuente = fuentes.id_fuente');
         $this->db->join('cargos','postulantes.id_cargo = cargos.id_cargo');
+		$this->db->join('contratados','postulantes.rut = contratados.rut','left');
         $this->db->where('postulantes.id_postulante = '.$id_postulante);
         $query = $this->db->get();
         $postulante = $query->result_array();

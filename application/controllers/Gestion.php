@@ -860,6 +860,7 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
             $postulante = $query->result_array();            
             if (!empty($postulante)) {
                 $data['existe'] = 'SI';
+				$data['id'] = $postulante[0]['id_postulante'];
             }   else {
                 $data['existe'] = 'NO';
             }

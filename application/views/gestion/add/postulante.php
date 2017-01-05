@@ -26,7 +26,7 @@ $(document).ready(function() {
     <div class="col-xs-8">
         <div class="alert alert-danger alert-dismissible" id="alerta" style="display: none;">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Atenci&oacute;n!</strong> El Rut ya se encuentra ingresado anteriormente.
+            <strong>Atenci&oacute;n!</strong> El Rut ya se encuentra ingresado anteriormente. <a class= "btn btn-xs primary" href="#"data-toggle="modal" data-target="#verPostulante" onclick = "verPostulante()">VER PERSONA</a>
         </div>
     </div><br />
     <div class="col-xs-8">
@@ -55,6 +55,7 @@ $(document).ready(function() {
                     <label>Rut:</label>
                     <div class="input-group">
                       <input type="text" id="rut" name="rut" class="form-control" placeholder="Rut" autocomplete="off" />
+					  <input type="hidden" id="id_postulante">
                       <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="validar_rut(event)">Validar</a></span>
                     </div>
                 </div>
@@ -690,9 +691,38 @@ $(document).ready(function() {
       </div>
       </div>
     </section>
-
+<div class="modal modal-success fade" id="verPostulante">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Postulante</h4>
+              </div>
+      <div class="modal-body" id="verPostulanteBody">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+     
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script>
-
+function verPostulante(){
+    $.ajax({
+          url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
+          type: 'POST',
+          data: {id_postulante:$('#id_postulante').val()},
+          success: function(data) {
+          $('#verPostulanteBody').html(data);
+          },
+          error: function(e) {
+            $('#verPostulanteBody').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
+    });
+}
 $('.verificar').hide();
 
 $('.datepicker').datepicker({
@@ -811,6 +841,7 @@ function validar_rut(event){
             data  = JSON.parse(data);          
             
             if (data.existe=='SI'){
+				$('#id_postulante').val(data.id);
                 $('.verificar').hide();
                 $('#alerta').fadeIn();
                 setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
@@ -827,5 +858,4 @@ function validar_rut(event){
           }
     });
 }
-
 </script>

@@ -73,7 +73,7 @@
                     <div class="col-md-8">
                     <div class="form-group">
                         <label>Item<?php echo $i?></label>                         
-                         <textarea class="form-control" rows="5" id="item_opcion[]" name="item_opcion[]" ><?php if(!empty($c['opcion'])){echo $c['opcion'];}?></textarea><br />
+                         <textarea class="form-control" rows="5" id="item_opcion[]" name="item_opcion[]" disabled><?php if(!empty($c['opcion'])){echo $c['opcion'];}?>&nbsp;</textarea><br />
                          <input class="form-control" type="hidden" name="activo[]" value="1">
                     </div> 
                     </div>

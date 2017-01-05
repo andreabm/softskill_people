@@ -216,6 +216,9 @@
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url('/index.php/gestion/turnos');?>"><i class="fa fa-circle-o"></i> Turnos</a></li>
                 <li><a href="<?php echo base_url('/index.php/gestion/competencias');?>"><i class="fa fa-circle-o"></i> Competencias</a></li>
+
+                <li><a href="<?php echo base_url('/index.php/gestion/escuchas');?>"><i class="fa fa-circle-o"></i> Escuchas</a></li>
+
                 <li><a href="<?php echo base_url('/index.php/gestion/fuentes');?>"><i class="fa fa-circle-o"></i> Fuentes</a></li>
                 <li><a href="<?php echo base_url('/index.php/gestion/motivo_no_califica');?>"><i class="fa fa-circle-o"></i> Motivo No Califica</a></li>
               </ul>

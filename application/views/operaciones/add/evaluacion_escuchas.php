@@ -27,7 +27,7 @@
 
     <?php 
         $attributes = array('id' => 'form1');
-        echo form_open('operaciones/update_einduccion', $attributes);
+        echo form_open('operaciones/insert_escuchas', $attributes);
         ?>
         <input class="form-control" type="hidden" name="id" id="id" value="<?php echo $id;?>" readonly/><br />
       <div class="row">
@@ -142,9 +142,23 @@
     </div>
 
 
-    <?php foreach($aspectos_escuchas as $a){ ?>
+    <?php 
+    /*
+    echo '<pre>';
+      print_r($aspectos_escuchas);
+    echo '</pre>'  ;
+
+    echo '<pre>';
+      print_r($aspectos_escuchas_items);
+    echo '</pre>'  ;
+    */
+
+    foreach($aspectos_escuchas as $a){ ?>
        <div class="row">
         <div class="col-xs-12">
+          
+          <input type="text" name="" id="" value="<?=$a['id_aspecto'];?>" style="width:70px;" />
+
             <div class="box box-primary">
                 <div class="box-header">
                   <h3 class="box-title"><?= $a['aspecto'].'&nbsp;&nbsp;&nbsp;'. round($a['ponderacion']) ?>%</h3>
@@ -160,9 +174,15 @@
                     <?php foreach($aspectos_escuchas_items as $i){
                             if($i['id_aspecto_escucha'] == $a['id_aspecto']){ ?>                            
                             <tr>
-                              <td><?= $i['item_aspecto']?></td>
-                              <td><select><option>SI</option><option>NO</option></select></td>
-                              <td></td>
+                              <td>
+                                <?=$i['item_aspecto'];?></td>
+                              <td>
+                                <select>
+                                  <option>SI</option>
+                                  <option>NO</option>
+                                </select>
+                              </td>
+                              <td><input type="text" /></td>
                               <td><input type="text" /></td>
                             </tr>                                
                            <?php  }} ?>

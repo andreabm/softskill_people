@@ -1064,29 +1064,21 @@ class Operaciones extends CI_Controller {
             //datos persona
             $persona = $this->MyModel->buscar_model('personas','rut ="'.$postulante[0]['rut'].'"');
             $data['persona'] = $persona;
-
             //desde aqui
             $cargos = $this->MyModel->buscar_model('cargos','id_cargo ='.$postulante[0]['id_cargo']);
             $data['cargo'] = $cargos;
-
             $areas = $this->MyModel->buscar_select('areas','id_area','area');
             $data['areas'] = $areas;
             $carteras = $this->MyModel->buscar_select('carteras','id_cartera','cartera',array('id_area = 5'));
             $data['carteras'] = $carteras;
-
             $supervisores = $this->MyModel->buscar_select('supervisores','id_supervisor','nombre_supervisor');
             $data['supervisores'] = $supervisores;
-            //hasta aqui
-            
+            //hasta aqui            
             //evaluacion_items ini
             $nota = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');
             $data['nota'] = $nota;
             //lo que respondio
-
             //$respondido_q= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
-
-
-
             $respondido= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
             //print_r($respondido);
             $data['respondido'] = $respondido;
@@ -1101,7 +1093,7 @@ class Operaciones extends CI_Controller {
             $data['evaluacion_items'] = $query->result();
             //evaluacion_items fin
 
-                    $this->db->from('aspectos_escucha');
+            $this->db->from('aspectos_escucha');
             $query = $this->db->get();
             $data['aspectos_escuchas'] = $query->result_array();
             
@@ -1154,6 +1146,11 @@ class Operaciones extends CI_Controller {
             $this->load->view('common/header');
             $this->load->view('operaciones/edit/evaluadores',$data);
             $this->load->view('common/footer');
+        }
+        public function insert_escuchas(){
+
+
+
         }
 
 }

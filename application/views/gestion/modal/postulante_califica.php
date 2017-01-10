@@ -1,13 +1,4 @@
 <div class="row">
-
-    <?php 
-    /*
-    echo '<pre>';
-        print_r($areas);
-    echo '</pre>';
-    */
-    ?>
-
     <div class="col-xs-8">
         <div class="alert alert-danger alert-dismissible" id="alerta_rut" style="display: none;">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

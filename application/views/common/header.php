@@ -1,3 +1,7 @@
+<?php
+if(!isset($this->session->userdata['id_usuario'])){ 
+    redirect('usuarios/login','refresh');
+}?>
 <!DOCTYPE html>
 <html>
 <head>

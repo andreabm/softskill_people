@@ -26,14 +26,7 @@
             </div>            
           </div>
           <?php
-          /*
-          echo '<pre>';
-            print_r($contratado);
-          echo '</pre>';
-          */
-
           if(!empty($contratado)){
-            //echo 'ya esta contratado';
             $btn_bloqueo = 'disabled';
             ?>
             <div id="alerta_sesion" class="alert alert-danger alert-dismissible">
@@ -42,12 +35,8 @@
             </div>
             <?php
           }else{
-            //echo 'no esta contratado';
             $btn_bloqueo = '';
-          }
-          ?>
-
-
+          }?>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-info">

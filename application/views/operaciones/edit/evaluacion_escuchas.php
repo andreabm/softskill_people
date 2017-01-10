@@ -332,16 +332,6 @@ function calcula_grupo(grupo,nparcial,val_ponderacion,ntotal){
   $("#"+nparcial).val(valor.toFixed(2));
   valor_test = val_ponderacion*valor;
   $('#'+ntotal).val(valor_test.toFixed(1));
-  /*
-  cantidad_total = 0;
-  $("."+grupo).each(
-    function(index, value) {
-      cantidad_total = cantidad_total + eval($(this).val());
-    }
-  );
-  valor_total = cantidad_total;
-  $("#total_general").val(valor_total.toFixed(2));
-  */
   suma_total();
   }
 

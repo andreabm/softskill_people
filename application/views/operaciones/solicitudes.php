@@ -22,6 +22,14 @@
             <strong><?php if($msje_solicitud[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'La solicitud se ha modificado con exito';}else{echo 'La solicitud no se ha modificado';}?>
             </div>        
             <?php }?>
+
+            <?php if(!isset($this->session->userdata['id_usuario'])){?>
+            <div id="alerta_sesion" class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n</strong> La sesion ha expirado, favor volver a loguearse.
+            </div>
+            <?php }?>
+
         </div>
     </div>
     

@@ -16,6 +16,8 @@
                     <strong>Atenci&oacute;n!</strong> El Rut ya se encuentra ingresado anteriormente.
                 </div>
             </div><br />
+
+
             <div class="col-xs-8">
                 <div class="alert alert-danger alert-dismissible" id="alerta_rut" style="display: none;">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -23,6 +25,28 @@
                 </div>
             </div>            
           </div>
+          <?php
+          /*
+          echo '<pre>';
+            print_r($contratado);
+          echo '</pre>';
+          */
+
+          if(!empty($contratado)){
+            //echo 'ya esta contratado';
+            $btn_bloqueo = 'disabled';
+            ?>
+            <div id="alerta_sesion" class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n,</strong> El Ejecutivo ya se encuentra contratado.
+            </div>
+            <?php
+          }else{
+            //echo 'no esta contratado';
+            $btn_bloqueo = '';
+          }
+          ?>
+
 
         <div class="row">
             <div class="col-xs-12">
@@ -35,7 +59,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>RAZ&Oacute;N SOCIAL</label>
-                                    <input class="form-control" type="text" name="razon_social" id="razon_social"/>
+                                    <input class="form-control" type="text" name="razon_social" id="razon_social" required/>
                                 </div>
                             </div>
                         </div>
@@ -292,7 +316,7 @@
                 <div class="row">
                 <div class="col-md-10"></div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-info pull-right">Guardar</button>
+                    <button type="submit" class="btn btn-info pull-right" <?=$btn_bloqueo?>>Guardar</button>
                 </div>       
                 </div>
 

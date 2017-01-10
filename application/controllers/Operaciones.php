@@ -32,6 +32,7 @@ class Operaciones extends CI_Controller {
     }
     
     public function agregar_solicitud(){
+
         if ($this->input->post('area_id')) {
             $nueva_solicitud = array(
                 'id_area' => $this->input->post('area_id'),
@@ -45,9 +46,14 @@ class Operaciones extends CI_Controller {
                 'motivo_solicitud' => $this->input->post('id_motivo'),
                 'cantidad_aprobada' => $this->input->post('cantidad_solicitada')
             );
+
+            print_r($nueva_solicitud);
             $this->MyModel->agregar_model('solicitudes',$nueva_solicitud);
             redirect('operaciones/solicitudes');
         }
+
+
+        
         $this->load->view('common/header');
         $areas = $this->MyModel->buscar_select('areas','id_area','area');
         $data['areas'] = $areas;
@@ -235,14 +241,10 @@ class Operaciones extends CI_Controller {
         $this->db->where('postulantes.id_postulante = '.$id_ejecutivo);
         $query = $this->db->get();
         $ejecutivo = $query->result_array();
-        /*
-        echo '<pre>';
-        print_r($ejecutivo);
-        echo '</pre>';
-        */
-        //mostrar query      
-        //echo $this->db->last_query();        
 
+
+        //mostrar query      
+        //echo $this->db->last_query();
         $data['ejecutivo'] = $ejecutivo;
         
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
@@ -250,6 +252,15 @@ class Operaciones extends CI_Controller {
 
         $sucursales = $this->MyModel->buscar_select('sucursales','id_sucursal','sucursal');
         $data['sucursales'] = $sucursales;
+
+        //contratados ini
+        $this->db->from('contratados');
+        $this->db->where('contratados.rut ="'.$ejecutivo[0]['rut'].'"');
+        $query = $this->db->get();
+        $contratado = $query->result();
+        $data['contratado'] = $contratado;
+        //contratados fin96078
+        
         
         if ($this->input->post('nombre')) {
             $es_soltero = $this->input->post('soltero');

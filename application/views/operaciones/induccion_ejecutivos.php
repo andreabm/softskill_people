@@ -83,8 +83,6 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-
-          <!-- /.box -->
         </div>
         <!-- /.col -->
       </div>
@@ -121,17 +119,4 @@ $(document).ready(function(){
             },
     });
 });
-function verPostulante(id_postulante){
-    $.ajax({
-          url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
-          type: 'POST',
-          data: {id_postulante:id_postulante},
-          success: function(data) {
-          $('#verPostulanteBody').html(data);
-          },
-          error: function(e) {
-            $('#verPostulanteBody').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
-          }
-    });
-}
 </script>

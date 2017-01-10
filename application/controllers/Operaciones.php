@@ -837,6 +837,7 @@ class Operaciones extends CI_Controller {
             $fecha_audio = $this->input->post('fecha_audio');
 
             $persona = $this->MyModel->buscar_model('personas','id_persona ="'.$rut.'"');
+
             $nueva_evaluacion = array(
                     'rut' => $rut,
                     'observacion_general' => $observacion_general,
@@ -992,16 +993,13 @@ class Operaciones extends CI_Controller {
             $data['nota'] = $nota;
             //lo que respondio            
 
-
             //$respondido_q= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
-
             $this->db->select('id_evaluacion,id_evaluacion_item');
             $this->db->from('evaluacion_induccion_respondido');
             $this->db->where('rut = "'.$postulante[0]['rut'].'"');
             $query = $this->db->get();
             $respondido_q = $query->result_array();
             $data['respondido_q'] = $respondido_q;
-
 
             $respondido= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
             //print_r($respondido);
@@ -1041,17 +1039,22 @@ class Operaciones extends CI_Controller {
 
     }
     public function escuchas_ejecutivos(){
-        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,evaluacion_induccion_resultados.resultado_final');
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,evaluacion_induccion_resultados.resultado_final,aspecto_escucha_resultado.rut as rut_b');
         $this->db->from('personas');
         $this->db->join('postulantes','personas.rut = postulantes.rut');
         $this->db->join('areas','areas.id_area = postulantes.id_area');
         $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
         $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo', 'left');
         $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+        $this->db->join('aspecto_escucha_resultado','aspecto_escucha_resultado.rut = postulantes.rut','left');
         $this->db->where('personas.clasificado = 1');
         $query = $this->db->get();
         $ejecutivos = $query->result_array();
         $data['ejecutivos'] = $ejecutivos;
+
+        $this->db->from('aspecto_escucha_resultado');
+        $query = $this->db->get();
+        $data['escucha_resultado'] = $query->result();
 
         $this->load->view('common/header');
         $this->load->view('operaciones/escuchas_ejecutivos',$data);
@@ -1074,6 +1077,9 @@ class Operaciones extends CI_Controller {
             $data['carteras'] = $carteras;
             $supervisores = $this->MyModel->buscar_select('supervisores','id_supervisor','nombre_supervisor');
             $data['supervisores'] = $supervisores;
+            $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre');
+            $data['evaluadores'] = $evaluadores;
+            
             //hasta aqui            
             //evaluacion_items ini
             $nota = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');
@@ -1107,6 +1113,79 @@ class Operaciones extends CI_Controller {
         $this->load->view('operaciones/add/evaluacion_escuchas',$data);
         $this->load->view('common/footer');
     }
+    public function ver_evaluacion_escuchas($id){
+        //postulante
+            $data['id'] = $id;
+            $postulante = $this->MyModel->buscar_model('postulantes','id_postulante ='.$id);
+            $data['postulante'] = $postulante;
+            //datos persona
+            $persona = $this->MyModel->buscar_model('personas','rut ="'.$postulante[0]['rut'].'"');
+            $data['persona'] = $persona;
+            //desde aqui
+            $cargos = $this->MyModel->buscar_model('cargos','id_cargo ='.$postulante[0]['id_cargo']);
+            $data['cargo'] = $cargos;
+            $areas = $this->MyModel->buscar_select('areas','id_area','area');
+            $data['areas'] = $areas;
+            $carteras = $this->MyModel->buscar_select('carteras','id_cartera','cartera',array('id_area = 5'));
+            $data['carteras'] = $carteras;
+            $supervisores = $this->MyModel->buscar_select('supervisores','id_supervisor','nombre_supervisor');
+            $data['supervisores'] = $supervisores;
+
+            $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre');
+            $data['evaluadores'] = $evaluadores;
+
+            //hasta aqui            
+            //evaluacion_items ini
+            /*
+            $nota = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');
+            $data['nota'] = $nota;
+            */
+            //lo que respondio
+            //$respondido_q= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
+            //$respondido= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
+
+
+            //print_r($respondido);
+            //$data['respondido'] = $respondido;
+
+            $this->db->from('evaluacion_induccion');        
+            $query = $this->db->get();
+            $evaluacion = $query->result();
+            $data['evaluacion'] = $evaluacion;
+
+            $this->db->from('evaluacion_induccion_item');
+            $query = $this->db->get();
+            $data['evaluacion_items'] = $query->result();
+            //evaluacion_items fin
+
+            $this->db->from('aspectos_escucha');
+            $query = $this->db->get();
+            $data['aspectos_escuchas'] = $query->result_array();
+            
+            $this->db->from('aspecto_escucha_items');
+            $query = $this->db->get();
+            $data['aspectos_escuchas_items'] = $query->result_array();
+
+            //ver
+            $this->db->select('id_aspecto,id_aspecto_items,respondido,observacion,nota_grupo');
+            $this->db->from('aspecto_escucha_respondido');
+            $this->db->where('rut = "'.$postulante[0]['rut'].'"');
+            $query = $this->db->get();
+            $respondido_q = $query->result_array();
+            $data['respondido_q'] = $respondido_q;
+
+            $this->db->from('aspecto_escucha_resultado');
+            $this->db->where('rut = "'.$postulante[0]['rut'].'"');
+            $query = $this->db->get();
+            $respondido_r = $query->result_array();
+            $data['respondido_r'] = $respondido_r;
+            //ver
+
+        $this->load->view('common/header');
+        $this->load->view('operaciones/edit/evaluacion_escuchas',$data);
+        $this->load->view('common/footer');
+    }
+
 
         public function evaluadores(){        
         $this->db->from('evaluadores');
@@ -1148,10 +1227,82 @@ class Operaciones extends CI_Controller {
             $this->load->view('operaciones/edit/evaluadores',$data);
             $this->load->view('common/footer');
         }
+
+        
         public function insert_escuchas(){
 
+            //inicio
+            $this->db->from('aspectos_escucha');        
+            $query = $this->db->get();
+            $aspectos = $query->result();
+            $data['aspectos'] = $aspectos;
 
+            $contador = 1;
+            foreach($data['aspectos'] as $row){
+                echo 'input de aspecto: '.$id_aspecto = $this->input->post('id_aspecto'.$row->id_aspecto);
+                echo '<br/>';
+                echo 'nota parcial: '.$n_parcial = $this->input->post('nparcial'.$row->id_aspecto);
+                echo '<br/>';
+                //echo 'input de item aspecto: '.$item_aspecto = $this->input->post('item_aspecto'.$row->id_aspecto);
+                //echo '<br/>';
 
+                //foreach item ini
+                $this->db->from('aspectos_escucha');
+                $this->db->join('aspecto_escucha_items','aspecto_escucha_items.id_aspecto_escucha = aspectos_escucha.id_aspecto');
+                //$this->db->where('aspecto_escucha_items.id_aspecto_escucha = aspectos_escucha.id_aspecto');        
+                $query = $this->db->get();
+                $as_item = $query->result();
+                $data['aspectos_item'] = $as_item;
+
+                    //recorro
+                    foreach($data['aspectos_item'] as $rows){
+                        //comparo id para asignar al input
+                        if($rows->id_aspecto_escucha==$row->id_aspecto){   
+                            //echo $rows->item_aspecto.'<br/>';
+                            echo 'input de item aspecto: '.$item_aspecto = $this->input->post('item_aspecto'.$rows->id_item_aspecto);
+                            echo '<br>';
+                            echo 'select cumple: '.$cumple = $this->input->post('cumple'.$rows->id_item_aspecto);
+                            echo '<br>';
+                            echo 'observacion: '.$observacion = $this->input->post('observacion'.$rows->id_item_aspecto);
+                            echo '<br>';
+
+                        $nuevo_item = array(     
+                            'rut' => $this->input->post('rut'),
+                            'id_aspecto' => $id_aspecto,
+                            'id_aspecto_items' => $item_aspecto,                        
+                            'respondido' => $cumple,
+                            'observacion' => $observacion,
+                            'nota_grupo' => $n_parcial
+                        );  
+                        $this->db->insert('aspecto_escucha_respondido', $nuevo_item);
+
+                        }
+                    }
+                    echo '<br>';
+                //foreach item fin
+            echo '<br/><br/>';
+            $contador = $contador + 1;
+            }   
+            //guarda resultado
+            $resultado = array(     
+                'rut' => $this->input->post('rut'),
+                'observacion_general' => $this->input->post('observacion_general'),
+                'resultado_final' => $this->input->post('total_general'),                        
+                'id_area' => $this->input->post('area_id'),
+                'id_cartera' => $this->input->post('cartera_id'),
+                'id_supervisor' => $this->input->post('supervisor'),
+                'fecha_evaluacion' => $this->input->post('fecha_evaluacion'),
+                'fecha_audio' => $this->input->post('fecha_audio'),
+                'rut_audio' => $this->input->post('rut_audio'),
+                'id_cargo' => $this->input->post('id_cargo'),
+                'estado' => '1',
+                'evaluador' => $this->input->post('evaluador')
+            );
+            $this->db->insert('aspecto_escucha_resultado', $resultado);
+            
+            $this->session->set_flashdata('msje_solicitud', '1');
+            redirect(base_url().'/index.php/operaciones/escuchas_ejecutivos');
+            
         }
 
 }

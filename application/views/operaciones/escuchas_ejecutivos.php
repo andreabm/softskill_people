@@ -26,6 +26,15 @@
     <div class="row">
         <div class="col-md-9"></div>
     </div>
+
+    <?php
+        /*
+        echo '<pre>';
+          print_r($escucha_resultado);
+        echo '</pre>';
+        */
+        
+        ?>
     <br />
       <div class="row">
         <div class="col-xs-12">
@@ -59,7 +68,13 @@
                             <td><?php echo $t['nombre'] ?></td>
                             <td align="center"><?php echo $t['resultado_final'];?></td>
                             <td>
+                              <?php if($t['rut']==$t['rut_b']){?>
+                              <a class="btn btn-xs btn-success" href="<?php echo base_url('index.php/operaciones/ver_evaluacion_escuchas/'.$t['id_postulante'])?>">Ver Evaluacion</a>  
+                              <a class="btn btn-xs btn-success" href="#" disabled>Evaluar</a>
+                              <?php }else{?>
+                              <a class="btn btn-xs btn-success" href="#" disabled>Ver Evaluacion</a>
                               <a class="btn btn-xs btn-success" href="<?php echo base_url('index.php/operaciones/evaluacion_escuchas/'.$t['id_postulante'])?>">Evaluar</a>
+                              <?php }?>
                             </td>
                     </tr>  
                   <?php }
@@ -95,7 +110,7 @@ $(document).ready(function(){
 });
 function verPostulante(id_postulante){
     $.ajax({
-          url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
+          url:"<?php echo base_url('index.php/gestion/ver_postulante')?>",
           type: 'POST',
           data: {id_postulante:id_postulante},
           success: function(data) {

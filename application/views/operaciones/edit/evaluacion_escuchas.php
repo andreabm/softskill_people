@@ -24,7 +24,15 @@
             <?php }?>
         </div>
     </div>
-
+    <script type="text/javascript">
+$(document).ready(function() {
+    $("form").keypress(function(e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+});
+    </script>
     <?php 
         $attributes = array('id' => 'form1');
         echo form_open('operaciones/insert_escuchas', $attributes);
@@ -68,7 +76,7 @@
                     <div class="form-group">
                         <label>Area</label>
                         <?php
-                        echo form_dropdown('area_id',$areas,$nota[0]['id_area'],array('class' => 'form-control','id' => 'select_area'));
+                        echo form_dropdown('area_id',$areas,$respondido_r[0]['id_area'],array('class' => 'form-control','id' => 'select_area','disabled'=>'disabled'));
                         ?>
                       </div>
                     </div>
@@ -76,7 +84,7 @@
                         <div class="form-group">
                             <label>Cartera</label>
                             <?php
-                            echo form_dropdown('cartera_id',$carteras,$nota[0]['id_cartera'],array('class' => 'form-control', 'id' => 'select_cartera'));
+                            echo form_dropdown('cartera_id',$carteras,$respondido_r[0]['id_cartera'],array('class' => 'form-control', 'id' => 'select_cartera','disabled'=>'disabled'));
                             ?>
                         </div>
                     </div>
@@ -85,7 +93,7 @@
                             <div class="form-group">
                                 <label>Supervisor</label>
                                 <?php
-                                echo form_dropdown('supervisor',$supervisores,$nota[0]['id_supervisor'],array('class' => 'form-control','id' => 'supervisor'));
+                                echo form_dropdown('supervisor',$supervisores,$respondido_r[0]['id_supervisor'],array('class' => 'form-control','id' => 'supervisor','disabled'=>'disabled'));
                                 ?>                           
                             </div>
                         </div>
@@ -96,7 +104,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right datepicker"  name="fecha_evaluacion" value="<?=date('Y-m-d');?>" disabled="disabled">
+                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_evaluacion" value="<?php echo $respondido_r[0]['fecha_evaluacion'];?>" disables readonly>
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -108,7 +116,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right datepicker" name="fecha_audio" value="<?=$nota[0]['fecha_audio'];?>">
+                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_audio" value="<?=$respondido_r[0]['fecha_audio'];?>" disables readonly>
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -117,7 +125,7 @@
                             <div class="form-group">
                                 <label>Evaluador</label>
                                 <?php
-                                echo form_dropdown('evaluador',$supervisores,'',array('class' => 'form-control','id' => 'evaluador'));
+                                echo form_dropdown('evaluador',$supervisores,$respondido_r[0]['evaluador'],array('class' => 'form-control','id' => 'evaluador','disabled' => 'disabled'));
                                 ?>
                                 
                             </div>
@@ -125,14 +133,14 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Rut del Audio</label>
-                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio" value="<?php echo $nota[0]['rut_audio'];?>" required>                           
+                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio" value="<?php echo $respondido_r[0]['rut_audio'];?>" disables readonly>                           
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Cargo a Postular</label>
-                                <input class="form-control" type="text" name="cargo" id="cargo" value="<?php echo $cargo[0]['cargo'];?>" readonly>
-                                <input class="form-control" type="hidden" name="id_cargo" id="id_cargo" value="<?php echo $cargo[0]['id_cargo'];?>" readonly>                                                           
+                                <input class="form-control" type="text" name="cargo" id="cargo" value="<?php echo $cargo[0]['cargo'];?>" disables readonly>
+                                <input class="form-control" type="hidden" name="id_cargo" id="id_cargo" value="<?php echo $cargo[0]['id_cargo'];?>" disables readonly>                                                           
                             </div>
                         </div>
                   </div>
@@ -145,7 +153,8 @@
     </div>
 
 
-    <?php 
+    <?php
+    array_unshift($respondido_q,'');
     foreach($aspectos_escuchas as $a){ ?>
        <div class="row">
         <div class="col-xs-12">
@@ -165,36 +174,58 @@
                         <th width="40%">Observacion</th>
                     </tr>
                     <?php 
+
                     foreach($aspectos_escuchas_items as $i){
-                            if($i['id_aspecto_escucha'] == $a['id_aspecto']){?>                            
-                            <tr>
+                            if($i['id_aspecto_escucha'] == $a['id_aspecto']){?>
+                            <?php 
+                                  if($respondido_q[$i['id_item_aspecto']]['id_aspecto_items']==$i['id_item_aspecto']){                                    
+                                      if($respondido_q[$i['id_item_aspecto']]['respondido']=='1'){
+                                          $checked_si = 'selected';
+                                          $checked_no = '';
+                                          $color = '';
+                                      }elseif($respondido_q[$i['id_item_aspecto']]['respondido']=='0'){
+                                        $checked_no = 'selected';
+                                        $checked_si = '';
+                                        $color = 'bgcolor="#ff6666"';
+                                      }else{
+                                        $checked_si = '';
+                                        $checked_no = '';
+                                      }
+
+                                      $nota = $respondido_q[$i['id_item_aspecto']]['nota_grupo'];
+                                  }?>                        
+                            <tr <?=$color;?>>
                               <td>
-                                <?=$i['item_aspecto'];?></td>
+                                <?php echo $i['item_aspecto'];?>
+                                
+                              </td>
                               <td>
                                 <input type="hidden" class="form-control" style="width:50px;" name="item_aspecto<?=$i['id_item_aspecto'];?>" id="item_aspecto<?=$i['id_item_aspecto'];?>" value="<?=$i['id_item_aspecto'];?>"  />
-                                  <select name="cumple<?=$i['id_item_aspecto'];?>" id="cumple<?=$i['id_item_aspecto'];?>" class="form-control" onchange="test(this,'multiplicar<?=$i['id_item_aspecto'];?>','resultado_grupo<?=$i['id_item_aspecto'];?>','pondera<?=$i['id_item_aspecto'];?>','grupo<?=$a['id_aspecto'];?>','nparcial<?=$a['id_aspecto'];?>','ponderacion<?=$a['id_aspecto'];?>','ntotal<?=$a['id_aspecto'];?>'),suma();">
+                                  <select name="cumple<?=$i['id_item_aspecto'];?>" id="cumple<?=$i['id_item_aspecto'];?>" class="form-control" onchange="test(this,'multiplicar<?=$i['id_item_aspecto'];?>','resultado_grupo<?=$i['id_item_aspecto'];?>','pondera<?=$i['id_item_aspecto'];?>','grupo<?=$a['id_aspecto'];?>','nparcial<?=$a['id_aspecto'];?>','ponderacion<?=$a['id_aspecto'];?>','ntotal<?=$a['id_aspecto'];?>'),suma();" disabled>
                                     <option value="">Seleccione</option>
-                                    <option value="1">SI</option>
-                                    <option value="0">NO</option>
+                                    <option value="1" <?php echo $checked_si;?>>SI</option>
+                                    <option value="0" <?php echo $checked_no;?>>NO</option>
                                   </select>
+                                  <?php // $respondido_q[$i['id_item_aspecto']]['respondido'];?>
                               </td>
                               <td>
                                 <input type="hidden" name="multiplicar<?=$i['id_item_aspecto'];?>" id="multiplicar<?=$i['id_item_aspecto'];?>" value="<?=$i['multiplicar'];?>" style="width:50px;" readonly/>
                                 <input type="hidden" name="pondera<?=$i['id_item_aspecto'];?>" id="pondera<?=$i['id_item_aspecto'];?>" value="<?=$i['ponderacion'];?>" style="width:50px;" readonly/>
                                 <input type="hidden" id="resultado_grupo<?=$i['id_item_aspecto'];?>" name="resultado_grupo<?=$i['id_item_aspecto'];?>" value="0" style="width:60px;" class="form-control grupo<?=$a['id_aspecto'];?>" readonly/>
-                                <input type="text" id="observacion<?=$i['id_item_aspecto'];?>" name="observacion<?=$i['id_item_aspecto'];?>" class="form-control"/>
+                                <input type="text" id="observacion<?=$i['id_item_aspecto'];?>" name="observacion<?=$i['id_item_aspecto'];?>" class="form-control" value="<?php echo $respondido_q[$i['id_item_aspecto']]['observacion'];?>" disabled/>
                               </td>
                             </tr>                                
-                           <?php  }
-                         }?>
-                             <tr>
+                           <?php  }?>
+                         <?php }?>
+                         <tr>
                               <td>Nota Parcial</td>
                               <td></td>
                               <td>
                                   <input type="hidden" name="nparcial<?=$a['id_aspecto'];?>" id="nparcial<?=$a['id_aspecto'];?>" value="" readonly>
-                                  <input type="text" name="ntotal<?=$a['id_aspecto'];?>" id="ntotal<?=$a['id_aspecto'];?>" class="form-control importe_linea" value="0" readonly>
+                                  <input type="text" name="ntotal<?=$a['id_aspecto'];?>" id="ntotal<?=$a['id_aspecto'];?>" class="form-control importe_linea" value="<?php echo $nota;?>" readonly>
                               </td>
-                            </tr>  
+                            </tr>
+                         
                   </table>            
                 </div>
             <!-- /.box-body -->
@@ -213,7 +244,7 @@
                 </div>
                 <div class="box-body">
                      <div class="form-group has-error">
-                      <input type="text" id="total_general" name="total_general" class="form-control" readonly>
+                      <input type="text" id="total_general" name="total_general" class="form-control" value="<?php echo $respondido_r[0]['resultado_final'];?>" readonly>
                     </div> 
                 </div>
             </div>
@@ -228,7 +259,7 @@
                 </div>
                 <div class="box-body">
                      <div class="form-group has-error">
-                      <textarea class="form-control" name="observacion_general" id="observacion_general" rows="3" ></textarea>
+                      <textarea class="form-control" name="observacion_general" id="observacion_general" rows="3"><?php echo $respondido_r[0]['observacion_general'];?></textarea>
                     </div> 
                 </div>
             </div>
@@ -239,8 +270,11 @@
 
 <div class="row">
   <div class="col-md-10"></div>
-      <div class="col-md-2">
-           <button type="submit" class="btn btn-info pull-right">Guardar</button>
+      <div class="col-md-1 pull-right">
+           <button type="submit" class="btn btn-info" disabled>Guardar</button>           
+      </div>
+      <div class="col-md-1 pull-right">
+           <button type="button" class="btn btn-info" onclick="window.location.href='<?php echo base_url('index.php/operaciones/escuchas_ejecutivos');?>'">Volver</button>           
       </div>
  </div>
 
@@ -248,7 +282,6 @@
 </section> </div>
 
 <script>
-test();
 $('.datepicker').datepicker({
       autoclose: true
     });
@@ -310,8 +343,8 @@ function calcula_grupo(grupo,nparcial,val_ponderacion,ntotal){
   $("#total_general").val(valor_total.toFixed(2));
   */
   suma_total();
-}
-  
+  }
+
   function suma_total(){
       importe_total = 0
       $(".importe_linea").each(

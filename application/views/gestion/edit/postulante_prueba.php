@@ -339,7 +339,7 @@
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
                     <?php echo form_hidden('id_postulante',$id_postulante);?>
-                        <button type="submit" class="btn btn-info pull-right">Guardar</button>
+                        <button type="submit" class="btn btn-info pull-right" id="guardar">Guardar</button>
                     </div>
                          
                   </div>
@@ -422,16 +422,19 @@ function calcula_grupo(grupo,resultado_final,total_cat,vponcat){
         $('#aprueba').hide(); 
         $('#noaprueba').hide();
         setTimeout(function(){$('#califica').fadeOut();},20000);
+        $('#guardar').prop("disabled", false);
     }else if(total_aprobacion<5.5 && total_aprobacion>=5){
         $('#aprueba').fadeIn();
         $('#califica').hide(); 
         $('#noaprueba').hide();
         setTimeout(function(){$('#aprueba').fadeOut();},20000);
+        $('#guardar').prop("disabled", false);
     }else{
         $('#noaprueba').fadeIn();
         $('#califica').hide(); 
         $('#aprueba').hide();
         setTimeout(function(){$('#noaprueba').fadeOut();},20000);
+        $('#guardar').prop("disabled", true);
     }    
     $("#aprobacion").val(total_aprobacion.toFixed(1));
 }

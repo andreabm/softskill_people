@@ -23,25 +23,21 @@
           </div>
           <?php
           if(!empty($contratado)){
-
-            $btn_bloqueo = 'disabled';
-            $btn_label = 'Imprime';
-            $formulario = 'Operaciones/imprime_ficha';
-            $tarjet = array('target' =>'_blank');
-            ?>
-            <div id="alerta_sesion" class="alert alert-danger alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Atenci&oacute;n,</strong> El Ejecutivo ya se encuentra contratado.
-            </div>
-            <?php
-
-          }else{
-
-            $btn_bloqueu = 'disabled';
-            $btn_label = 'Guarda';
-            $formulario = 'Operaciones/ficha_contratacion';
-            $tarjet = '';
-
+                $btn_bloqueo = 'disabled';
+                $btn_label = 'Imprime';
+                $formulario = 'Operaciones/imprime_ficha';
+                $tarjet = array('target' =>'_blank');
+                ?>
+                <div id="alerta_sesion" class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Atenci&oacute;n,</strong> El Ejecutivo ya se encuentra contratado.
+                </div>
+                <?php
+            }else{
+                $btn_bloqueu = 'disabled';
+                $btn_label = 'Guarda';
+                $formulario = 'Operaciones/ficha_contratacion';
+                $tarjet = '';
           }?>
         <?php
             echo form_open($formulario,$tarjet);

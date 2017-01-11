@@ -240,7 +240,6 @@ class Operaciones extends CI_Controller {
         $query = $this->db->get();
         $ejecutivo = $query->result_array();
 
-
         //mostrar query      
         //echo $this->db->last_query();
         $data['ejecutivo'] = $ejecutivo;
@@ -257,8 +256,7 @@ class Operaciones extends CI_Controller {
         $query = $this->db->get();
         $contratado = $query->result();
         $data['contratado'] = $contratado;
-        //contratados fin96078
-        
+        //contratados fin96078        
         
         if ($this->input->post('nombre')) {
             $es_soltero = $this->input->post('soltero');
@@ -318,6 +316,9 @@ class Operaciones extends CI_Controller {
     }
 
     function imprimir_ficha($id_ejecutivo){
+        if (empty($id_ejecutivo)){
+            $id_ejecutivo = $this->input->post('id_ejecutivo');
+        }
         $data['id_ejecutivo'] = $id_ejecutivo;
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');
@@ -333,10 +334,8 @@ class Operaciones extends CI_Controller {
         //imprime query
         //echo $this->db->last_query();
 
-        $ejecutivo = $query->result_array();
-                
+        $ejecutivo = $query->result_array();                
         $data['ejecutivo'] = $ejecutivo;
-
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
         $data['turnos'] = $turnos;
         //importante el slash del final o no funcionará correctamente
@@ -345,10 +344,9 @@ class Operaciones extends CI_Controller {
         //establecemos el nombre del archivo
         $this->html2pdf->filename('test.pdf');
         $this->html2pdf->html(utf8_decode($this->load->view('operaciones/ficha_contratacion_pdf', $data, true)));
-         if($this->html2pdf->create('save')) 
-        {
-            $this->show();
-        }
+             if($this->html2pdf->create('save')){
+                $this->show();
+            }
         
     }
      public function show()
@@ -363,6 +361,45 @@ class Operaciones extends CI_Controller {
                 readfile($route);
             }
         }
+    }
+
+    public function imprime_ficha($id_ejecutivo){
+        if (empty($id_ejecutivo)){
+            $id_ejecutivo = $this->input->post('id_ejecutivo');
+        }
+            $data['id_ejecutivo'] = $id_ejecutivo;
+            $this->db->from('postulantes');
+            $this->db->join('personas','personas.rut = postulantes.rut');
+            $this->db->join('areas','areas.id_area= postulantes.id_area');
+            $this->db->join('pms','pms.id_area= areas.id_area');
+            $this->db->join('sucursales','sucursales.id_sucursal = postulantes.sucursal_id');
+            $this->db->join('turnos_postulantes','turnos_postulantes.id_postulante = postulantes.id_postulante');
+            $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno');   
+            $this->db->join('contratados','contratados.rut = postulantes.rut','left');
+            $this->db->where('postulantes.id_postulante = '.$id_ejecutivo);
+            $query = $this->db->get();
+
+            if ($this->input->post('nombre')) {
+                $es_soltero = $this->input->post('soltero');
+                if ($es_soltero == 'X') {
+                    $edo_civil = 'Soltero';
+                } else{
+                    $edo_civil = 'Casado';
+                }
+                $fecha_nacimiento = date("Y-m-d", strtotime($this->input->post('fecha_nacimiento')));
+                
+                $motivo = $this->input->post('motivo_contrato');
+               
+                $motivo_contrato = $this->input->post('motivo_contrato').' '.$this->input->post($motivo);
+                $fecha_ingreso = date("Y-m-d", strtotime($this->input->post('fecha_contrato')));
+                          
+                $existe_contrato = $this->MyModel->buscar_model('contratados',array('rut'=>$this->input->post('rut')));
+                
+                redirect(base_url().'index.php/operaciones/imprimir_ficha/'.$id_ejecutivo);
+        }
+        $this->load->view('common/header');
+        $this->load->view('operaciones/ficha_contratacion',$data);
+        $this->load->view('common/footer');
     }
     
     public function pasar_asistencia(){

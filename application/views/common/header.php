@@ -285,13 +285,8 @@ if(!isset($this->session->userdata['id_usuario'])){
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/induccion');?>"><i class="fa fa-circle-o"></i>Inducci&oacute;n Calidad</a></li>
-
                 <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/induccion_ejecutivos');?>"><i class="fa fa-circle-o"></i>Inducci&oacute;n Ejecutivo</a></li>
-
-                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/escuchas');?>"><i class="fa fa-circle-o"></i>Escuchas </a></li>
-                
-                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/escuchas_ejecutivos');?>"><i class="fa fa-circle-o"></i>Escuchas 2</a></li>
+                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/escuchas_ejecutivos');?>"><i class="fa fa-circle-o"></i>Escuchas</a></li>
 
                 <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/desempeño');?>"><i class="fa fa-circle-o"></i>Desempe&ntilde;o </a></li>
                 <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/continuidad_laboral');?>"><i class="fa fa-circle-o"></i> Continuidad Laboral</a></li>

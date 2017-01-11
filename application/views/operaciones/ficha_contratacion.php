@@ -3,11 +3,7 @@
     <section class="content-header">
       <h1>Ficha<small> de Contratacion</small></h1>
     </section>
-   <?php
-    echo form_open('Operaciones/ficha_contratacion');
-    echo form_hidden('id_ejecutivo', $id_ejecutivo);
-    echo form_hidden('id_persona', $ejecutivo[0]['id_persona']);
-    ?>
+   
     <section class="content">
           <div class="row">
             <div class="col-xs-8">
@@ -27,16 +23,30 @@
           </div>
           <?php
           if(!empty($contratado)){
+
             $btn_bloqueo = 'disabled';
+            $btn_label = 'Imprime';
+            $formulario = 'Operaciones/imprime_ficha';
+            $tarjet = array('target' =>'_blank');
             ?>
             <div id="alerta_sesion" class="alert alert-danger alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Atenci&oacute;n,</strong> El Ejecutivo ya se encuentra contratado.
             </div>
             <?php
+
           }else{
-            $btn_bloqueo = '';
+
+            $btn_bloqueu = 'disabled';
+            $btn_label = 'Guarda';
+            $formulario = 'Operaciones/ficha_contratacion';
+            $tarjet = '';
+
           }?>
+        <?php
+            echo form_open($formulario,$tarjet);
+            echo form_hidden('id_ejecutivo', $id_ejecutivo);
+            echo form_hidden('id_persona', $ejecutivo[0]['id_persona']);?>  
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-info">
@@ -304,13 +314,16 @@
                 
                 <div class="row">
                 <div class="col-md-10"></div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-info pull-right" <?=$btn_bloqueo?>>Guardar</button>
-                </div>       
+
+                    <div class="col-md-2">                    
+                        <button type="submit" class="btn btn-info pull-right"><?=$btn_label?></button>
+                    </div>
+
                 </div>
 
             </div>
         </div>
+        <?php echo form_close();?>
     </section>
 
 </div>

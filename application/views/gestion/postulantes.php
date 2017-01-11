@@ -149,7 +149,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
          
-            <button type="submit" class="btn btn-outline">Asignar</button>
+            <button type="submit" class="btn btn-outline" id="asignar">Asignar</button>
         </form>
       </div>
     </div><!-- /.modal-content -->

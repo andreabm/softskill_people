@@ -25,13 +25,37 @@ class Index extends CI_Controller {
         $area = $this->input->post('area');
         $carteras = $this->MyModel->buscar_model('carteras','id_area ='.$area);
         $sucursales = $this->MyModel->buscar_model('areas','id_area ='.$area);
+        $solicitudes = $this->MyModel->buscar_model('solicitudes','id_area ='.$area);
 
         //$lsucursales = $this->MyModel->buscar_select('sucursales','sucursales','sucursales');
         //$data['lsucursales'] = $lsucursales;
         //print_r($this->db->last_query());
         $data['carteras'] = $carteras;
         $data['sucursales'] = $sucursales;
+        $data['solicitudes'] = $solicitudes;
         print_r(json_encode($data));
+    }
+    public function cargar_solicitudes(){
+        $area = $this->input->post('area');
+        
+        $carteras = $this->MyModel->buscar_model('carteras','id_area ='.$area);
+
+        $query = $this->db->query("SELECT carteras.id_cartera, carteras.cartera FROM carteras 
+                                    INNER JOIN solicitudes ON solicitudes.id_cartera = carteras.id_cartera WHERE carteras.id_area = ".$area);
+
+        $carteras = $query->result_array();
+
+        $sucursales = $this->MyModel->buscar_model('areas','id_area ='.$area);
+        $solicitudes = $this->MyModel->buscar_model('solicitudes','id_area ='.$area);
+
+        //$lsucursales = $this->MyModel->buscar_select('sucursales','sucursales','sucursales');
+        //$data['lsucursales'] = $lsucursales;
+        //print_r($this->db->last_query());
+        $data['carteras'] = $carteras;
+        $data['sucursales'] = $sucursales;
+        $data['solicitudes'] = $solicitudes;
+        print_r(json_encode($data));
+
     }
 
     public function test(){

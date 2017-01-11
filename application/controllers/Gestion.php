@@ -514,8 +514,12 @@ class Gestion extends CI_Controller {
     public function postulante_califica(){
         $id_postulante = $this->input->post('id_postulante');
         
+        $cargos = $this->MyModel->buscar_select('cargos','id_cargo','cargo');    
+        $data['cargos'] = $cargos;
+
         $this->db->from('areas');
         $this->db->join('solicitudes','solicitudes.id_area=areas.id_area');
+        $this->db->where('solicitudes.cantidad_entregada < solicitudes.cantidad_solicitada');
         $this->db->group_by('areas.id_area');
         $query = $this->db->get();
         $areas = $query->result_array();   
@@ -531,7 +535,7 @@ class Gestion extends CI_Controller {
         $motivos_no_califica = $this->MyModel->buscar_select('motivo_no_califica','id_motivo_no_califica','motivo');
         $data['motivos_no_califica'] = $motivos_no_califica;
         
-        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,postulantes.id_cargo,personas.email');
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,postulantes.id_cargo,personas.email,postulantes.id_cargo');
         $this->db->from('postulantes');
         $this->db->join('personas','postulantes.rut=personas.rut');
         $this->db->where('postulantes.id_postulante = '.$id_postulante);
@@ -622,9 +626,7 @@ class Gestion extends CI_Controller {
             $this->db->insert('usuarios', $data); 
             
         }
-        $update_persona = array(
-            'clasificado' => $califica
-        );
+        $update_persona = array('clasificado' => $califica);
         
         $this->db->where('rut',$rut);
         $this->db->update('postulantes', $update_postulante);

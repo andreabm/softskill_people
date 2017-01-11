@@ -11,18 +11,36 @@
             <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $postulante[0]['nombre'] ?>"/>
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="form-group">
             <label>RUT</label>
             <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut'] ?>" readonly="readonly"/>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>CARGO A POSTULAR</label>
+            <?php
+                echo form_dropdown('id_cargo',$cargos,$postulante[0]['id_cargo'],array('id' => 'id_cargo','class' => 'form-control','disabled' => 'disabled'));
+             ?>
+            <!--<input class="form-control" type="text" name="rut" id="rut" value="<?php //echo $postulante[0]['id_cargo'] ?>" readonly="readonly"/>-->
+        </div>
+    </div>
+
     <div class="col-md-12">
         <div class="form-group">
             <label>Email</label>
             <input class="form-control" type="text" name="email" id="email" value="<?php echo $postulante[0]['email'] ?>" readonly="readonly"/>
         </div>
     </div>
+
+    <div class="col-md-12">
+        <div class="alert alert-danger alert-dismissible" id="alerta_cargo" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenci&oacute;n!</strong> El cargo a Postular no Coincide.
+        </div>
+    </div>
+
     <div class="col-md-4">
         <label>Area</label>
         <select class="form-control" name="area" id="area">
@@ -71,25 +89,38 @@ $('#califica').change(function(){
  $( "#area" ).change(function() {
     cargar_carteras();
 });
-function cargar_carteras(){    
+function cargar_carteras(){
+    var cargo_postular = $('#id_cargo').val();
     $.ajax({
-      url:"<?php echo base_url('/index.php/index/cargar_carteras')?>",
+      url:"<?php echo base_url('/index.php/index/cargar_solicitudes')?>",
       type:'POST',
       data: {area:$('#area').val()},
       success: function(data) {        
       options_p = "<option selected>Seleccione area</option>";
       options_s = "";
+      options_sol = "";
         data = JSON.parse(data);
-        //console.debug(data);
         $.each(data.carteras,function(i,v){
              options_p +="<option value='"+v.id_cartera+"'>"+v.cartera+"</option>";            
         });
         $("#cartera").html(options_p);
         $.each(data.sucursales,function(i,v){
             $('#sucu').val(v.id_sucursal);
-             options_s +="<input type='hidden' name='id_sucursal' id='id_sucursal' value='"+v.id_sucursal+"' >";            
+             options_s +="<input type='hidden' name='id_sucursal' id='id_sucursal' value='"+v.id_sucursal+"' >";          
         });
         $("#suc").html(options_s);
+        $.each(data.solicitudes,function(i,v){
+            $('#sucu').val(v.id_solicitud);
+             options_sol +="<input type='hidden' name='id_solicitud' id='id_solicitud' value='"+v.id_cargo+"' >";
+             if(cargo_postular!=v.id_cargo){               
+               $('#alerta_cargo').fadeIn();
+                setTimeout(function(){$("#alerta_cargo").fadeOut(3000);},4000);
+                $('#asignar').prop("disabled", true); 
+             }else{
+                $('#alerta_cargo').fadeOut();
+                $('#asignar').prop("disabled", false); 
+             }
+        });
       },
       
       error: function(e) {
@@ -97,6 +128,4 @@ function cargar_carteras(){
       }
    }); 
 }
-
-
 </script>

@@ -51,8 +51,6 @@ class Operaciones extends CI_Controller {
             $this->MyModel->agregar_model('solicitudes',$nueva_solicitud);
             redirect('operaciones/solicitudes');
         }
-
-
         
         $this->load->view('common/header');
         $areas = $this->MyModel->buscar_select('areas','id_area','area');

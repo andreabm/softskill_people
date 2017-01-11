@@ -529,7 +529,7 @@ class Gestion extends CI_Controller {
         $this->db->join('solicitudes','solicitudes.id_cartera=carteras.id_cartera');
         $this->db->group_by('carteras.id_cartera');
         $query = $this->db->get();
-        $carteras = $query->result_array();   
+        $carteras = $query->result_array();
         $data['carteras'] = $carteras;
         
         $motivos_no_califica = $this->MyModel->buscar_select('motivo_no_califica','id_motivo_no_califica','motivo');

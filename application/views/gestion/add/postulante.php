@@ -18,10 +18,7 @@ $(document).ready(function() {
     });
 });
     </script>
-    <?php
-  echo form_open('Gestion/agregar_postulante');
-  ?>
-  
+ <?php echo form_open('Gestion/agregar_postulante');?>  
   <div class="row">
     <div class="col-xs-8">
         <div class="alert alert-danger alert-dismissible" id="alerta" style="display: none;">
@@ -109,6 +106,12 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label>Email</label>
                             <input class="form-control" type="text" name="email" id="email" placeholder="Email" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Raz&oacute;n Social</label>
+                            <input class="form-control" type="text" name="razon_social" id="razon_social" placeholder="Raz&oacute;n Social" value="" />
                         </div>
                     </div>
               </div>

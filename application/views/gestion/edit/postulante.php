@@ -8,19 +8,8 @@
     </section>
     <!-- Main content -->
     <section class="content">
-
-      <?php 
-      /*
-      echo '<pre>';
-      print_r($postulante);
-      echo '</pre>';
-      */
-      ?>
-
     <br />
-    <?php  
-  echo form_open('Gestion/editar_postulante');
-  ?>
+   <?php echo form_open('Gestion/editar_postulante');?>
       <div class="row">
         <div class="col-xs-12">
             <div class="box box-success">
@@ -38,7 +27,30 @@
                     </div>                    
               </div>
               
-              <div class="row">                    
+              <div class="row">
+                  <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Nombres</label>
+                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" value="<?php echo $postulante[0]['nombre'];?>" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Apellido Paterno</label>
+                            <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" value="<?php echo $postulante[0]['paterno'];?>"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Apellido Materno</label>
+                            <input class="form-control" type="text" name="materno" id="materno" placeholder="Apellido Materno" value="<?php echo $postulante[0]['materno'];?>"/>
+                        </div>
+                    </div>
+
+                </div>      
+
+                    
+                <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Fecha:</label>
@@ -55,13 +67,6 @@
                     
                     <div class="col-md-3 ">
                         <div class="form-group">
-                            <label>Nombre</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" value="<?php echo $postulante[0]['nombre'] ?>" />
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-3 ">
-                        <div class="form-group">
                             <label>Edad</label>
                             <input class="form-control" type="text" name="edad" id="edad" placeholder="Edad" value="<?php if(isset($postulante[0]['edad'])){echo $postulante[0]['edad'];}?>" />                           
                         </div>
@@ -72,7 +77,12 @@
                             <input class="form-control" type="text" name="email" id="email" placeholder="Email" value="<?php echo $postulante[0]['email'] ?>" />
                         </div>
                     </div>
-                    
+                    <div class="col-md-3 ">
+                        <div class="form-group">
+                            <label>Raz&oacute;n Social</label>
+                            <input class="form-control" type="text" name="razon_social" id="razon_social" placeholder="Raz&oacute;n Social" value="<?php echo $postulante[0]['razon_social'] ?>" />
+                        </div>
+                    </div>                    
               </div>              
               
               <div class="row">

@@ -42,7 +42,13 @@
         <?php
             echo form_open($formulario,$tarjet);
             echo form_hidden('id_ejecutivo', $id_ejecutivo);
-            echo form_hidden('id_persona', $ejecutivo[0]['id_persona']);?>  
+            echo form_hidden('id_persona', $ejecutivo[0]['id_persona']);
+            /*    
+            echo '<pre>';
+                print_r($ejecutivo);
+            echo '</pre>';
+            */
+            ?>  
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-info">
@@ -54,7 +60,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>RAZ&Oacute;N SOCIAL</label>
-                                    <input class="form-control" type="text" name="razon_social" id="razon_social" required/>
+                                    <input class="form-control" type="text" name="razon_social" id="razon_social" value="<?php echo $ejecutivo[0]['razon_social'] ?>" required/>
                                 </div>
                             </div>
                         </div>

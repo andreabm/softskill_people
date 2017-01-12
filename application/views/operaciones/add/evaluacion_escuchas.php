@@ -26,6 +26,12 @@
     </div>
 
     <?php 
+/*
+        echo '<pre>';
+          print_r($nota);
+        echo '</pre>';
+        */
+
         $attributes = array('id' => 'form1');
         echo form_open('operaciones/insert_escuchas', $attributes);
         ?>
@@ -68,7 +74,7 @@
                     <div class="form-group">
                         <label>Area</label>
                         <?php
-                        echo form_dropdown('area_id',$areas,$nota[0]['id_area'],array('class' => 'form-control','id' => 'select_area'));
+                        echo form_dropdown('area_id',$areas,$postulante[0]['id_area'],array('class' => 'form-control','id' => 'select_area'));
                         ?>
                       </div>
                     </div>
@@ -76,7 +82,7 @@
                         <div class="form-group">
                             <label>Cartera</label>
                             <?php
-                            echo form_dropdown('cartera_id',$carteras,$nota[0]['id_cartera'],array('class' => 'form-control', 'id' => 'select_cartera'));
+                            echo form_dropdown('cartera_id',$carteras,$postulante[0]['id_cartera'],array('class' => 'form-control', 'id' => 'select_cartera'));
                             ?>
                         </div>
                     </div>
@@ -85,7 +91,7 @@
                             <div class="form-group">
                                 <label>Supervisor</label>
                                 <?php
-                                echo form_dropdown('supervisor',$supervisores,$nota[0]['id_supervisor'],array('class' => 'form-control','id' => 'supervisor'));
+                                echo form_dropdown('supervisor',$supervisores,'',array('class' => 'form-control','id' => 'supervisor'));
                                 ?>                           
                             </div>
                         </div>
@@ -108,7 +114,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right datepicker" name="fecha_audio" value="<?=$nota[0]['fecha_audio'];?>">
+                              <input type="text" class="form-control pull-right datepicker" name="fecha_audio" value="">
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -125,7 +131,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Rut del Audio</label>
-                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio" value="<?php echo $nota[0]['rut_audio'];?>" required>                           
+                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio" value="" required>                           
                             </div>
                         </div>
                         <div class="col-md-3">

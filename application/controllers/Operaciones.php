@@ -1110,6 +1110,7 @@ class Operaciones extends CI_Controller {
             //postulante
             $data['id'] = $id;
             $postulante = $this->MyModel->buscar_model('postulantes','id_postulante ='.$id);
+
             $data['postulante'] = $postulante;
             //datos persona
             $persona = $this->MyModel->buscar_model('personas','rut ="'.$postulante[0]['rut'].'"');
@@ -1128,8 +1129,8 @@ class Operaciones extends CI_Controller {
             
             //hasta aqui            
             //evaluacion_items ini
-            $nota = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');
-            $data['nota'] = $nota;
+            //$nota = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');
+            //$data['nota'] = $nota;
             //lo que respondio
             //$respondido_q= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
             $respondido= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');

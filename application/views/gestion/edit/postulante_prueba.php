@@ -373,11 +373,11 @@ function prioridad(val,valert,vprioridad,valert2){
         if(valor_to < 5){
           $('#'+valert).fadeIn();
           $('#'+valert2).hide();
-          setTimeout(function(){$('#'+valert).fadeOut();},10000);
+          //setTimeout(function(){$('#'+valert).fadeOut();},10000);
         }else{
           $('#'+valert2).fadeIn();
           $('#'+valert).hide();
-          setTimeout(function(){$('#'+valert2).fadeOut();},10000);
+          //setTimeout(function(){$('#'+valert2).fadeOut();},10000);
         }
     }
     

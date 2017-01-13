@@ -185,8 +185,7 @@ class Gestion extends CI_Controller {
                 'valora' => $valora,
                 'condiciones' => $condiciones
             );
-            
-                        
+                   
             $this->MyModel->agregar_model('personas',$nueva_persona);
             $postulante_id = $this->MyModel->agregar_model('postulantes',$nuevo_postulante);
             foreach ($turnos as $id => $t) {
@@ -870,10 +869,10 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
             $this->db->where('rut="'.$id.'"');
             $query = $this->db->get();
             $postulante = $query->result_array();            
-            if (!empty($postulante)) {
+            if(!empty($postulante)){
                 $data['existe'] = 'SI';
 				$data['id'] = $postulante[0]['id_postulante'];
-            }   else {
+            }else{
                 $data['existe'] = 'NO';
             }
         }

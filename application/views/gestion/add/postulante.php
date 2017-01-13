@@ -346,8 +346,7 @@ $(document).ready(function() {
                         $factor_seleccionadas = array();
                         foreach($factor_seleccionadas as $b){
                             $check[] = $b['id_factor'];        
-                        }
-                               
+                        }                               
                  
                         foreach($factor as $k=>$a){              
                         if (in_array($k,$check)) {
@@ -808,12 +807,10 @@ function agregar_hobbie(event){
             }else{               
                 $('#alerta_hobbies_r').fadeIn();
                 setTimeout(function(){$("#alerta_hobbies_r").fadeOut(2000);},3000);        
-            }            
-            
+            }
           },
           error: function(e) {
             alert('error');
-            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
           }
     });
     }else{
@@ -844,12 +841,12 @@ function validar_rut(event){
             data  = JSON.parse(data);          
             
             if (data.existe=='SI'){
-				$('#id_postulante').val(data.id);
+				        $('#id_postulante').val(data.id);
                 $('.verificar').hide();
                 $('#alerta').fadeIn();
                 setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
                 return false;
-            } else {                
+            }else{                
                 $('.verificar').fadeIn();
                 //respuesta.innerText = "Exito";
             }            
@@ -859,6 +856,8 @@ function validar_rut(event){
             alert('error');
             //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
           }
+
     });
+    
 }
 </script>

@@ -51,9 +51,12 @@ $(document).ready(function() {
                 
                     <label>Rut:</label>
                     <div class="input-group">
-                      <input type="text" id="rut" name="rut" class="form-control" placeholder="Rut" autocomplete="off" />
-					  <input type="hidden" id="id_postulante">
-                      <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="validar_rut(event)">Validar</a></span>
+                      <input type="hidden" id="prueba" name="prueba" value="0" />
+
+                      <input type="text" id="rut" name="rut" class="form-control" placeholder="Rut" autocomplete="off" onkeyup="texto_rut(event);" />
+
+					            <input type="hidden" id="id_postulante">
+                      <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="validar_rut(event),texto_rut(event);">Validar</a></span>
                     </div>
                 </div>
               </div>
@@ -693,6 +696,7 @@ $(document).ready(function() {
       </div>
       </div>
     </section>
+
 <div class="modal modal-success fade" id="verPostulante">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -701,16 +705,15 @@ $(document).ready(function() {
                   <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Postulante</h4>
               </div>
-      <div class="modal-body" id="verPostulanteBody">
-        
+      <div class="modal-body" id="verPostulanteBody">        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-     
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 <script>
 function verPostulante(){
     $.ajax({
@@ -726,7 +729,7 @@ function verPostulante(){
     });
 }
 $('.verificar').hide();
-
+texto_rut();
 $('.datepicker').datepicker({
       autoclose: true
     });
@@ -735,22 +738,24 @@ $(".timepicker").timepicker({
       showMeridian: false
 });
 
-
+function texto_rut(event){
+event.preventDefault();
 $('#rut').Rut({
   on_error: function(){ 
     $('#alerta_rut').fadeIn();
     $('.verificar').fadeOut();
+    $('#prueba').val('1');
     setTimeout(function(){
         $("#alerta_rut").fadeOut(2000);},3000);
     },
   format_on: 'keyup'
 });
+}
 
 setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
 setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
 
-function agregar_factor(event){
-    
+function agregar_factor(event){    
     event.preventDefault();
     var ofactor = document.getElementById("otro_factor");
     var vfactor = ofactor.value;
@@ -807,10 +812,12 @@ function agregar_hobbie(event){
             }else{               
                 $('#alerta_hobbies_r').fadeIn();
                 setTimeout(function(){$("#alerta_hobbies_r").fadeOut(2000);},3000);        
-            }
+            }            
+            
           },
           error: function(e) {
             alert('error');
+            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
           }
     });
     }else{
@@ -826,11 +833,11 @@ function validar_rut(event){
     event.preventDefault();
     var edValue = document.getElementById("rut");
     var rut = edValue.value;    
-    
-    var muestra = document.getElementById("muestra");
-    //muestra.innerText = "Campo rut ingresado: "+rut;
-        
+    var muestra = document.getElementById("muestra");        
     var respuesta = document.getElementById("respuesta");
+
+    var prueba = document.getElementById("prueba");
+
     $.ajax({
           url:"<?php echo base_url('index.php/gestion/valida_rut')?>",
           type: 'POST',
@@ -841,14 +848,21 @@ function validar_rut(event){
             data  = JSON.parse(data);          
             
             if (data.existe=='SI'){
+                //alert(validado);
 				        $('#id_postulante').val(data.id);
                 $('.verificar').hide();
                 $('#alerta').fadeIn();
                 setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
                 return false;
-            }else{                
+            }else if(data.existe=='NO' && prueba==1){
+                //alert('test');
+                $('#id_postulante').val(data.id);
+                $('.verificar').hide();
+                $('#alerta').fadeIn();
+                setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
+                return false;
+            }else {                
                 $('.verificar').fadeIn();
-                //respuesta.innerText = "Exito";
             }            
             
           },
@@ -856,8 +870,6 @@ function validar_rut(event){
             alert('error');
             //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
           }
-
     });
-    
 }
 </script>

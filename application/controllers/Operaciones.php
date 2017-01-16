@@ -1353,5 +1353,53 @@ class Operaciones extends CI_Controller {
             
         }
 
+        public function fuentes(){        
+            $this->db->from('fuentes');      
+            $query = $this->db->get();
+            $fuentes = $query->result_array();
+            $data['fuentes'] = $fuentes;
+            $this->load->view('common/header');
+            $this->load->view('operaciones/fuentes',$data);
+            $this->load->view('common/footer');
+        }
+        public function editar_fuente($id_fuente){            
+            if(empty($id_fuente)){
+               $id_fuente = $this->input->post('id_postulante');
+            }
+            //consulto por fuente
+            $this->db->from('fuentes');
+            $this->db->where('fuentes.id_fuente = '.$id_fuente);        
+            $query = $this->db->get();
+            $fuente = $query->result_array();
+            $data['fuente'] = $fuente;            
+            if($this->input->post('nombre_fuente')){
+                $nombre = $this->input->post('nombre_fuente');
+                $id_fuente = $this->input->post('id_fuente');
+                 $actualiza_fuente = array(
+                        'fuente' => $nombre,
+                        'id_fuente' => $id_fuente
+                    );
+                print_r($actualiza_fuente);
+                $this->MyModel->agregar_model('fuentes',$actualiza_fuente,'id_fuente',$this->input->post('id_fuente'));                
+                redirect(base_url("index.php/Operaciones/fuentes"));
+            }            
+
+            $this->load->view('common/header');
+            $this->load->view('operaciones/edit/fuentes',$data);
+            $this->load->view('common/footer');
+        }
+        public function agregar_fuente(){
+            if($this->input->post('nombre_fuente')) {
+                $nombre = $this->input->post('nombre_fuente');
+                $nuevo_fuente = array('fuente' => $nombre);   
+
+                $this->db->insert('fuentes', $nuevo_fuente);
+                redirect(base_url("index.php/Operaciones/fuentes"));
+            }
+            $this->load->view('common/header');
+            $this->load->view('operaciones/add/fuentes');
+            $this->load->view('common/footer');
+        }
+
 }
 ?>

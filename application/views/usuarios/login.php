@@ -14,7 +14,8 @@
       <link rel="stylesheet" href="<?php echo base_url("assets/ionicons-2.0.1/css/ionicons.min.css"); ?>">
 
 <!--ini-->
-<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed" rel="stylesheet">
+
 <style type="text/css">
 body{
     background-color: #fff;
@@ -28,7 +29,7 @@ padding: 10px 0px;
 }
 .frase{
     padding: 30px 0px; 
-    text-align: right;
+    text-align: center;
 }
 .marco{
     top: 0px;
@@ -39,7 +40,7 @@ padding: 10px 0px;
     padding-bottom:60px;
 }
 .soft{
-    font-family: 'Amatic SC', cursive;
+    font-family: 'Fira Sans Extra Condensed', sans-serif;
     font-size: 30px;
     font-weight: bold;
 }
@@ -135,8 +136,7 @@ padding: 10px 0px;
            <!--ini-->
            <div class="container marco" >
                 <div class="row">
-                    <div class="col-xs-4 logo"><img src="<?php echo base_url('assets/dist/img/logo_serbanc.jpg');?>" width="230" /></div>    
-                    <div class="col-xs-8 frase">Operamos desde 1983 como una organización orientada a brindar soluciones de valor agregado a sus clientes en el ámbito de la Cobranza y Aseguramiento de Ingresos.</div>
+                    <div class="col-xs-12 frase">Operamos desde 1983 como una organización orientada a brindar soluciones de valor agregado a sus clientes en el ámbito de la Cobranza y Aseguramiento de Ingresos.</div>
                 </div>
             </div> 
            <!--fin--> 

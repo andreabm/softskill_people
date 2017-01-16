@@ -227,7 +227,7 @@
                         $resultado_test = $resultado_competencia[$c['id_competencias_item']]*$c['ponderacion'];                        
                         ?>
                         <td>
-                        <input type="text" class="form-control grupo<?=$comp['id_competencia']?>" name="<?php echo 'ritem'.$c['id_competencias_item'].'';?>" id="<?php echo 'ritem'.$c['id_competencias_item'].'';?>" placeholder="<?php echo 'ritem'.$c['id_competencias_item'].'';?>" value="<?php echo $resultado_test?>" style="width:100px" disabled/>
+                        <input type="hidden" class="form-control grupo<?=$comp['id_competencia']?>" name="<?php echo 'ritem'.$c['id_competencias_item'].'';?>" id="<?php echo 'ritem'.$c['id_competencias_item'].'';?>" placeholder="<?php echo 'ritem'.$c['id_competencias_item'].'';?>" value="<?php echo $resultado_test?>" style="width:100px" disabled/>
                         <td>
                         <?php
                         echo '</tr>';                        
@@ -241,7 +241,19 @@
                 $resultado_final = number_format((float)$otro_result/100, 1, '.', '');                
                 $por_cat = number_format((float)$resultado_final*$comp['ponderacion'], 1, '.', '');                
                 $total_cat = $total_cat + $por_cat/100;
-                $total_cat = number_format((float)$total_cat, 1, '.', '');
+                $total_cat = number_format((float)$total_cat, 1, '.', '');                
+
+                echo '<tr>';
+                echo '<th>Resultado</th>';
+                echo '<th>
+                <input class="form-control" name="total'.$comp['id_competencia'].'" id="total'.$comp['id_competencia'].'" placeholder="total'.$comp['id_competencia'].'" value="'.$resultado_final.'" style="width:100px" disabled>
+                <input class="form-control" type="hidden" name="grupo" id="grupo" value="grupo'.$comp['id_competencia'].'" style="width:70px;" disabled/>
+                <input type="hidden" class="form-control" name="resultado'.$comp['id_competencia'].'" id="resultado'.$comp['id_competencia'].'" placeholder="Resultado" style="width:100px" value="" disabled>
+                
+                </th>';
+                echo '<th>
+                <input type="hidden" class="form-control agrupado" name="total_cat'.$comp['id_competencia'].'" id="total_cat'.$comp['id_competencia'].'" placeholder="total_cat'.$comp['id_competencia'].'" value="'.$por_cat.'" style="width:100px" disabled>
+                </tr>';         
 
                 echo '<tr>';
                 echo '<th colspan="7">';
@@ -258,26 +270,7 @@
                 <?php
                 echo '</th>';
                 echo '</tr>';
-
-                echo '<tr>';
-                echo '<th>Resultado</th>';
-                echo '<th>
-                <input class="form-control" name="total'.$comp['id_competencia'].'" id="total'.$comp['id_competencia'].'" placeholder="total'.$comp['id_competencia'].'" value="'.$resultado_final.'" style="width:100px" disabled>
-                <input class="form-control" type="hidden" name="grupo" id="grupo" value="grupo'.$comp['id_competencia'].'" style="width:70px;" disabled/>
-                <input type="hidden" class="form-control" name="resultado'.$comp['id_competencia'].'" id="resultado'.$comp['id_competencia'].'" placeholder="Resultado" style="width:100px" value="" disabled>
-                
-                </th>';
-                echo '<th>
-                <input type="hidden" class="form-control agrupado" name="total_cat'.$comp['id_competencia'].'" id="total_cat'.$comp['id_competencia'].'" placeholder="total_cat'.$comp['id_competencia'].'" value="'.$por_cat.'" style="width:100px" disabled>
-                </tr>';         
               }
-              
-              echo '<tr>';
-                echo '<th><label>APROBACI&Oacute;N</label></th>';
-                echo '<th>
-                      <input class="form-control" name="aprobacion" id="aprobacion" value="'.$total_cat.'" disabled readonly />  
-                </th>';
-
               
               echo '</table>';
               ?>
@@ -311,7 +304,15 @@
                   <h3 class="box-title" name="resultado_psicologica">COMENTARIOS DE LA EVALUACIÓN PSICOLOGICA Y RESULTADO FINAL</h3>
               </div>
               <div class="box-body">
-                <textarea class="form-control" ></textarea>
+
+                <div class="col-md-12">
+                      <input class="form-control" name="aprobacion" id="aprobacion" value="<?=$total_cat?>" disabled readonly /> 
+                </div><br/><br/>
+
+                <div class="col-md-12">
+                <textarea class="form-control" name="comentario" id="comentario">Nota final <?=$total_cat?>, </textarea>
+                </div>
+
               </div>
             <!-- /.box-body -->
             </div>
@@ -326,8 +327,10 @@
                   <h3 class="box-title">Otros</h3>
               </div>
         <div class="box-body">
-        <textarea class="form-control"></textarea>
-              
+          <div class="col-md-12">
+            <textarea class="form-control" name="otro" id="otro"></textarea>
+          </div>   
+
           </div>
         
               
@@ -380,7 +383,6 @@ function prioridad(val,valert,vprioridad,valert2){
           //setTimeout(function(){$('#'+valert2).fadeOut();},10000);
         }
     }
-    
 }   
    
 function calcula(calificacion,ponderacion,resultado_final,ritem,grupo,total_cat,ponderacion_cat){
@@ -436,7 +438,8 @@ function calcula_grupo(grupo,resultado_final,total_cat,vponcat){
         setTimeout(function(){$('#noaprueba').fadeOut();},20000);
         $('#guardar').prop("disabled", true);
     }    
-    $("#aprobacion").val(total_aprobacion.toFixed(1));
+        $("#aprobacion").val(total_aprobacion.toFixed(1));
+        $("#comentario").val('Nota final '+total_aprobacion.toFixed(1)+', ');
 }
 </script>
 <script>

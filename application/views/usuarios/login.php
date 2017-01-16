@@ -17,33 +17,13 @@
 <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed" rel="stylesheet">
 
 <style type="text/css">
-body{
-    background-color: #fff;
-    padding-top:0px;
-}
-.fondo{
-    background-image: url("<?php echo base_url('assets/dist/img/background_serbanc.jpg');?>");
-}
-.logo{
-padding: 10px 0px;    
-}
-.frase{
-    padding: 30px 0px; 
-    text-align: center;
-}
-.marco{
-    top: 0px;
-    max-width: 900px;  
-}
-.vertical-offset-100{
-    padding-top:70px;
-    padding-bottom:60px;
-}
-.soft{
-    font-family: 'Fira Sans Extra Condensed', sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-}
+body{background-color: #fff;padding-top:0px;}
+.fondo{background-image: url("<?php echo base_url('assets/dist/img/background_serbanc.jpg');?>");}
+.logo{padding: 10px 0px;}
+.frase{padding: 30px 0px;text-align: center;}
+.marco{top: 0px;max-width: 900px;}
+.vertical-offset-100{padding-top:70px;padding-bottom:60px;}
+.soft{font-family: 'Fira Sans Extra Condensed', sans-serif;font-size: 30px;font-weight: bold;}
 </style>
 <!--fin-->
   </head>

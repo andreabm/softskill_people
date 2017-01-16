@@ -510,7 +510,9 @@ class Gestion extends CI_Controller {
                $nuevo_resultado = array(
                     'rut' => $this->input->post('rut'),
                     'id_competencia_item' => $id,
-                    'calificacion' => $c
+                    'calificacion' => $c,
+                    'comentario' => $this->input->post('comentario'),
+                    'otros' => $this->input->post('otro')
                );
                $this->db->insert('resultado_competencias', $nuevo_resultado);
             }

@@ -18,11 +18,11 @@
     </tr>
     <tr>
         <th>Fono movil</th>
-        <td><?php echo $postulante[0]['fono_movil']?></td>
+        <td><?php echo '+56 9 '.$postulante[0]['fono_movil']?></td>
     </tr>
     <tr>
         <th>Fono fijo</th>
-        <td><?php echo $postulante[0]['fono_fijo']?></td>
+        <td><?php echo '+56 2 '.$postulante[0]['fono_fijo']?></td>
     </tr>
     <tr>
         <th>Discapacidad</th>
@@ -34,7 +34,7 @@
     </tr>
     <tr>
         <th>Pretensiones de Renta</th>
-        <td><?php echo $postulante[0]['pretension_renta']?></td>
+        <td>$<?php echo number_format($postulante[0]['pretension_renta'], 0, ',', '.');?></td>
     </tr>
     <tr>
         <th>Fecha de Entrevista</th>

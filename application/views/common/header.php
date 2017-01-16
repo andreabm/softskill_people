@@ -206,8 +206,8 @@ if(!isset($this->session->userdata['id_usuario'])){
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url('/index.php/gestion/postulantes');?>"><i class="fa fa-circle-o"></i>Ver Postulantes </a></li>
                 <li><a href="<?php echo base_url('/index.php/gestion/agregar_postulante');?>"><i class="fa fa-circle-o"></i> Agregar Postulante</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Test Psicologico</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Competencias</a></li>
+                <!-- <li><a href="#"><i class="fa fa-circle-o"></i> Test Psicologico</a></li> 
+                <li><a href="#"><i class="fa fa-circle-o"></i> Competencias</a></li>-->
                 
               </ul>
             </li>

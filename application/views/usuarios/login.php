@@ -33,7 +33,7 @@ padding: 10px 0px;
 }
 .marco{
     top: 0px;
- width: 900px;   
+    max-width: 900px;  
 }
 .vertical-offset-100{
     padding-top:70px;
@@ -136,7 +136,7 @@ padding: 10px 0px;
            <!--ini-->
            <div class="container marco" >
                 <div class="row">
-                    <div class="col-xs-12 frase">Operamos desde 1983 como una organización orientada a brindar soluciones de valor agregado a sus clientes en el ámbito de la Cobranza y Aseguramiento de Ingresos.</div>
+                    <div class="col-xs-12 col-md-12 frase">Operamos desde 1983 como una organización orientada a brindar soluciones de valor agregado a sus clientes en el ámbito de la Cobranza y Aseguramiento de Ingresos.</div>
                 </div>
             </div> 
            <!--fin--> 

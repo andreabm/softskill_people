@@ -18,6 +18,7 @@
 <style type="text/css">
 body{
     background-color: #fff;
+    padding-top:0px;
 }
 .fondo{
     background-image: url("<?php echo base_url('assets/dist/img/background_serbanc.jpg');?>");

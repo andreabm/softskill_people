@@ -25,13 +25,7 @@
         </div>
     </div>
 
-    <?php 
-/*
-        echo '<pre>';
-          print_r($nota);
-        echo '</pre>';
-        */
-
+    <?php
         $attributes = array('id' => 'form1');
         echo form_open('operaciones/insert_escuchas', $attributes);
         ?>
@@ -124,8 +118,7 @@
                                 <label>Evaluador</label>
                                 <?php
                                 echo form_dropdown('evaluador',$supervisores,'',array('class' => 'form-control','id' => 'evaluador'));
-                                ?>
-                                
+                                ?>                                
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -261,7 +254,7 @@ $('.datepicker').datepicker({
 $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
-});
+    });
 
 $('#rut_audio').Rut({
   on_error: function(){ 

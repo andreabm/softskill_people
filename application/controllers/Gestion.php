@@ -120,6 +120,8 @@ class Gestion extends CI_Controller {
             $espera = $this->input->post('espera');
             $valora = $this->input->post('valora');
             $condiciones = $this->input->post('condiciones');
+
+            $r_social = $this->input->post('razon_social');
             
             $nueva_persona = array(
                 'rut' => $rut,
@@ -140,7 +142,8 @@ class Gestion extends CI_Controller {
                 'email' => $email,
                 'edad' => $edad,
                 'paterno' => $paterno,
-                'materno' => $materno
+                'materno' => $materno,
+                'razon_social' => $r_social
             ); 
             $nuevo_postulante = array(
                 'rut' => $rut,
@@ -182,8 +185,7 @@ class Gestion extends CI_Controller {
                 'valora' => $valora,
                 'condiciones' => $condiciones
             );
-            
-                        
+                   
             $this->MyModel->agregar_model('personas',$nueva_persona);
             $postulante_id = $this->MyModel->agregar_model('postulantes',$nuevo_postulante);
             foreach ($turnos as $id => $t) {
@@ -331,6 +333,10 @@ class Gestion extends CI_Controller {
             $espera = $this->input->post('espera');
             $valora = $this->input->post('valora');
             $condiciones = $this->input->post('condiciones');
+
+            $paterno = $this->input->post('paterno');
+            $materno = $this->input->post('materno');
+            $r_social = $this->input->post('razon_social');
                         
             $nueva_persona = array(
                 'rut' => $rut,
@@ -349,7 +355,10 @@ class Gestion extends CI_Controller {
                 'enfermedad' => $enfermedad,
                 'contacto_familiar' => $familiar,
                 'edad' => $edad,
-                'email' => $email
+                'email' => $email,
+                'paterno' => $paterno,
+                'materno' => $materno,
+                'razon_social' => $r_social
             ); 
             $nuevo_postulante = array(
                 'rut' => $rut,
@@ -860,10 +869,10 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
             $this->db->where('rut="'.$id.'"');
             $query = $this->db->get();
             $postulante = $query->result_array();            
-            if (!empty($postulante)) {
+            if(!empty($postulante)){
                 $data['existe'] = 'SI';
 				$data['id'] = $postulante[0]['id_postulante'];
-            }   else {
+            }else{
                 $data['existe'] = 'NO';
             }
         }

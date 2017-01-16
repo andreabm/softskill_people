@@ -67,5 +67,10 @@ class Index extends CI_Controller {
         $data['postulante'] = $cargos;
         print_r(json_encode($data));
     }
+    public function new_login(){
+        $this->load->view('common/header_nlogin');
+        $this->load->view('index/new_login');
+        //$this->load->view('common/footer');
+    }
 }
 ?>

@@ -63,15 +63,13 @@ padding: 10px 0px;
             echo $this->session->flashdata('msg');
         }
         
-        
         if(isset($_GET["u"])){
-
-            switch ($_GET["u"]){
-                case '1':
-                ?>
-                <div class="alert alert-danger text-center">La cuenta a la cual desea ingresar se encuentra Inactivo.</div>
-                <?php
-                break;
+                switch ($_GET["u"]){
+                    case '1':
+                    ?>
+                    <div class="alert alert-danger text-center">La cuenta a la cual desea ingresar se encuentra Inactivo.</div>
+                    <?php
+                    break;
                 }
             }
         ?>
@@ -137,8 +135,8 @@ padding: 10px 0px;
            <!--ini-->
            <div class="container marco" >
                 <div class="row">
-                    <div class="col-xs-5 logo"><img src="<?php echo base_url('assets/dist/img/logo_serbanc.jpg');?>" width="230" /></div>    
-                    <div class="col-xs-7 frase">Operamos desde 1983 como una organización orientada a brindar soluciones de valor agregado a sus clientes en el ámbito de la Cobranza y Aseguramiento de Ingresos.</div>
+                    <div class="col-xs-4 logo"><img src="<?php echo base_url('assets/dist/img/logo_serbanc.jpg');?>" width="230" /></div>    
+                    <div class="col-xs-8 frase">Operamos desde 1983 como una organización orientada a brindar soluciones de valor agregado a sus clientes en el ámbito de la Cobranza y Aseguramiento de Ingresos.</div>
                 </div>
             </div> 
            <!--fin--> 

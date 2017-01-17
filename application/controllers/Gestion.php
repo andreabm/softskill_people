@@ -23,6 +23,7 @@ class Gestion extends CI_Controller {
         $query = $this->db->get();
         $postulantes = $query->result_array();
         $data['postulantes'] = $postulantes;
+        $data['query'] = $this->db->last_query();
         $this->load->view('common/header');
         $this->load->view('gestion/postulantes',$data);
         $this->load->view('common/footer');
@@ -30,14 +31,17 @@ class Gestion extends CI_Controller {
     
     public function ver_postulante(){
         $id_postulante = $this->input->post('id_postulante');
+        $this->db->select('personas.rut,personas.nombre,personas.paterno,personas.materno,personas.fecha_nacimiento,personas.sexo,personas.edo_civil,personas.nacionalidad,personas.discapacidad,personas.enfermedad,personas.direccion,personas.comuna,personas.fono_movil,personas.fono_fijo,personas.email,personas.clasificado,postulantes.pretension_renta,postulantes.fecha_entrevista,fuentes.fuente,cargos.cargo,evaluadores.nombre_evaluador');
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');
         $this->db->join('fuentes','postulantes.id_fuente = fuentes.id_fuente');
         $this->db->join('cargos','postulantes.id_cargo = cargos.id_cargo');
+        $this->db->join('evaluadores','evaluadores.id_evaluador = postulantes.evaluador_id','left');
         $this->db->where('postulantes.id_postulante = '.$id_postulante);
         $query = $this->db->get();
         $postulante = $query->result_array();
         $data['postulante']=$postulante;
+        $data['query'] = $this->db->last_query();
         
         $this->db->from('turnos_postulantes');
         $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno');
@@ -476,7 +480,7 @@ class Gestion extends CI_Controller {
         $usuarios = $this->MyModel->buscar_select('usuarios','id_usuario','nombre'); //FALTA FILTRAR POR PERFILES        
         $data['usuarios'] = $usuarios;
 
-        $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre'); //FALTA FILTRAR POR PERFILES        
+        $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre_evaluador'); //FALTA FILTRAR POR PERFILES        
         $data['evaluadores'] = $evaluadores;
 
         if ($this->input->post('rut')) {

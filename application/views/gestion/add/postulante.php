@@ -2,7 +2,7 @@
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Postulacion 
+        Postulaci&oacute;n 
         <small> de Empleo</small>
       </h1>
     </section>
@@ -63,19 +63,19 @@ $(document).ready(function() {
               </div>  
               
                 <div class="row verificar">                
-                  <div class="col-md-3 ">
+                  <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Nombres</label>
                             <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" />
                         </div>
                     </div>
-                    <div class="col-md-3 ">
+                    <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Apellido Paterno</label>
                             <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" />
                         </div>
                     </div>
-                    <div class="col-md-3 ">
+                    <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Apellido Materno</label>
                             <input class="form-control" type="text" name="materno" id="materno" placeholder="Apellido Materno" />
@@ -85,7 +85,7 @@ $(document).ready(function() {
                     
                 <div class="row verificar">                
                 
-                <div class="col-md-3">
+                <div class="col-md-4">
                       <div class="form-group">
                         <label>Fecha:</label>
         
@@ -99,28 +99,21 @@ $(document).ready(function() {
                       </div>
                     </div>
                                         
-                    <div class="col-md-3 ">
+                    <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Edad</label>
                             <input class="form-control" type="text" name="edad" id="edad" placeholder="Edad" />                           
                         </div>
                     </div>                    
-                    <div class="col-md-3 ">
+                    <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Email</label>
                             <input class="form-control" type="text" name="email" id="email" placeholder="Email" />
                         </div>
                     </div>
-                    <div class="col-md-3 ">
-                        <div class="form-group">
-                            <label>Raz&oacute;n Social</label>
-                            <input class="form-control" type="text" name="razon_social" id="razon_social" placeholder="Raz&oacute;n Social" value="" />
-                        </div>
-                    </div>
-              </div>
-              
+              </div>              
               <div class="row verificar">
-                <div class="col-md-3">
+                <div class="col-md-4">
                       <div class="form-group">
                         <label>Fecha de Nacimiento:</label>
         
@@ -133,7 +126,7 @@ $(document).ready(function() {
                         <!-- /.input group -->
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                     <div class="form-group">
                         <label>Sexo</label>
                             <select class="form-control" style="width: 100%;" name="sexo">
@@ -142,7 +135,7 @@ $(document).ready(function() {
                             </select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Estado Civil</label>
                             <select class="form-control" style="width: 100%;" name="estado_civil">
@@ -152,22 +145,22 @@ $(document).ready(function() {
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+              </div>
+                  
+              <div class="row verificar">
+                <div class="col-md-3">
                         <div class="form-group">
                             <label>Nacionalidad</label>
                             <input class="form-control" type="text" name="nacionalidad" id="nacionalidad" placeholder="Nacionalidad">                           
                         </div>
                     </div>
-              </div>
-                  
-              <div class="row verificar">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <div class="form-group">
                       <label>Direcci&oacute;n</label>
                       <input type="text" class="form-control" placeholder="Direccion" name="direccion">
                     </div>
                  </div>
-                 <div class="col-md-4">
+                 <div class="col-md-3">
                     <label>Comuna</label>
                     <?php
                     echo form_dropdown('comuna',$comunas,'',array('class' => 'form-control','id' => 'comuna'));
@@ -682,14 +675,12 @@ $(document).ready(function() {
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-info pull-right">Guardar</button>
-                    </div>
-                         
-                  </div>
-              
-          </div>
-          
+                    </div>                         
+              </div>
+              <br><br><br>
+          </div>          
             <!-- /.box-body -->
-            </div>
+        </div>
         <!-- /.col -->
       </div>
       <!-- /.row -->
@@ -715,161 +706,169 @@ $(document).ready(function() {
 </div><!-- /.modal -->
 
 <script>
-function verPostulante(){
-    $.ajax({
-          url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
-          type: 'POST',
-          data: {id_postulante:$('#id_postulante').val()},
-          success: function(data) {
-          $('#verPostulanteBody').html(data);
-          },
-          error: function(e) {
-            $('#verPostulanteBody').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
-          }
-    });
-}
-$('.verificar').hide();
-texto_rut();
-$('.datepicker').datepicker({
-      autoclose: true
+$(document).ready(function(){
+    //$.fn.datepicker.defaults.language = 'es';
+     $('.datepicker').datepicker({       
+        format: 'yyyy-mm-dd',
+        startDate: '0d',
+        language: "es",
+        autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
 });
-
-function texto_rut(event){
-event.preventDefault();
-$('#rut').Rut({
-  on_error: function(){ 
-    $('#alerta_rut').fadeIn();
-    $('.verificar').fadeOut();
-    $('#prueba').val('1');
-    setTimeout(function(){
-        $("#alerta_rut").fadeOut(2000);},3000);
-    },
-  format_on: 'keyup'
 });
-}
+</script>
 
-setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
-setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
+<script>
+  function verPostulante(){
+      $.ajax({
+            url:"<?php echo base_url('index.php/gestion/ver_postulante')?>",
+            type: 'POST',
+            data: {id_postulante:$('#id_postulante').val()},
+            success: function(data) {
+            $('#verPostulanteBody').html(data);
+            },
+            error: function(e) {
+              $('#verPostulanteBody').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+            }
+      });
+  }
 
-function agregar_factor(event){    
+  $('.verificar').hide();
+  texto_rut();
+
+  function texto_rut(event){
     event.preventDefault();
-    var ofactor = document.getElementById("otro_factor");
-    var vfactor = ofactor.value;
-        if(vfactor!=''){
-        $.ajax({
-          url:"<?php echo base_url('index.php/gestion/agregar_factor')?>",
-          type: 'POST',
-          data: {factor:vfactor},
-          success: function(data){
-            
-            console.debug(data);
-            data  = JSON.parse(data);          
-            
-            if (data.guardo=='SI'){
-                $("#otro_factor").val("");
-                $('#muestra_factor').load('<?php echo base_url('index.php/gestion/mostrar_factor');?>');
-
-            }else{               
-                $('#alerta_factor_r').fadeIn();
-                setTimeout(function(){$("#alerta_factor_r").fadeOut(2000);},3000);        
-            }            
-            
-          },
-          error: function(e) {
-            alert('error');
-            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
-          }
+    $('#rut').Rut({
+      on_error: function(){ 
+        $('#alerta_rut').fadeIn();
+        $('.verificar').fadeOut();
+        $('#prueba').val('1');
+        setTimeout(function(){
+            $("#alerta_rut").fadeOut(2000);},3000);
+        },
+      format_on: 'keyup'
     });
-    }else{
-        $('#alerta_factor').fadeIn();
-        setTimeout(function(){$("#alerta_factor").fadeOut(2000);},3000);
-    }
+  }
 
-} 
+  setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
+  setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
 
-function agregar_hobbie(event){
-    event.preventDefault();
-    var ohobbie = document.getElementById("otro_hobbie");
-    var vhobbie = ohobbie.value;
-        if(vhobbie!=''){
-        $.ajax({
-          url:"<?php echo base_url('index.php/gestion/agregar_hobbie')?>",
-          type: 'POST',
-          data: {hobbie:vhobbie},
-          success: function(data){
-            
-            console.debug(data);
-            data  = JSON.parse(data);          
-            
-            if (data.guardo=='SI'){
-                $("#otro_hobbie").val("");
-                $('#muestra_hobbies').load('<?php echo base_url('index.php/gestion/mostrar_hobbies');?>');
+  function agregar_factor(event){    
+      event.preventDefault();
+      var ofactor = document.getElementById("otro_factor");
+      var vfactor = ofactor.value;
+          if(vfactor!=''){
+          $.ajax({
+            url:"<?php echo base_url('index.php/gestion/agregar_factor')?>",
+            type: 'POST',
+            data: {factor:vfactor},
+            success: function(data){
+              
+              console.debug(data);
+              data  = JSON.parse(data);          
+              
+              if (data.guardo=='SI'){
+                  $("#otro_factor").val("");
+                  $('#muestra_factor').load('<?php echo base_url('index.php/gestion/mostrar_factor');?>');
 
-            }else{               
-                $('#alerta_hobbies_r').fadeIn();
-                setTimeout(function(){$("#alerta_hobbies_r").fadeOut(2000);},3000);        
-            }            
-            
-          },
-          error: function(e) {
-            alert('error');
-            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
-          }
-    });
-    }else{
-        $('#alerta_hobbies').fadeIn();
-        setTimeout(function(){$("#alerta_hobbies").fadeOut(2000);},3000);
-    }
+              }else{               
+                  $('#alerta_factor_r').fadeIn();
+                  setTimeout(function(){$("#alerta_factor_r").fadeOut(2000);},3000);        
+              }            
+              
+            },
+            error: function(e) {
+              alert('error');
+              //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+            }
+      });
+      }else{
+          $('#alerta_factor').fadeIn();
+          setTimeout(function(){$("#alerta_factor").fadeOut(2000);},3000);
+      }
 
-}  
+  } 
 
-    
+  function agregar_hobbie(event){
+      event.preventDefault();
+      var ohobbie = document.getElementById("otro_hobbie");
+      var vhobbie = ohobbie.value;
+          if(vhobbie!=''){
+          $.ajax({
+            url:"<?php echo base_url('index.php/gestion/agregar_hobbie')?>",
+            type: 'POST',
+            data: {hobbie:vhobbie},
+            success: function(data){
+              
+              console.debug(data);
+              data  = JSON.parse(data);          
+              
+              if (data.guardo=='SI'){
+                  $("#otro_hobbie").val("");
+                  $('#muestra_hobbies').load('<?php echo base_url('index.php/gestion/mostrar_hobbies');?>');
+
+              }else{               
+                  $('#alerta_hobbies_r').fadeIn();
+                  setTimeout(function(){$("#alerta_hobbies_r").fadeOut(2000);},3000);        
+              }            
+              
+            },
+            error: function(e) {
+              alert('error');
+              //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+            }
+      });
+      }else{
+          $('#alerta_hobbies').fadeIn();
+          setTimeout(function(){$("#alerta_hobbies").fadeOut(2000);},3000);
+      }
+
+  }      
         
-function validar_rut(event){
-    event.preventDefault();
-    var edValue = document.getElementById("rut");
-    var rut = edValue.value;    
-    var muestra = document.getElementById("muestra");        
-    var respuesta = document.getElementById("respuesta");
+  function validar_rut(event){
+      event.preventDefault();
+      var edValue = document.getElementById("rut");
+      var rut = edValue.value;    
+      var muestra = document.getElementById("muestra");        
+      var respuesta = document.getElementById("respuesta");
 
-    var prueba = document.getElementById("prueba");
+      var prueba = document.getElementById("prueba");
 
-    $.ajax({
-          url:"<?php echo base_url('index.php/gestion/valida_rut')?>",
-          type: 'POST',
-          data: {rut:rut},
-          success: function(data){
-            
-            console.debug(data);
-            data  = JSON.parse(data);          
-            
-            if (data.existe=='SI'){
-                //alert(validado);
-				        $('#id_postulante').val(data.id);
-                $('.verificar').hide();
-                $('#alerta').fadeIn();
-                setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
-                return false;
-            }else if(data.existe=='NO' && prueba==1){
-                //alert('test');
-                $('#id_postulante').val(data.id);
-                $('.verificar').hide();
-                $('#alerta').fadeIn();
-                setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
-                return false;
-            }else {                
-                $('.verificar').fadeIn();
-            }            
-            
-          },
-          error: function(e) {
-            alert('error');
-            //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
-          }
-    });
-}
+      $.ajax({
+            url:"<?php echo base_url('index.php/gestion/valida_rut')?>",
+            type: 'POST',
+            data: {rut:rut},
+            success: function(data){
+              
+              console.debug(data);
+              data  = JSON.parse(data);          
+              
+              if (data.existe=='SI'){
+                  //alert(validado);
+  				        $('#id_postulante').val(data.id);
+                  $('.verificar').hide();
+                  $('#alerta').fadeIn();
+                  setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
+                  return false;
+              }else if(data.existe=='NO' && prueba==1){
+                  //alert('test');
+                  $('#id_postulante').val(data.id);
+                  $('.verificar').hide();
+                  $('#alerta').fadeIn();
+                  setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
+                  return false;
+              }else {                
+                  $('.verificar').fadeIn();
+              }            
+              
+            },
+            error: function(e) {
+              alert('error');
+              //$('#respuesta').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+            }
+      });
+  }
 </script>

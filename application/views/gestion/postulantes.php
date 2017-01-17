@@ -62,7 +62,7 @@
                         ?>
                         <tr>
                           <td><?php echo $p['rut'] ?></td>
-                          <td><?php echo $p['nombre'] ?></td>
+                          <td><?php echo $p['nombre'].' '.$p['paterno'] ?></td>
                           <td><?php echo $p['fecha_nacimiento'] ?></td>
                           <td><?php echo $p['fono_movil'] ?></td>
                           <td><?php echo $p['nacionalidad'] ?></td>
@@ -117,9 +117,11 @@
       <div class="modal-body" id="verPostulanteBody">
         
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-     
+      <div class="modal-footer">      
+       <!-- <form action="<?php echo base_url("/index.php/gestion/agregar_postulante"); ?>">
+          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Editar</button> 
+        </form>-->
+        <button type="button" class="btn btn-outline " data-dismiss="modal">Cerrar</button>     
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

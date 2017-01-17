@@ -2,9 +2,11 @@
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Postulacion 
+        Postulaci&oacute;n 
         <small> de Empleo</small>
       </h1>
+
+      <?php //var_dump($postulante) ?>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -28,19 +30,19 @@
               </div>
               
               <div class="row">
-                  <div class="col-md-3 ">
+                  <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Nombres</label>
                             <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" value="<?php echo $postulante[0]['nombre'];?>" />
                         </div>
                     </div>
-                    <div class="col-md-3 ">
+                    <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Apellido Paterno</label>
                             <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" value="<?php echo $postulante[0]['paterno'];?>"/>
                         </div>
                     </div>
-                    <div class="col-md-3 ">
+                    <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Apellido Materno</label>
                             <input class="form-control" type="text" name="materno" id="materno" placeholder="Apellido Materno" value="<?php echo $postulante[0]['materno'];?>"/>
@@ -51,7 +53,7 @@
 
                     
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label>Fecha:</label>
         
@@ -65,29 +67,22 @@
                       </div>
                     </div>
                     
-                    <div class="col-md-3 ">
+                    <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Edad</label>
                             <input class="form-control" type="text" name="edad" id="edad" placeholder="Edad" value="<?php if(isset($postulante[0]['edad'])){echo $postulante[0]['edad'];}?>" />                           
                         </div>
                     </div>                    
-                    <div class="col-md-3 ">
+                    <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Email</label>
                             <input class="form-control" type="text" name="email" id="email" placeholder="Email" value="<?php echo $postulante[0]['email'] ?>" />
                         </div>
-                    </div>
-                    <div class="col-md-3 ">
-                        <div class="form-group">
-                            <label>Raz&oacute;n Social</label>
-                            <input class="form-control" type="text" name="razon_social" id="razon_social" placeholder="Raz&oacute;n Social" value="<?php echo $postulante[0]['razon_social'] ?>" />
-                        </div>
-                    </div>                    
+                    </div>                 
               </div>              
               
               <div class="row">
-               
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label>Fecha de Nacimiento:</label>
                     
@@ -101,7 +96,7 @@
                       </div>
                     </div>
                
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                     <div class="form-group">
                         <label>Sexo</label>
                             <select class="form-control" style="width: 100%;" name="sexo">
@@ -120,7 +115,7 @@
                             </select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Estado Civil</label>
                             <select class="form-control" style="width: 100%;" name="estado_civil">
@@ -145,23 +140,23 @@
                                     ?>
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-3">
+                    </div>                    
+              </div>
+                  
+              <div class="row">
+              <div class="col-md-3">
                         <div class="form-group">
                             <label>Nacionalidad</label>
                             <input class="form-control" type="text" name="nacionalidad" id="nacionalidad" placeholder="Nacionalidad" value="<?php echo $postulante[0]['nacionalidad']?>">                           
                         </div>
                     </div>
-              </div>
-                  
-              <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <div class="form-group">
                       <label>Direcci&oacute;n</label>
                       <input type="text" class="form-control" placeholder="Direccion" name="direccion" value="<?php echo $postulante[0]['direccion'] ?>">
                     </div>
                  </div>
-                 <div class="col-md-4">
+                 <div class="col-md-3">
                     <label>Comuna</label>
                     <?php
                     echo form_dropdown('comuna',$comunas,$postulante[0]['comuna'],array('class' => 'form-control','id' => 'comuna'));
@@ -699,7 +694,7 @@
                     </div>
                          
                   </div>
-              
+              <br><br><br>
           </div>
           
             <!-- /.box-body -->
@@ -710,16 +705,22 @@
       </div>
       </div>
     </section>
-
 <script>
-$('.datepicker').datepicker({
-      autoclose: true
+$(document).ready(function(){
+    //$.fn.datepicker.defaults.language = 'es';
+     $('.datepicker').datepicker({       
+        format: 'yyyy-mm-dd',
+        startDate: '0d',
+        language: "es",
+        autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
-    });
-    
+});
+});
+</script>
+<script>
 //agregar factor
 function agregar_factor(event){
     

@@ -1,5 +1,5 @@
 <table class="table">
-<?php //var_dump($postulante); ?>
+<?php //print_r($postulante) ?>
     <tr>
         <th>RUT</th>
         <td><?php echo $postulante[0]['rut']?></td>
@@ -90,5 +90,9 @@
         }
         ?>
         <td><?php echo $turnos_string ?></td>
+    </tr>
+    <tr>
+        <th>Evaluador</th>
+        <td><?php //echo $postulante[0]['nombre_evaluador']?></td>
     </tr>
 </table>

@@ -58,20 +58,6 @@ if(!isset($this->session->userdata['id_usuario'])){
     <!-- validador rut -->
   <script src="<?php echo base_url("assets/plugins/validador_rut/jquery.Rut.js"); ?>"></script>
   <script src="<?php echo base_url("assets/plugins/validador_rut/jquery.Rut.min.js"); ?>"></script>
-
-<script>
-$(document).ready(function(){
-    //$.fn.datepicker.defaults.language = 'es';
-     $('.datepicker').datepicker({       
-        format: 'yyyy-mm-dd',
-        startDate: '0d',
-        language: "es",
-        autoclose: true
-    });
-
-});
-</script>
-
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
 <div class="wrapper">
@@ -90,16 +76,12 @@ $(document).ready(function(){
         <span class="sr-only">Toggle navigation</span>
       </a>
       <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-         
+        <ul class="nav navbar-nav">         
          <!--chat
           <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-comments"></i></a>
           </li>
          chat-->   
-
-
-
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -110,16 +92,13 @@ $(document).ready(function(){
               <!-- User image -->
               <li class="user-header">
                 <img src="<?php echo $this->session->userdata('img'); ?>" class="img-circle" alt="User Image">
-
                 <p>
                   <?php echo $this->session->userdata('nombre'); ?>
                   <small><?php echo $this->session->userdata('mail'); ?></small>
                 </p>
-              </li>
-              
+              </li>              
               <!-- Menu Body -->
-              <li class="user-body">
-                
+              <li class="user-body">                
                 <!-- /.row -->
               </li>
               <!-- Menu Footer-->
@@ -130,17 +109,12 @@ $(document).ready(function(){
                 <div class="pull-right">
                   <a href="<?php echo base_url('/index.php/usuarios/logout');?>" class="btn btn-default btn-flat">Logout</a>
                 </div>
-              </li>
-              
-              
+              </li>   
             </ul>
           </li>
-         
         </ul>
       </div>
-      
     </nav>
-    
   </header>
   
   <!--VENTANA_CHAT-->
@@ -301,7 +275,6 @@ $(document).ready(function(){
                 <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/continuidad_laboral');?>"><i class="fa fa-circle-o"></i> Continuidad Laboral</a></li>
               </ul>
             </li>
-
             <li>
               <a href="#"><i class="fa fa-circle-o"></i> Administracion
                 <span class="pull-right-container">
@@ -315,8 +288,7 @@ $(document).ready(function(){
                 <li><a href="<?php echo base_url('/index.php/operaciones/sucursales');?>"><i class="fa fa-circle-o"></i> Sucursales</a></li>
              </ul>
           </li>
-            </ul>
-
+         </ul>
         </li>
       </ul>
     </section>

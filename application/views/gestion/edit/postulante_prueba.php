@@ -28,36 +28,44 @@ $('.datepicker').datepicker({
                   <h3 class="box-title">Postulante</h3>
               </div>
               <div class="box-body">
-                <div class="row">
-                <div class="col-md-3">
-                      <div class="form-group">
-                        <label>Fecha:</label>
-        
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <?php 
-                          if (!empty($postulante[0]['fecha_entrevista']) && $postulante[0]['fecha_entrevista'] != '0000-00-00') {
-                            $date =  date_create($postulante[0]['fecha_entrevista']);
-                            $fecha_entrevista = date_format($date, 'd-m-Y');
-                          }
-                          ?>
-                          <input type="text" class="form-control pull-right" class="datepicker" name="fecha" value="<?php echo $fecha_entrevista ?>" disabled="disabled">
+              <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Fecha:</label>
+      
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
                         </div>
-                        <!-- /.input group -->
+                        <?php 
+                        if (!empty($postulante[0]['fecha_entrevista']) && $postulante[0]['fecha_entrevista'] != '0000-00-00') {
+                          $date =  date_create($postulante[0]['fecha_entrevista']);
+                          $fecha_entrevista = date_format($date, 'd-m-Y');
+                        }
+                        ?>
+                        <input type="text" class="form-control pull-right" class="datepicker" name="fecha" value="<?php echo $fecha_entrevista ?>" disabled="disabled">
                       </div>
+                      <!-- /.input group -->
                     </div>
-                    <div class="col-md-3">
+                </div>
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Rut</label>
                         <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut']?>">
                       </div>
                     </div>
+              </div>
+                <div class="row">                                   
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" type="text" name="nombre" id="rut" value="<?php echo $postulante[0]['nombre']?>">
+                            <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $postulante[0]['nombre']?>">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <input class="form-control" type="text" name="apellido" id="apellido" value="<?php echo $postulante[0]['paterno']?>">
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -315,9 +323,11 @@ $('.datepicker').datepicker({
                   <h3 class="box-title" name="resultado_psicologica">COMENTARIOS DE LA EVALUACIÓN PSICOLOGICA Y RESULTADO FINAL</h3>
               </div>
               <div class="box-body">
-
-                <div class="col-md-12">
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <label>Nota Final</label>
                       <input class="form-control" name="aprobacion" id="aprobacion" value="<?=$total_cat?>" disabled readonly /> 
+                  </div>
                 </div><br/><br/>
 
                 <div class="col-md-12">

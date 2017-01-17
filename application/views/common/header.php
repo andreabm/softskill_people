@@ -59,6 +59,17 @@ if(!isset($this->session->userdata['id_usuario'])){
   <script src="<?php echo base_url("assets/plugins/validador_rut/jquery.Rut.js"); ?>"></script>
   <script src="<?php echo base_url("assets/plugins/validador_rut/jquery.Rut.min.js"); ?>"></script>
 
+<script>
+$(document).ready(function(){
+     $('.datepicker').datepicker({       
+        format: 'yyyy-mm-dd',
+        startDate: '0d',
+        language: "es",
+        autoclose: true
+    });
+});
+</script>
+
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
 <div class="wrapper">
@@ -295,6 +306,7 @@ if(!isset($this->session->userdata['id_usuario'])){
             <li><a href="<?php echo base_url('/index.php/operaciones/evaluadores');?>"><i class="fa fa-circle-o"></i> Evaluadores</a></li>
             <li><a href="<?php echo base_url('/index.php/operaciones/pms');?>"><i class="fa fa-circle-o"></i> PMS</a></li>
             <li><a href="<?php echo base_url('/index.php/operaciones/sucursales');?>"><i class="fa fa-circle-o"></i> Sucursales</a></li>
+            <li><a href="<?php echo base_url('/index.php/operaciones/fuentes');?>"><i class="fa fa-circle-o"></i> Fuentes</a></li>
           </ul>
         </li>
       </ul>

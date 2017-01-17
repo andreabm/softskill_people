@@ -1,4 +1,15 @@
- <div class="content-wrapper">
+<script>
+$(document).ready(function() {
+$('.datepicker').datepicker({
+       
+        format: 'yyyy-mm-dd',
+        startDate: '0d',
+        language: "es",
+        autoclose: true
+    });
+});
+</script>
+<div class="content-wrapper">
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>

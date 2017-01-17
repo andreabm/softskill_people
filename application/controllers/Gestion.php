@@ -75,7 +75,7 @@ class Gestion extends CI_Controller {
             $direccion = $this->input->post('direccion');
             $comuna = $this->input->post('comuna');
             $celular = $this->input->post('celular');
-            $fono = $this->input->post('estado_civil');
+            $fono = $this->input->post('fono');
             $hijos = $this->input->post('hijos');
             $edad = $this->input->post('edad');
             $edades_hijos = $this->input->post('edades_hijos');

@@ -219,8 +219,8 @@ $(document).ready(function(){
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url('/index.php/gestion/postulantes');?>"><i class="fa fa-circle-o"></i>Ver Postulantes </a></li>
                 <li><a href="<?php echo base_url('/index.php/gestion/agregar_postulante');?>"><i class="fa fa-circle-o"></i> Agregar Postulante</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Test Psicologico</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Competencias</a></li>
+                <!-- <li><a href="#"><i class="fa fa-circle-o"></i> Test Psicologico</a></li> 
+                <li><a href="#"><i class="fa fa-circle-o"></i> Competencias</a></li>-->
                 
               </ul>
             </li>
@@ -240,7 +240,7 @@ $(document).ready(function(){
                 <li><a href="<?php echo base_url('/index.php/gestion/motivo_no_califica');?>"><i class="fa fa-circle-o"></i> Motivo No Califica</a></li>
               </ul>
             </li>
-            <li><a href="<?php echo base_url('/index.php/gestion/exejecutivos');?>"><i class="fa fa-circle-o"></i> Ex Ejecutivos</a></li>
+            <li><a href="<?php echo '#' //base_url('/index.php/gestion/exejecutivos');?>"><i class="fa fa-circle-o"></i> Ex Empleados</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -274,11 +274,7 @@ $(document).ready(function(){
           </a>
           <ul class="treeview-menu">
             <li ><a href="<?php echo base_url('/index.php/operaciones/solicitudes');?>"><i class="fa fa-circle-o"></i> Solicitudes</a></li>
-            <li><a href="<?php echo base_url('/index.php/operaciones/ejecutivos');?>"><i class="fa fa-circle-o"></i> Validar Solicitudes</a></li>
             <li><a href="<?php echo base_url('/index.php/operaciones/ejecutivos');?>"><i class="fa fa-circle-o"></i> Ejecutivos</a></li>
-
-            <li><a href="<?php echo base_url('/index.php/operaciones/inducciones');?>"><i class="fa fa-circle-o"></i> Ev. Inducci&oacute;n</a></li>
-
             <li>
               <a href="#"><i class="fa fa-circle-o"></i> Asistencia
                 <span class="pull-right-container">
@@ -305,11 +301,22 @@ $(document).ready(function(){
                 <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/continuidad_laboral');?>"><i class="fa fa-circle-o"></i> Continuidad Laboral</a></li>
               </ul>
             </li>
-            <li><a href="<?php echo base_url('/index.php/operaciones/evaluadores');?>"><i class="fa fa-circle-o"></i> Evaluadores</a></li>
-            <li><a href="<?php echo base_url('/index.php/operaciones/pms');?>"><i class="fa fa-circle-o"></i> PMS</a></li>
-            <li><a href="<?php echo base_url('/index.php/operaciones/sucursales');?>"><i class="fa fa-circle-o"></i> Sucursales</a></li>
-            <li><a href="<?php echo base_url('/index.php/operaciones/fuentes');?>"><i class="fa fa-circle-o"></i> Fuentes</a></li>
-          </ul>
+
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Administracion
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo base_url('/index.php/operaciones/inducciones');?>"><i class="fa fa-circle-o"></i> Ev. Inducci&oacute;n</a></li>
+                <li><a href="<?php echo base_url('/index.php/operaciones/evaluadores');?>"><i class="fa fa-circle-o"></i> Evaluadores</a></li>
+                <li><a href="<?php echo base_url('/index.php/operaciones/pms');?>"><i class="fa fa-circle-o"></i> PMS</a></li>
+                <li><a href="<?php echo base_url('/index.php/operaciones/sucursales');?>"><i class="fa fa-circle-o"></i> Sucursales</a></li>
+             </ul>
+          </li>
+            </ul>
+
         </li>
       </ul>
     </section>

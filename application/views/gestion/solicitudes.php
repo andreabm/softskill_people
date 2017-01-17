@@ -27,7 +27,7 @@
                   <th>Cantidad Entregada</th>
                   <th>Prioridad</th>
                   <th>Observacion</th>
-                  <th>Opciones</th>
+                  <!-- <th>Opciones</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -45,10 +45,10 @@
                             <td><?= $s['cantidad_entregada']?></td>
                             <td><?= $s['prioridad']?></td>
                             <td><?= $s['observacion']?></td>
-                            <td>
+                            <!--<td>
                               <a class="btn btn-xs btn-success">Ver</a>
                               <a class="btn btn-xs btn-warning" href="#">Editar</a>                 
-                          </td>
+                          </td> -->
                         </tr>
                   <?php  }
                 }

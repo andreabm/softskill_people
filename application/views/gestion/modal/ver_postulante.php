@@ -6,15 +6,39 @@
     </tr>
     <tr>
         <th>Nombre</th>
-        <td><?php echo $postulante[0]['nombre']?></td>
+        <td><?php echo $postulante[0]['nombre'].' '.$postulante[0]['paterno'].' '.$postulante[0]['materno']?></td>
     </tr>
     <tr>
         <th>Fecha Nacimiento</th>
-        <td><?php echo $postulante[0]['fecha_nacimiento']?></td>
+        <td><?php $fecha = date_create($postulante[0]['fecha_nacimiento']); echo date_format($fecha, 'd/m/Y');?></td>
+    </tr>
+    <tr>
+        <th>Sexo</th>
+        <td><?php echo $postulante[0]['sexo']?></td>
     </tr>
     <tr>
         <th>Estado civil</th>
         <td><?php echo $postulante[0]['edo_civil']?></td>
+    </tr>
+    <tr>
+        <th>Nacionalidad</th>
+        <td><?php echo $postulante[0]['nacionalidad']?></td>
+    </tr>
+    <tr>
+        <th>Discapacidad</th>
+        <td><?php echo $postulante[0]['discapacidad']?></td>
+    </tr>
+    <tr>
+        <th>Enfermedad</th>
+        <td><?php echo $postulante[0]['enfermedad']?></td>
+    </tr>
+    <tr>
+        <th>Direccion</th>
+        <td><?php echo $postulante[0]['direccion']?></td>
+    </tr>
+    <tr>
+        <th>Comuna</th>
+        <td><?php echo $postulante[0]['comuna']?></td>
     </tr>
     <tr>
         <th>Fono movil</th>
@@ -25,12 +49,8 @@
         <td><?php echo '+56 2 '.$postulante[0]['fono_fijo']?></td>
     </tr>
     <tr>
-        <th>Discapacidad</th>
-        <td><?php echo $postulante[0]['discapacidad']?></td>
-    </tr>
-    <tr>
-        <th>Fuente</th>
-        <td><?php echo $postulante[0]['fuente']?></td>
+        <th>E-mail</th>
+        <td><?php echo $postulante[0]['email']?></td>
     </tr>
     <tr>
         <th>Pretensiones de Renta</th>
@@ -41,6 +61,10 @@
         <td><?php echo $postulante[0]['fecha_entrevista']?></td>
     </tr>
     <tr>
+    <tr>
+        <th>Fuente</th>
+        <td><?php echo $postulante[0]['fuente']?></td>
+    </tr>
         <th>Califica</th>
         <?php
         if ($postulante[0]['clasificado'] == 1){
@@ -66,9 +90,5 @@
         }
         ?>
         <td><?php echo $turnos_string ?></td>
-    </tr>
-    <tr>
-        <th>Direccion</th>
-        <td><?php echo $postulante[0]['direccion']?></td>
     </tr>
 </table>

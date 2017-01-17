@@ -706,18 +706,46 @@ $(document).ready(function() {
 </div><!-- /.modal -->
 
 <script>
-$(document).ready(function(){
-    //$.fn.datepicker.defaults.language = 'es';
-     $('.datepicker').datepicker({       
-        format: 'yyyy-mm-dd',
-        startDate: '0d',
+
+$(document).ready(function(){  
+$('.datepicker').datepicker({
+        todayBtn: true,
         language: "es",
         autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
-});
+    });
+}); 
+function verPostulante(){
+    $.ajax({
+          url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
+          type: 'POST',
+          data: {id_postulante:$('#id_postulante').val()},
+          success: function(data) {
+          $('#verPostulanteBody').html(data);
+          },
+          error: function(e) {
+            $('#verPostulanteBody').html('<div class="alert alert-danger">Error: NO se puede cargar la vista</div>');
+          }
+    });
+}
+$('.verificar').hide();
+texto_rut();
+
+function texto_rut(event){
+event.preventDefault();
+$('#rut').Rut({
+  on_error: function(){ 
+    $('#alerta_rut').fadeIn();
+    $('.verificar').fadeOut();
+    $('#prueba').val('1');
+    setTimeout(function(){
+        $("#alerta_rut").fadeOut(2000);},3000);
+    },
+  format_on: 'keyup'
+>>>>>>> 88d2921c44182d571691af5e09f378b1b4d4739c
 });
 </script>
 

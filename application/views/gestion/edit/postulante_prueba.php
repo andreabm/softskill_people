@@ -196,19 +196,18 @@ $('.datepicker').datepicker({
       </div>
       <!-- /.row -->
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-            <div class="box box-danger">
-                <div class="box-header">
-                  <h3 class="box-title">ASSESSMENT CENTER (Simulación de Gestión de Cobranza Telefónica)</h3>
-              </div>
-              <div class="box-body">
-              <label>COMPETENCIAS DE EVALUACIÓN FORMAL PARA EJECUTIVO DE CALL CENTER</label>
+          <div class="row">
               <?php 
-              echo '<table class="table" style="width:50%">';
-              $total_cat = 0;
-          
-              foreach ($competencias as $comp) {
+              $total_cat = 0;          
+              foreach ($competencias as $comp) {?>
+              <div class="col-xs-12">
+                <div class="box box-info">
+                  <div class="box-header">
+                      <h3 class="box-title">ASSESSMENT CENTER (Simulación de Gestión de Cobranza Telefónica)</h3>
+                  </div>
+              <div class="box-body">  
+              <?php
+                echo '<table class="table" style="width:50%">';
                 echo '<tr>';
                 echo '<th>'.$comp['competencia'].': '.$comp['ponderacion'].'%<th>';
                 echo '<th><input type="hidden" class="form-control" name="ponderacion_categoria'.$comp['id_competencia'].'" id="ponderacion_categoria'.$comp['id_competencia'].'" value="'.$comp['ponderacion'].'" readonly disabled/><th>';
@@ -225,6 +224,7 @@ $('.datepicker').datepicker({
                 }
                 
                 foreach($competencias_item as $c){
+
                     if ($c['id_competencia'] == $comp['id_competencia']) {
                         echo '<tr>';
                         echo '<td>';
@@ -289,14 +289,14 @@ $('.datepicker').datepicker({
                 <?php
                 echo '</th>';
                 echo '</tr>';
-              }
+                echo '</table>';
+                ?>
+                </div></div></div>
+              <?php }
               
-              echo '</table>';
+              
               ?>
-            </div>
-          </div>
-            <!-- /.box-body -->
-            </div>
+            
         <!-- /.col -->
       </div>
       

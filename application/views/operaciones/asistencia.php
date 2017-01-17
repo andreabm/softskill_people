@@ -118,6 +118,17 @@
  </div>
  <script>
 $(document).ready(function(){
+
+  $('.datepicker').datepicker({
+      autoclose:true,
+      language: 'es',
+      locale: 'es'
+    });
+$(".timepicker").timepicker({
+      showInputs: false,
+      showMeridian: false
+    });
+  
     $('#ejecutivo').DataTable({
        "language": {
                 "url": '<?php echo base_url("/js/bootstrap-dataTables-Spanish.json") ?>',

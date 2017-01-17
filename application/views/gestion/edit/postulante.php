@@ -706,21 +706,18 @@
       </div>
     </section>
 <script>
-$(document).ready(function(){
-    //$.fn.datepicker.defaults.language = 'es';
-     $('.datepicker').datepicker({       
-        format: 'yyyy-mm-dd',
-        startDate: '0d',
+
+$(document).ready(function(){  
+$('.datepicker').datepicker({
+        todayBtn: true,
         language: "es",
         autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,
-      showMeridian: false
-});
-});
-</script>
-<script>
+
+    });
+});    
 //agregar factor
 function agregar_factor(event){
     

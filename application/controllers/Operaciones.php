@@ -1125,7 +1125,7 @@ class Operaciones extends CI_Controller {
             $data['carteras'] = $carteras;
             $supervisores = $this->MyModel->buscar_select('supervisores','id_supervisor','nombre_supervisor');
             $data['supervisores'] = $supervisores;
-            $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre');
+            $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre_evaluador');
             $data['evaluadores'] = $evaluadores;
             
             //hasta aqui            

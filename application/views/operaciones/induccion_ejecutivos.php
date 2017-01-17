@@ -59,15 +59,18 @@
                             <td><?php echo $t['nombre'] ?></td>
                             <td align="center"><?php echo $t['resultado_final'];?></td>
                             <td>
-                              <a class="btn btn-xs btn-success" href="<?php echo base_url('index.php/operaciones/evaluacion_induccion_calidad/'.$t['id_postulante'])?>">Ev. de Inducci&oacute;n Calidad</a>
+                              
                               
                               <?php if(isset($t['resultado_final'])){
-                                $activo = 'disabled href="#"';
-                              }else{
-                                $activo = 'href="'.base_url('index.php/operaciones/evaluacion_induccion/'.$t['id_postulante']).'"';
-                              }?>
+                                $activo_a = 'href="'.base_url('index.php/operaciones/evaluacion_induccion_calidad/'.$t['id_postulante']).'"';
+                                $activo_b = 'disabled href="#"';
 
-                              <a class="btn btn-xs btn-info" <?=$activo?> >Ev. de Inducci&oacute;n Ejecutivo</a>
+                              }else{
+                                $activo_a = 'disabled href="#"';
+                                $activo_b = 'href="'.base_url('index.php/operaciones/evaluacion_induccion/'.$t['id_postulante']).'"';
+                              }?>
+                              <a class="btn btn-xs btn-success" <?=$activo_a?>>Ev. de Inducci&oacute;n Calidad</a>
+                              <a class="btn btn-xs btn-info" <?=$activo_b?> >Ev. de Inducci&oacute;n Ejecutivo</a>
                               
 
                             </td>

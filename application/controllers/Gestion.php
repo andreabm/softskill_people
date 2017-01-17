@@ -476,7 +476,7 @@ class Gestion extends CI_Controller {
         $usuarios = $this->MyModel->buscar_select('usuarios','id_usuario','nombre'); //FALTA FILTRAR POR PERFILES        
         $data['usuarios'] = $usuarios;
 
-        $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre'); //FALTA FILTRAR POR PERFILES        
+        $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre_evaluador'); //FALTA FILTRAR POR PERFILES        
         $data['evaluadores'] = $evaluadores;
 
         if ($this->input->post('rut')) {

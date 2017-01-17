@@ -714,9 +714,9 @@
 <script>
 $(document).ready(function(){  
 $('.datepicker').datepicker({
-      autoclose:true,
-      language: 'es',
-      locale: 'es'
+        todayBtn: true,
+        language: "es",
+        autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,

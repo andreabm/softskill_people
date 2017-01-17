@@ -59,18 +59,6 @@ if(!isset($this->session->userdata['id_usuario'])){
   <script src="<?php echo base_url("assets/plugins/validador_rut/jquery.Rut.js"); ?>"></script>
   <script src="<?php echo base_url("assets/plugins/validador_rut/jquery.Rut.min.js"); ?>"></script>
 
-<script>
-$(document).ready(function(){
-    //$.fn.datepicker.defaults.language = 'es';
-     $('.datepicker').datepicker({       
-        format: 'yyyy-mm-dd',
-        startDate: '0d',
-        language: "es",
-        autoclose: true
-    });
-
-});
-</script>
 
 </head>
 <body class="hold-transition skin-purple sidebar-mini">

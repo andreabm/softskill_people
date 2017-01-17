@@ -715,6 +715,17 @@ $(document).ready(function() {
 </div><!-- /.modal -->
 
 <script>
+$(document).ready(function(){  
+$('.datepicker').datepicker({
+      autoclose:true,
+      language: 'es',
+      locale: 'es'
+    });
+$(".timepicker").timepicker({
+      showInputs: false,
+      showMeridian: false
+    });
+}); 
 function verPostulante(){
     $.ajax({
           url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
@@ -730,13 +741,6 @@ function verPostulante(){
 }
 $('.verificar').hide();
 texto_rut();
-$('.datepicker').datepicker({
-      autoclose: true
-    });
-$(".timepicker").timepicker({
-      showInputs: false,
-      showMeridian: false
-});
 
 function texto_rut(event){
 event.preventDefault();

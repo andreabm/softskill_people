@@ -712,14 +712,17 @@
     </section>
 
 <script>
+$(document).ready(function(){  
 $('.datepicker').datepicker({
-      autoclose: true
+      autoclose:true,
+      language: 'es',
+      locale: 'es'
     });
 $(".timepicker").timepicker({
       showInputs: false,
       showMeridian: false
     });
-    
+});    
 //agregar factor
 function agregar_factor(event){
     

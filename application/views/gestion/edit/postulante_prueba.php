@@ -147,7 +147,7 @@ $('.datepicker').datepicker({
                             <div class="form-group">
                                 <label>Evaluador</label>
                                 <?php
-                                echo form_dropdown('evaluador',$usuarios,'',array('class' => 'form-control'));
+                                echo form_dropdown('evaluador',$evaluadores,'',array('class' => 'form-control'));
                                 ?>
                             </div>
                         </div>

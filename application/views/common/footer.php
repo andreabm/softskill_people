@@ -20,9 +20,9 @@
 <script src="<?php echo base_url("assets/plugins/knob/jquery.knob.js"); ?>"></script>
 <!-- daterangepicker -->
 <script src="<?php echo base_url("assets/dist/js/moment.min.js"); ?>"></script>
-<script src="<?php echo base_url("assets/plugins/daterangepicker/daterangepicker.js"); ?>"></script>
+
 <!-- datepicker -->
-<script src="<?php echo base_url("assets/plugins/datepicker/bootstrap-datepicker.js"); ?>"></script>
+
 <!-- Bootstrap WYSIHTML5 -->
 <script src="<?php echo base_url("assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"); ?>"></script>
 <!-- Slimscroll -->

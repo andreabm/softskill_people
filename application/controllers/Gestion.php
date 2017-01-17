@@ -473,9 +473,12 @@ class Gestion extends CI_Controller {
         $data['postulante'] = $postulante;
         $data['resultado_competencia'] = $resultado_competencia;
         
-        $usuarios = $this->MyModel->buscar_select('usuarios','id_usuario','nombre'); //FALTA FILTRAR POR PERFILES
-        
+        $usuarios = $this->MyModel->buscar_select('usuarios','id_usuario','nombre'); //FALTA FILTRAR POR PERFILES        
         $data['usuarios'] = $usuarios;
+
+        $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre'); //FALTA FILTRAR POR PERFILES        
+        $data['evaluadores'] = $evaluadores;
+
         if ($this->input->post('rut')) {
             $rut = $this->input->post('rut');
             $nombre = $this->input->post('nombre');

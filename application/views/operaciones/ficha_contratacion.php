@@ -239,37 +239,37 @@
                             <div class="col-md-8">
                               <div class="input-group">
                                     <span class="input-group-addon">
-                                      <input type="radio" name="motivo_contrato" value="renuncia" <?php if ($motivo_contrato == 'renuncia') { echo 'checked' ;} ?>/> Renuncia de:
+                                      <input type="radio" name="motivo_contrato" value="renuncia" <?php if ($motivo_contrato == 'renuncia') { echo 'checked' ;} ?> required> Renuncia de:
                                     </span>
                                 <input type="text" class="form-control" name="renuncia" <?php if ($motivo_contrato == 'renuncia') { echo 'value = "'.$obs.'"' ;} ?>>
                               </div><br />
                               <div class="input-group">
                                     <span class="input-group-addon">
-                                      <input type="radio" name="motivo_contrato" value="despido" <?php if ($motivo_contrato == 'despido') { echo 'checked' ;} ?>> Despido de:
+                                      <input type="radio" name="motivo_contrato" value="despido" <?php if ($motivo_contrato == 'despido') { echo 'checked' ;} ?> required> Despido de:
                                     </span>
                                 <input type="text" class="form-control" name="despido" <?php if ($motivo_contrato == 'despido') { echo 'value = "'.$obs.'"' ;} ?>>
                               </div><br />
                               <div class="input-group">
                                     <span class="input-group-addon">
-                                      <input type="radio"  name="motivo_contrato"  value="licencia" <?php if ($motivo_contrato == 'licencia') { echo 'checked' ;} ?>> Licencia de:
+                                      <input type="radio"  name="motivo_contrato"  value="licencia" <?php if ($motivo_contrato == 'licencia') { echo 'checked' ;} ?> required> Licencia de:
                                     </span>
                                 <input type="text" class="form-control" name="licencia" <?php if ($motivo_contrato == 'licencia') { echo 'value = "'.$obs.'"' ;} ?>>
                               </div><br />
                               <div class="input-group">
                                     <span class="input-group-addon" >
-                                      <input type="radio" name="motivo_contrato" value="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'checked' ;} ?>> Aumento de Dotaci&oacute;n:
+                                      <input type="radio" name="motivo_contrato" value="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'checked' ;} ?> required> Aumento de Dotaci&oacute;n:
                                     </span>
                                 <input type="text" class="form-control" name="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'value = "'.$obs.'"' ;} ?>>
                               </div><br />
                               <div class="input-group">
                                     <span class="input-group-addon">
-                                      <input type="radio" name="motivo_contrato" value="reemplazo" <?php if ($motivo_contrato == 'reemplazo') { echo 'checked' ;} ?>> Por reemplazo:
+                                      <input type="radio" name="motivo_contrato" value="reemplazo" <?php if ($motivo_contrato == 'reemplazo') { echo 'checked' ;} ?> required> Por reemplazo:
                                     </span>
                                 <input type="text" class="form-control" name="reemplazo" <?php if ($motivo_contrato == 'reemplazo') { echo 'value = "'.$obs.'"' ;} ?>>
                               </div><br />
                               <div class="input-group">
                                 <span class="input-group-addon">
-                                      <input type="radio" name="motivo_contrato" value="cargo_nuevo" <?php if ($motivo_contrato == 'cargo_nuevo') { echo 'checked' ;} ?>> Cargo nuevo (especif&iacute;que):
+                                      <input type="radio" name="motivo_contrato" value="cargo_nuevo" <?php if ($motivo_contrato == 'cargo_nuevo') { echo 'checked' ;} ?> required> Cargo nuevo (especif&iacute;que):
                                     </span>
                                 <input type="text" class="form-control" name="cargo_nuevo" <?php if($motivo_contrato=='cargo_nuevo') { echo 'value = "'.$obs.'"';} ?>>
                               </div>

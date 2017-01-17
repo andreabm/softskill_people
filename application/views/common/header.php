@@ -61,12 +61,14 @@ if(!isset($this->session->userdata['id_usuario'])){
 
 <script>
 $(document).ready(function(){
+    //$.fn.datepicker.defaults.language = 'es';
      $('.datepicker').datepicker({       
         format: 'yyyy-mm-dd',
         startDate: '0d',
         language: "es",
         autoclose: true
     });
+
 });
 </script>
 

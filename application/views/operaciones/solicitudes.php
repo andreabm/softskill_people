@@ -61,8 +61,7 @@
                   <th>Cargo</th>
                   <th>Cant. Solicitada</th>
                   <th>Cant. Aprobada</th>
-                  <th>Cant. Entregada</th>
-                  <th>Estado</th>                  
+                  <th>Cant. Entregada</th>                  
                   <th>Validado</th>
                   <th>Opciones</th> <!-- Mostrar solo si es coordinador operativo -->
                 </tr>
@@ -71,19 +70,11 @@
                 <?php
                 if(!empty($solicitudes)) {
                     foreach ($solicitudes as $s) {
-
-                      if($s['activo']==1){
-                        $estado = "<i class='fa fa-check fa-lg' aria-hidden='true' style='color:green;'></i>";
-                      }else{
-                        $estado = "<i class='fa fa-times fa-lg' aria-hidden='true' style='color:red;'></i>";
-                      }
                       if($s['validado']==1){
                         $validado = "<i class='fa fa-check fa-lg' aria-hidden='true' style='color:green;'></i>";
                       }else{
                         $validado = "<i class='fa fa-times fa-lg' aria-hidden='true' style='color:red;'></i>";
-                      }
-
-                      ?>
+                      }?>
                         <tr>
                             <td><?php echo $s['prioridad']?></td>
                             <td><?php echo $s['area']?></td>
@@ -93,13 +84,11 @@
                             <td><?php echo $s['cantidad_aprobada'] ?></td>
                             <?php if (empty($s['cantidad_entregada'])){$s['cantidad_entregada'] = 0;}?>
                             <td><?php echo $s['cantidad_entregada']?></td>
-                            <td align="center"><?php echo $estado;?></td>
                             <td><?php echo $validado;?></td>
                             <td><a class="btn btn-xs btn-success" href="#" data-toggle="modal" data-target="#validarSolicitud" onclick = "validarSolicitud(<?php echo $s['id_solicitud'];  ?>)">Validar</a></td>
                         </tr>
                     <?php }
-                }
-                ?>
+                }?>
                 </tbody>
                 <tfoot>
                

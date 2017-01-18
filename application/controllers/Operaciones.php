@@ -1064,7 +1064,6 @@ class Operaciones extends CI_Controller {
             $data['evaluacion_items'] = $query->result();
             //evaluacion_items fin
 
-
         $this->load->view('common/header');
         $this->load->view('operaciones/edit/evaluacion_induccion_calidad',$data);
         $this->load->view('common/footer');
@@ -1078,7 +1077,7 @@ class Operaciones extends CI_Controller {
         //borro info
         if(!empty($resultado_final)){
         //updeteo resultado
-        $data = array('resultado_final' => $resultado_final);
+        $data = array('resultado_final' => $resultado_final,'calidad' => '1');
         $this->db->where('rut', $rut);
         $this->db->update('evaluacion_induccion_resultados', $data);
 

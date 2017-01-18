@@ -60,12 +60,12 @@ $(document).ready(function () {
     <div class="row">
         <div class="col-xs-12">        
         <?php 
-        $msje_solicitud = $this->session->flashdata('msje_evaluacion');
-            if(!empty($msje_solicitud)){
+            if($nota[0]['calidad']==1){
+              $bloquea = 'disabled';
             ?>
-            <div id="alertita" class="alert alert-<?php if($msje_solicitud[0]==1){echo 'success';}else{echo 'danger';}?> alert-dismissible">
+            <div id="alertita" class="alert alert-danger alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong><?php if($msje_solicitud[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'Se ha registrado con exito';}else{echo 'La solicitud no se ha modificado';}?>
+            <strong>Atenci&oacute;n</strong> El Ejecutivo ya fue evaluado por Calidad.
             </div>        
             <?php }?>
         </div>
@@ -308,7 +308,7 @@ $(document).ready(function () {
 <div class="row">
   <div class="col-md-10"></div>
       <div class="col-md-2">
-           <button type="submit" class="btn btn-info pull-right">Guardar</button>
+           <button type="submit" class="btn btn-info pull-right" <?=$bloquea;?>>Guardar</button>
       </div>
  </div>
 
@@ -329,7 +329,7 @@ $('#rut_audio').Rut({
     $('#alerta_rut').fadeIn();
     $('.verificar').fadeOut();
     setTimeout(function(){
-        $("#alerta_rut").fadeOut(2000);},3000);
+        $("#alerta_rut").fadeOut(4000);},5000);
     },
   format_on: 'keyup'
 });

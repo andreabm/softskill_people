@@ -56,7 +56,7 @@
                     foreach($evaluadores as $p) {
                         ?>
                         <tr>
-                          <td><?php echo $p['nombre'] ?></td>
+                          <td><?php echo $p['nombre_evaluador'] ?></td>
                           <td>                              
                               <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/operaciones/editar_evaluador/'.$p['id_evaluador'])?>">Editar</a>                              
                           </td>

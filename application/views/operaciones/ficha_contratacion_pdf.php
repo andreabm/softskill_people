@@ -1,255 +1,249 @@
- 
- <?php 
- /*
- echo '<pre>';
- print_r($ejecutivo);
- echo '</pre>';
-*/
- ?>
-
  <div class="content-wrapper">
 <!-- Content Header (Page header) -->
     <section class="content-header">
-      <center><h1>Ficha<small> de Contratacion</small></h1></center>
+      <h1>Ficha<small> de Contratacion</small></h1>
     </section>
    <h3 class="box-title">Solicitud de Contrataci&oacute;n</h3>
-
-   <table style="width:500px;">  
+   <table>
     <tr>
-        <th align="left">RAZ&Oacute;N SOCIAL</th>
-        <td align="left">test</td>
-        
-    </tr>
-   </table>
-
-   <table style="width:100%;">  
-    <tr>
-        <th>Apellido Paterno</th>
-        <th>Apellido Materno</th>
-        <th>Nombres</th>
-    </tr>
-    <tr>
-        <td><?php if(!empty($ejecutivo[0]['paterno'])){echo $ejecutivo[0]['paterno'];} ?></td>
-        <td><?php if(!empty($ejecutivo[0]['materno'])){echo $ejecutivo[0]['materno'];} ?></td>
-        <td><?php if(!empty($ejecutivo[0]['nombre'])){echo $ejecutivo[0]['nombre'];} ?></td>
-    </tr>
-   </table>
-    <table style="width:100%;">  
-    <tr>
-        <th>Rut</th>
-        <td><?php if(!empty($ejecutivo[0]['rut'])){echo $ejecutivo[0]['rut'];}?></td>
-        <th>Fecha nacimiento</th>
-        <td><?php if(!empty($ejecutivo[0]['fecha_nacimiento'])){echo $ejecutivo[0]['fecha_nacimiento'];}?></td>
-    </tr>
-   </table>
-
-   <table style="width:100%;">  
-    <tr>
-        <th>Direcci&oacute;n</th>
-        <th>Comuna/Ciudad</th>
-    </tr>
-    <tr>
-        <td><?php if(!empty($ejecutivo[0]['direccion'])){echo $ejecutivo[0]['direccion'];}?></td>
-        <td><?php if(!empty($ejecutivo[0]['comuna'])){echo $ejecutivo[0]['comuna'];}?></td>
-    </tr>
-    <tr>
-        <td colspan="2">&nbsp;</td>
-    </tr>
-   </table>
-
-    <table style="width:100%;">  
-    <tr>
-        <td>Tel&eacute;fonos</td>
-        <td>Casa</td>
-        <td><input class="form-control" type="text" name="tcasa" id="tcasa" value="<?php if(!empty($ejecutivo[0]['fono_fijo'])){echo $ejecutivo[0]['fono_fijo'];}?>"/></td>
-        <td>Celular</td>
-        <td><input class="form-control" type="text" name="tcelular" id="tcelular" value="<?php if(!empty($ejecutivo[0]['fono_movil'])){echo $ejecutivo[0]['fono_movil'];}?>"/></td>
-    </tr>
-    </table>
-
-    <table style="width:100%;">  
-    <tr>
-        <td colspan="6">Estado civil</td>
-    </tr>    
-    <tr>    
-        <td width="40">Soltero</td>
-        <td width="110"><input style="width:120px;" class="form-control" type="text" name="tcasa" id="tcasa" value="<?php if($ejecutivo[0]['edo_civil']=='Soltero'){  echo "X";}else{ echo "&nbsp;";} ?>" /></td>
-        <td width="40">Casado</td>
-        <td width="110"><input style="width:120px;" class="form-control" type="text" name="tcelular" id="tcelular" value="<?php if($ejecutivo[0]['edo_civil']=='Casado'){  echo "X";}else{ echo "&nbsp;";} ?>"/></td>
-        <td width="40">Con Hijos</td>
-        <td width="110">
-            
-
-            <input style="width:120px;" class="form-control" type="text" name="chijos" id="chijos" value="<?php if($ejecutivo[0]['num_hijos']>0){  echo "X";}else{echo "0";} ?>"/></td>
-    </tr>
-    </table>
-
-   <table style="width:100%;">     
-    <tr>    
-        <td width="40">Afp</td>
-        <td width="110"><input style="width:120px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['afp'] ?>" /></td>
-        <td width="40">Salud</td>
-        <td width="110"><input style="width:120px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['salud'] ?>"/></td>
-        <td width="40">F. contrato</td>
-        <td width="110"><input style="width:120px;" class="form-control" type="text" name="fcontrato" id="fcontrato" value="<?php echo $ejecutivo[0]['fecha_ingreso'] ?>"/></td>
-    </tr>
-    </table>
-
-   <table style="width:100%;">     
-    <tr>    
-        <td width="40">Cargo Postulado</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['id_cargo'];?>" /></td>
-        <td width="40">Plazo de Contrato</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="&nbsp;"/></td>
-    </tr>
-    <tr>    
-        <td width="40">Pm/Rol</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['nombre_pm'];?>" /></td>
-        <td width="40">Industria</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['area'];?>"/></td>
-    </tr>
-    <tr>    
-        <td width="40">Cod. Proyecto</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['cod_sap'];?>" /></td>
-        <td width="40">Direcci&oacute;n sucursal</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['sucursal'];?>"/></td>
-    </tr>
-    <tr>
-        <td colspan="2">Departamento (<span style="font-size: 12pt;"><i>Solo area de apoyo</i></span>)</td>
-        <td colspan="2"><input style="width:312px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['gerencia'];?>"/></td>
-    </tr>
-    <tr>    
-        <td width="40">Horario de trabajo</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['turno'];?>" /></td>
-        <td width="40">S&aacute;bado</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="&nbsp;"/></td>
-    </tr>
-    </table>
-
-    <?php
-        if (!empty($ejecutivo[0]['motivo_contrato'])){
-            $motivo_contrato1 = explode(' ',$ejecutivo[0]['motivo_contrato'],2);
-            //print_r($motivo_contrato1);
-            $motivo_contrato = $motivo_contrato1[0];
-            $obs = $motivo_contrato1[1];
-        } else {
-            $motivo_contrato = ''; 
-            $obs = '';
-        }        
-        ?>
-
-    <table style="width:100%;"> 
-        <tr>    
-        <td width="40" colspan="6">Motivo de la contrataci&oacute;</td>
-        </tr>
-    <tr>    
-        <td width="20"><input type="checkbox" value="renuncia" <?php if ($motivo_contrato == 'renuncia') { echo 'checked' ;} ?>></td>
-        <td width="60">Renuncia de</td>
-        <td width="190"><input style="width:190px;" class="form-control" type="text" name="renuncia" value="<?php if ($motivo_contrato == 'renuncia') { echo 'value = "'.$obs.'"' ;} ?>" /></td>
-        <td width="20"><input type="checkbox" value="despido" <?php if ($motivo_contrato == 'despido') { echo 'checked' ;} ?>></td>
-        <td width="60">Despido de</td>
-        <td width="176"><input style="width:176px;" class="form-control" type="text" name="despido" id="odespido" value="<?php if ($motivo_contrato == 'despido') { echo 'value = "'.$obs.'"' ;} ?>" /></td>
-    </tr>
-    <tr>    
-        <td width="20"><input type="checkbox" value="licencia" <?php if ($motivo_contrato == 'licencia') { echo 'checked' ;} ?>></td>
-        <td width="60">Licencia de</td>
-        <td width="190"><input style="width:190px;" class="form-control" type="text" name="licencia" <?php if ($motivo_contrato == 'licencia') { echo 'value = "'.$obs.'"' ;} ?> /></td>
-        <td width="20"><input type="checkbox" value="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'checked' ;} ?>></td>
-        <td width="60">Aumento dotaci&oacute;n</td>
-        <td width="176"><input style="width:176px;" class="form-control" type="text" name="aumento" id="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'value = "'.$obs.'"' ;} ?>/></td>
-    </tr>
-    <tr>    
-        <td width="20"><input type="checkbox" <?php if ($motivo_contrato == 'reemplazo') { echo 'checked' ;} ?>></td>
-        <td width="60">Por remplazo</td>
-        <td width="190"><input style="width:190px;" class="form-control" type="text" name="reemplazo" <?php if ($motivo_contrato == 'reemplazo') { echo 'value = "'.$obs.'"' ;} ?> /></td>
-        <td width="20"><input type="checkbox" <?php if ($motivo_contrato == 'cargo_nuevo') { echo 'checked' ;} ?>></td>
-        <td width="60">Cargo nuevo</td>
-        <td width="176"><input style="width:176px;" class="form-control" type="text" name="cargo_nuevo" id="cargo_nuevo" <?php if($motivo_contrato == 'cargo_nuevo') { echo 'value = "'.$obs.'"' ;} ?> /></td>
-    </tr>
-    <tr>
-           <td colspan="2">&nbsp;</td>     
-        </tr>
-    </table>
-
-    <table style="width:674px" cellspacing="0">
-        <tr >
-           <td style="border: 1px solid black;">Bonos (Adjunta tabla de bono)</td> 
-           <td style="border: 1px solid black;">111</td>
-        </tr>
-        <tr>
-           <td style="border: 1px solid black;">Remuneracion base</td> 
-           <td style="border: 1px solid black;">22</td>
-        </tr>
-        <tr>
-           <td colspan="2">&nbsp;</td>     
-        </tr>
-    </table>
-
-    <table style="width:100%;">
-    <tr>    
-        <td width="230"><span style="font-size: 12pt;">Para remuneraciones fijas indicar sueldo liquido</span></td>
-        <td width="200"><input style="width:300px;" class="form-control" type="text" name="afp" id="afp" value="$ <?php echo number_format($ejecutivo[0]['sueldo_liquido'], 0, '', '.');?>" /></td>
-    </tr>
-    <tr>    
-        <td width="230"><span style="font-size: 12pt;">El sueldo base ser&aacute; calculado por recursos humanos</span></td>
-        <td width="200"><input style="width:300px;" class="form-control" type="text" name="salud" id="salud" value="$"/></td>
-    </tr>
-      <tr>
-        <td colspan="2">&nbsp;</td>     
-      </tr>
-    </table><br/><br/><br/>
-
-   <table style="width:100%;" cellspacing="0">
-    <tr>    
-        <td width="100" style="border: 1px solid black;" align="center"><span style="font-size: 12pt;">Jefe Directo</span></td>
-        <td width="100" style="border: 1px solid black;" align="center"><span style="font-size: 12pt;">Encargado del Area</span></td>
-        <td width="100" style="border: 1px solid black;" align="center"><span style="font-size: 12pt;">Coordinadora Operativa</span></td>
-        <td width="100" style="border: 1px solid black;" align="center"><span style="font-size: 12pt;">Gerente Adm.</span></td>
+        <th style="width: 800px;">RAZÓN SOCIAL</th><td colspan="2">kjfkjdf</td>
         
     </tr>
     <tr>
-        <td style="border: 1px solid black; font-size: 10pt;">Nombre: <?php echo $ejecutivo[0]['jefe_directo'];?></td>
-        <td style="border: 1px solid black; font-size: 10pt;">Nombre: <?php echo $ejecutivo[0]['encargado_area'];?></td>
-        <td style="border: 1px solid black; font-size: 10pt;">Nombre: <?php echo $ejecutivo[0]['coordinadora_operativa'];?></td>
-        <td style="border: 1px solid black; font-size: 10pt;">Nombre: <?php echo $ejecutivo[0]['gerente_adm'];?></td>
+        <th>RAZÓN SOCIAL2</th><td>kjfkjdf</td>
+        <td>kjfkjdf</td>
     </tr>
-    <tr>
-        <td style="border: 1px solid black; font-size: 10pt;">Fecha:</td>
-        <td style="border: 1px solid black; font-size: 10pt;">Fecha:</td>
-        <td style="border: 1px solid black; font-size: 10pt;">Fecha:</td>
-        <td style="border: 1px solid black; font-size: 10pt;">Fecha:</td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black; font-size: 10pt;">Firma:<br/><br/><br/></td>
-        <td style="border: 1px solid black; font-size: 10pt;">Firma:<br/><br/><br/></td>
-        <td style="border: 1px solid black; font-size: 10pt;">Firma:<br/><br/><br/></td>
-        <td style="border: 1px solid black; font-size: 10pt;">Firma:<br/><br/><br/></td>
-    </tr>
-      <tr>
-        <td colspan="4">&nbsp;</td>     
-      </tr>
-    </table>
+   </table>
+    
+    
+    <section class="content">
+        <br />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">Solicitud de Contrataci&oacute;n</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>RAZ&Oacute;N SOCIAL</label>
+                                    <input class="form-control" type="text" name="razon_social" id="razon_social"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nombre Completo</label>                                   
+                                    <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $ejecutivo[0]['nombre'] ?>"/>                           
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>R.U.T</label>
+                                    <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $ejecutivo[0]['rut'] ?>" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Fecha de nacimiento</label>
+                                    <input class="form-control datepicker" type="text" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo $ejecutivo[0]['fecha_nacimiento'] ?>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Direcci&oacute;n</label>
+                                    <input class="form-control" type="text" name="direccion" id="direccion" value="<?php echo $ejecutivo[0]['direccion'] ?>"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Comuna</label>
+                                    <input class="form-control" type="text" name="comuna" id="comuna" value="<?php echo $ejecutivo[0]['comuna'] ?>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h4>Tel&eacute;fonos: </h4>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>M&oacute;vil</label>
+                                    <input class="form-control" type="text" name="movil" id="movil" value="<?php echo $ejecutivo[0]['fono_movil'] ?>" />
+                                </div>
+                            </div>  
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fijo</label>
+                                    <input class="form-control" type="text" name="fijo" id="fijo" value="<?php echo $ejecutivo[0]['fono_fijo'] ?>" />
+                                </div>
+                            </div>                      
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h4>Estado Civil: </h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                              
+                                    <label>Soltero</label>
+                                    <input class="form-control" type="text" name="soltero" id="soltero" value="<?php if($ejecutivo[0]['edo_civil']== 'Soltero'){  echo "X";}else{ echo " ";} ?>" />
+                                </div>
+                            </div> 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Casado</label>
+                                    <input class="form-control" type="text" name="casado" id="casado" value="<?php if($ejecutivo[0]['edo_civil']== 'Casado'){  echo "X";}else{ echo " ";} ?>" />
+                                </div>
+                            </div> 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Con Hijos</label>
+                                    <input class="form-control" type="text" name="con_hijos" id="con_hijos" value="<?php if($ejecutivo[0]['num_hijos']>0){  echo "X";}else{ echo " ";} ?>"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>AFP</label>
+                                    <input class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['afp'] ?>" />
+                                </div>
+                            </div> 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Sistema de Salud</label>
+                                    <input class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['salud'] ?>" />
+                                </div>
+                            </div> 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha de Contrato</label>
+                                    <input class="form-control datepicker" type="text" name="fecha_contrato" id="fecha_contrato" value="<?php echo $ejecutivo[0]['fecha_ingreso'] ?>" />
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>PM/ROL</label>
+                                    <input class="form-control" type="text" name="pm" id="pm" disabled value="<?php echo $ejecutivo[0]['nombre_pm'] ?>" />
+                                </div>
+                            </div> 
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Industria</label>
+                                    <input class="form-control" type="text" name="centro_costo" disabled id="centro_costo" value="<?php echo $ejecutivo[0]['area'] ?>" />
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>C&oacute;digo de Proyecto (COD SAP)</label>
+                                    <input class="form-control" type="text" name="sap" id="sap" value="<?php echo $ejecutivo[0]['cod_sap'] ?>"/>
+                                </div>
+                            </div> 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Direcci&oacute;n Sucursal</label>
+                                    <input class="form-control" type="text" name="sucursal" id="sucursal" disabled value="<?php echo $ejecutivo[0]['sucursal'] ?>" />
+                                </div>
+                            </div> 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Departamento (&Aacute;rea de Apoyo)</label>
+                                    <input class="form-control" type="text" name="apoyo" id="apoyo" value="<?php echo $ejecutivo[0]['gerencia'] ?>"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Horario de Trabajo</label>
+                                    <?php
+                                    echo form_dropdown('turno_id',$turnos,$ejecutivo[0]['id_turno'],array('class' => 'form-control'));
+                                    ?>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        if (!empty($ejecutivo[0]['motivo_contrato'])){
+                            $motivo_contrato1 = explode(' ',$ejecutivo[0]['motivo_contrato'],2);
+                            //print_r($motivo_contrato1);
+                            $motivo_contrato = $motivo_contrato1[0];
+                            $obs = $motivo_contrato1[1];
+                        } else {
+                            $motivo_contrato = ''; 
+                            $obs = '';
+                        }
+                        
+                        
+                        ?>
+                        <div class="row">
+                            <div class="col-md-3"> <h4>Motivo de la Contrataci&oacute;n:</h4></div>
+                            <div class="col-md-8">
+                              <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <input type="radio" name="motivo_contrato" value="renuncia" <?php if ($motivo_contrato == 'renuncia') { echo 'checked' ;} ?>/> Renuncia de:
+                                    </span>
+                                <input type="text" class="form-control" name="renuncia" <?php if ($motivo_contrato == 'renuncia') { echo 'value = "'.$obs.'"' ;} ?>>
+                              </div><br />
+                              <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <input type="radio" name="motivo_contrato" value="despido" <?php if ($motivo_contrato == 'despido') { echo 'checked' ;} ?>> Despido de:
+                                    </span>
+                                <input type="text" class="form-control" name="despido" <?php if ($motivo_contrato == 'despido') { echo 'value = "'.$obs.'"' ;} ?>>
+                              </div><br />
+                              <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <input type="radio"  name="motivo_contrato"  value="licencia" <?php if ($motivo_contrato == 'licencia') { echo 'checked' ;} ?>> Licencia de:
+                                    </span>
+                                <input type="text" class="form-control" name="licencia" <?php if ($motivo_contrato == 'licencia') { echo 'value = "'.$obs.'"' ;} ?>>
+                              </div><br />
+                              <div class="input-group">
+                                    <span class="input-group-addon" >
+                                      <input type="radio" name="motivo_contrato"  value="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'checked' ;} ?>> Aumento de Dotaci&oacute;n:
+                                    </span>
+                                <input type="text" class="form-control" name="aumento" <?php if ($motivo_contrato == 'aumento') { echo 'value = "'.$obs.'"' ;} ?>>
+                              </div><br />
+                              <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <input type="radio" name="motivo_contrato" value="reemplazo" <?php if ($motivo_contrato == 'reemplazo') { echo 'checked' ;} ?>> Por reemplazo:
+                                    </span>
+                                <input type="text" class="form-control" name="reemplazo" <?php if ($motivo_contrato == 'reemplazo') { echo 'value = "'.$obs.'"' ;} ?>>
+                              </div><br />
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                      <input type="radio" name="motivo_contrato" value="cargo_nuevo" <?php if ($motivo_contrato == 'cargo_nuevo') { echo 'checked' ;} ?>> Cargo nuevo (especif&iacute;que):
+                                    </span>
+                                <input type="text" class="form-control" name="cargo_nuevo" <?php if ($motivo_contrato == 'cargo_nuevo') { echo 'value = "'.$obs.'"' ;} ?>">
+                              </div>
+                                <!-- /input-group -->
+                            </div>
+                        </div>
+                       
+                    </div>
+                    
+                </div>
+                <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-info pull-right">Guardar</button>
+                </div>       
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <table style="width:100%; border: 1px solid black;" cellspacing="0">
-        <tr>    
-            <td width="100" align="left"><span style="font-size: 12pt;">USO EXCLUSIVO RRHH</span></td>
-            <td width="100">&nbsp;</td>
-            <td width="100">&nbsp;</td>
-        </tr>
-        <tr>
-            <td><br>Timbre y recepci&oacute;n</td>
-            <td style="border: 1px solid black; width:80px; height:80px;">&nbsp;</td>
-            <td></td>    
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>    
-        </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>     
-      </tr>
-    </table>
 </div>
 
 

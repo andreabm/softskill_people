@@ -6,9 +6,10 @@
         </div>
     </div>
     <div class="col-md-12">
+    <?php print_r($postulante) ?>
         <div class="form-group">
             <label>Nombre</label>
-            <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $postulante[0]['nombre'] ?>"/>
+            <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $postulante[0]['nombre'].' '.$postulante[0]['paterno'].' '.$postulante[0]['materno'] ?>"/>
         </div>
     </div>
     <div class="col-md-6">

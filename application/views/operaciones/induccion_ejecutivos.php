@@ -56,7 +56,7 @@
                             <td><?php echo $t['cartera'] ?></td>
                             <td><?php echo $t['tipo_ejecutivo'] ?></td>
                             <td><?php echo $t['rut'] ?></td>
-                            <td><?php echo $t['nombre'] ?></td>
+                            <td><?php echo $t['nombre'].' '.$t['paterno'] ?></td>
                             <td align="center"><?php echo $t['resultado_final'];?></td>
                             <td>
                               

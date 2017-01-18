@@ -709,13 +709,9 @@ $(document).ready(function() {
 
 $(document).ready(function(){  
 $('.datepicker').datepicker({
-        todayBtn: true,
-        language: "es",
         autoclose: true
     });
 $(".timepicker").timepicker({
-      showInputs: false,
-      showMeridian: false
     });
 }); 
 function verPostulante(){

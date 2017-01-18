@@ -113,10 +113,11 @@ $(document).ready(function() {
                     </div>
               </div>              
               <div class="row verificar">
+
                 <div class="col-md-4">
                       <div class="form-group">
                         <label>Fecha de Nacimiento:</label>
-        
+                    
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -126,6 +127,11 @@ $(document).ready(function() {
                         <!-- /.input group -->
                       </div>
                     </div>
+
+
+
+
+
                     <div class="col-md-4">
                     <div class="form-group">
                         <label>Sexo</label>
@@ -706,18 +712,6 @@ $(document).ready(function() {
 </div><!-- /.modal -->
 
 <script>
-
-$(document).ready(function(){  
-$('.datepicker').datepicker({
-        todayBtn: true,
-        language: "es",
-        autoclose: true
-    });
-$(".timepicker").timepicker({
-      showInputs: false,
-      showMeridian: false
-    });
-}); 
 function verPostulante(){
     $.ajax({
           url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
@@ -745,7 +739,6 @@ $('#rut').Rut({
         $("#alerta_rut").fadeOut(2000);},3000);
     },
   format_on: 'keyup'
->>>>>>> 88d2921c44182d571691af5e09f378b1b4d4739c
 });
 </script>
 
@@ -872,8 +865,19 @@ $('#rut').Rut({
             success: function(data){
               
               console.debug(data);
-              data  = JSON.parse(data);          
-              
+              data  = JSON.parse(data);
+              //datepicker ini
+              $('.datepicker').datepicker({
+                      todayBtn: true,
+                      language: "es",
+                      autoclose: true
+                  });
+              $(".timepicker").timepicker({
+                    showInputs: false,
+
+              });
+              //datepicker fin
+
               if (data.existe=='SI'){
                   //alert(validado);
   				        $('#id_postulante').val(data.id);

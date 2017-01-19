@@ -25,6 +25,7 @@
                     <div class="form-group">
                         <label>Area</label>
                         <?php
+                        array_unshift($areas,'--Seleccione--');
                         echo form_dropdown('area_id',$areas,'',array('class' => 'form-control','id' => 'select_area'));
                         ?>
                       </div>
@@ -33,7 +34,8 @@
                         <div class="form-group">
                             <label>Cartera</label>
                             <?php
-                            echo form_dropdown('cartera_id',$carteras,'',array('class' => 'form-control', 'id' => 'select_cartera'));
+                            //array_unshift($carteras,'--Seleccione--');
+                            echo form_dropdown('cartera_id','--Seleccione--','',array('class' => 'form-control', 'id' => 'select_cartera'));
                             ?>
                         </div>
                     </div>
@@ -120,15 +122,23 @@
 
 </div>
 <script>
+/*
+ $(document).ready(function() {
+      cargar_carteras();
+  });
+ */
+
  $( "#select_area" ).change(function() {
-    //alert($('#producto').val());
-    cargar_carteras();
+    cargar_carteras(this.value);
 });
-function cargar_carteras(){    
+function cargar_carteras(valor_area){
+    
+    var v_area = valor_area;
+
     $.ajax({
       url:"<?php echo base_url('/index.php/index/cargar_carteras')?>",
       type:'POST',
-      data: {area:$('#select_area').val()},
+      data: {area:v_area},
       success: function(data) {        
       options_p = "<option selected>Seleccione area</option>";
         data = JSON.parse(data);

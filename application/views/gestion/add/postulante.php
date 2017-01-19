@@ -113,10 +113,11 @@ $(document).ready(function() {
                     </div>
               </div>              
               <div class="row verificar">
+
                 <div class="col-md-4">
                       <div class="form-group">
                         <label>Fecha de Nacimiento:</label>
-        
+                    
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -870,8 +871,19 @@ $('#rut').Rut({
             success: function(data){
               
               console.debug(data);
-              data  = JSON.parse(data);          
-              
+              data  = JSON.parse(data);
+              //datepicker ini
+              $('.datepicker').datepicker({
+                      todayBtn: true,
+                      language: "es",
+                      autoclose: true
+                  });
+              $(".timepicker").timepicker({
+                    showInputs: false,
+
+              });
+              //datepicker fin
+
               if (data.existe=='SI'){
                   //alert(validado);
   				        $('#id_postulante').val(data.id);

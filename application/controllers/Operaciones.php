@@ -55,8 +55,11 @@ class Operaciones extends CI_Controller {
         $this->load->view('common/header');
         $areas = $this->MyModel->buscar_select('areas','id_area','area');
         $data['areas'] = $areas;
+        /*
         $carteras = $this->MyModel->buscar_select('carteras','id_cartera','cartera',array('id_area = 5'));
         $data['carteras'] = $carteras;
+        */
+
         $cargos = $this->MyModel->buscar_select('cargos','id_cargo','cargo');
         $data['cargos'] = $cargos;
         
@@ -604,12 +607,12 @@ class Operaciones extends CI_Controller {
         $rechazado = $this->input->post('rechazado');
         $observacion = $this->input->post('observacion');
         $observacion_aprobada = $this->input->post('observacion_aprobada');
+        $cant_aprobada = $this->input->post('cantidad_aprobada');
         
         $data = array(
-               'cantidad_aprobada' => $cant_solicitada,
+               'cantidad_aprobada' => $cant_aprobada,
                'prioridad' => $prioridad,
                'validado' => $rechazado,
-               //'observacion' => $observacion,
                'observacion_aprobada' => $observacion_aprobada
             );
           /*  
@@ -1061,7 +1064,6 @@ class Operaciones extends CI_Controller {
             $data['evaluacion_items'] = $query->result();
             //evaluacion_items fin
 
-
         $this->load->view('common/header');
         $this->load->view('operaciones/edit/evaluacion_induccion_calidad',$data);
         $this->load->view('common/footer');
@@ -1075,7 +1077,7 @@ class Operaciones extends CI_Controller {
         //borro info
         if(!empty($resultado_final)){
         //updeteo resultado
-        $data = array('resultado_final' => $resultado_final);
+        $data = array('resultado_final' => $resultado_final,'calidad' => '1');
         $this->db->where('rut', $rut);
         $this->db->update('evaluacion_induccion_resultados', $data);
 

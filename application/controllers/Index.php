@@ -36,13 +36,10 @@ class Index extends CI_Controller {
         print_r(json_encode($data));
     }
     public function cargar_solicitudes(){
-        $area = $this->input->post('area');
-        
-        $carteras = $this->MyModel->buscar_model('carteras','id_area ='.$area);
-
+        $area = $this->input->post('area');        
+        //$carteras = $this->MyModel->buscar_model('carteras','id_area ='.$area);
         $query = $this->db->query("SELECT carteras.id_cartera, carteras.cartera FROM carteras 
                                     INNER JOIN solicitudes ON solicitudes.id_cartera = carteras.id_cartera WHERE carteras.id_area = ".$area);
-
         $carteras = $query->result_array();
 
         $sucursales = $this->MyModel->buscar_model('areas','id_area ='.$area);
@@ -56,6 +53,14 @@ class Index extends CI_Controller {
         $data['solicitudes'] = $solicitudes;
         print_r(json_encode($data));
 
+    }
+    public function cargar_solicitudes_b(){
+        $cartera = $this->input->post('cartera');
+        $area = $this->input->post('area');
+        $solicitud = $this->MyModel->buscar_model('solicitudes','id_cartera ='.$cartera,'id_area ='.$area);
+
+        $data['solicitud'] = $solicitud;
+        print_r(json_encode($data));
     }
 
     public function test(){

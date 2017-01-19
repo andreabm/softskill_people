@@ -61,7 +61,7 @@
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right" class="datepicker" name="fecha" value="<?php echo date('d-m-Y') ?>" disabled="disabled" />
+                          <input type="text" class="form-control pull-right datepicker" name="fecha" value="<?php echo date('d-m-Y') ?>" disabled="disabled" />
                         </div>
                         <!-- /.input group -->
                       </div>

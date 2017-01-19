@@ -1,3 +1,11 @@
+
+<?php
+/*
+echo '<pre>';
+print_r($areas);
+echo '</pre>';
+*/
+?>
 <div class="row">
     <div class="col-xs-8">
         <div class="alert alert-danger alert-dismissible" id="alerta_rut" style="display: none;">
@@ -44,7 +52,8 @@
 
     <div class="col-md-4">
         <label>Area</label>
-        <select class="form-control" name="area" id="area">
+        <select class="form-control" name="area" id="area" required>
+            <option value="">--Seleccione--</option>
         <?php foreach($areas as $a){?>         
             <option value="<?php echo $a['id_area'];?>"><?php echo $a['area'] ?></option>
         <?php }?>
@@ -53,7 +62,7 @@
     <div class="col-md-4">
         <label>Cartera</label>
 
-        <input type="hidden" name="sucu" id="sucu" class="form-control">
+        <input type="hidden" name="nsucursal" id="nsucursal" class="form-control">
         
         <select class="form-control" name="cartera" id="cartera">
         <?php foreach($carteras as $a){?>         
@@ -87,46 +96,93 @@ $('#califica').change(function(){
     }
 });
 
- $( "#area" ).change(function() {
-    cargar_carteras();
+$( "#area" ).change(function(){
+    //alert(this.value);
+    cargar_carteras(this.value);
 });
-function cargar_carteras(){
+function cargar_carteras(valor_area){
+    var v_area = valor_area;
     var cargo_postular = $('#id_cargo').val();
+
     $.ajax({
       url:"<?php echo base_url('/index.php/index/cargar_solicitudes')?>",
       type:'POST',
-      data: {area:$('#area').val()},
-      success: function(data) {        
-      options_p = "<option selected>Seleccione area</option>";
+
+      data: {area:v_area},
+
+      success: function(data){  
+
+      options_p = "<option value=''>--Seleccione--</option>";
       options_s = "";
       options_sol = "";
+
+        //carteras
         data = JSON.parse(data);
         $.each(data.carteras,function(i,v){
-             options_p +="<option value='"+v.id_cartera+"'>"+v.cartera+"</option>";            
+             options_p +="<option value='"+v.id_cartera+"'>"+v.cartera+"</option>";           
         });
         $("#cartera").html(options_p);
+        
+        //cargo debe coincidir con puesto            
+        $( "#cartera" ).change(function(){
+            verificar_cartera(this.value)
+        }); 
+
+        //sucursales
         $.each(data.sucursales,function(i,v){
-            $('#sucu').val(v.id_sucursal);
-             options_s +="<input type='hidden' name='id_sucursal' id='id_sucursal' value='"+v.id_sucursal+"' >";          
+            $('#nsucursal').val(v.id_sucursal);
+             options_s +="<input type='hidden' name='id_sucursal' id='id_sucursal' value='"+v.id_sucursal+"' >";  
         });
-        $("#suc").html(options_s);
+        $("#nsucursal").html(options_s);
+
+        //mensaje
         $.each(data.solicitudes,function(i,v){
-            $('#sucu').val(v.id_solicitud);
-             options_sol +="<input type='hidden' name='id_solicitud' id='id_solicitud' value='"+v.id_cargo+"' >";
-             if(cargo_postular!=v.id_cargo){               
-               $('#alerta_cargo').fadeIn();
-                setTimeout(function(){$("#alerta_cargo").fadeOut(3000);},4000);
-                $('#asignar').prop("disabled", true); 
-             }else{
-                $('#alerta_cargo').fadeOut();
-                $('#asignar').prop("disabled", false); 
-             }
+          $('#nsucursal').val(v.id_solicitud);
         });
+
       },
       
       error: function(e) {
         console.debug('error');
       }
    }); 
+}
+
+function verificar_cartera(selCartera){
+     var sel_area = $('#area').val();
+     var sel_cartera = selCartera;
+     var cargo_postular = $('#id_cargo').val(); 
+
+     $.ajax({
+      url:"<?php echo base_url('/index.php/index/cargar_solicitudes_b')?>",
+      type:'POST',
+
+      data: {cartera:sel_cartera,area:sel_area},
+      success: function(data){
+      options_sol = "";
+        //carteras
+        data = JSON.parse(data);
+        //mensaje
+        $.each(data.solicitud,function(i,v){
+          $('#nsucursal').val(v.id_solicitud);
+               
+             options_sol +="<input type='hidden' name='id_solicitud' id='id_solicitud' value='"+v.id_cargo+"' >";
+             $("#suc").html(options_sol);
+
+             if(cargo_postular!=v.id_cargo){               
+                $('#alerta_cargo').fadeIn();
+                setTimeout(function(){$("#alerta_cargo").fadeOut(3000);},4000);
+                $('#asignar').prop("disabled", true); 
+             }else{
+                $('#alerta_cargo').fadeOut();
+                $('#asignar').prop("disabled", false); 
+             }
+             
+        });
+      },      
+      error: function(e) {
+        console.debug('error');
+      }
+   });
 }
 </script>

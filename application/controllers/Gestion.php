@@ -538,17 +538,20 @@ class Gestion extends CI_Controller {
         $this->db->from('areas');
         $this->db->join('solicitudes','solicitudes.id_area=areas.id_area');
         $this->db->where('solicitudes.cantidad_entregada < solicitudes.cantidad_solicitada');
+        $this->db->where('solicitudes.validado = 1');
         $this->db->group_by('areas.id_area');
         $query = $this->db->get();
         $areas = $query->result_array();   
         $data['areas'] = $areas;
         
+        /*
         $this->db->from('carteras');
         $this->db->join('solicitudes','solicitudes.id_cartera=carteras.id_cartera');
         $this->db->group_by('carteras.id_cartera');
         $query = $this->db->get();
         $carteras = $query->result_array();
         $data['carteras'] = $carteras;
+        */
         
         $motivos_no_califica = $this->MyModel->buscar_select('motivo_no_califica','id_motivo_no_califica','motivo');
         $data['motivos_no_califica'] = $motivos_no_califica;

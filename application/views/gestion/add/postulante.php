@@ -52,11 +52,10 @@ $(document).ready(function() {
                     <label>Rut:</label>
                     <div class="input-group">
                       <input type="hidden" id="prueba" name="prueba" value="0" />
-
                       <input type="text" id="rut" name="rut" class="form-control" placeholder="Rut" autocomplete="off" onkeyup="texto_rut(event);" />
 
 					            <input type="hidden" id="id_postulante">
-                      <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="validar_rut(event),texto_rut(event);">Validar</a></span>
+                      <span class="input-group-addon" id="basic-addon2"><a href="#" onclick="validar_rut(event);">Validar</a></span>
                     </div>
                 </div>
               </div>
@@ -767,6 +766,7 @@ event.preventDefault();
 
   function texto_rut(event){
     event.preventDefault();
+    $('#prueba').val('0');
     $('#rut').Rut({
       on_error: function(){ 
         $('#alerta_rut').fadeIn();
@@ -894,7 +894,7 @@ event.preventDefault();
                   $('#id_postulante').val(data.id);
                   $('.verificar').hide();
                   $('#alerta_rut').fadeIn();
-                  setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
+                  setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);                  
                   return false;
               }else{                
                   $('.verificar').fadeIn();

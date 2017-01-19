@@ -726,20 +726,19 @@ function verPostulante(){
     });
 }
 $('.verificar').hide();
-texto_rut();
-
-function texto_rut(event){
+//texto_rut();
+function texto_rut(event){  
 event.preventDefault();
-$('#rut').Rut({
-  on_error: function(){ 
-    $('#alerta_rut').fadeIn();
-    $('.verificar').fadeOut();
-    $('#prueba').val('1');
-    setTimeout(function(){
-        $("#alerta_rut").fadeOut(2000);},3000);
-    },
-  format_on: 'keyup'
-});
+    $('#rut').Rut({
+       on_error: function(){
+          $('#alerta_rut').fadeIn();
+          $('.verificar').fadeOut();
+          $('#prueba').val('1');
+          //setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);},
+          format_on: 'keyup'
+       }
+    });
+}
 </script>
 
 <script>
@@ -856,7 +855,7 @@ $('#rut').Rut({
       var muestra = document.getElementById("muestra");        
       var respuesta = document.getElementById("respuesta");
 
-      var prueba = document.getElementById("prueba");
+      var prueba = $('#prueba').val();
 
       $.ajax({
             url:"<?php echo base_url('index.php/gestion/valida_rut')?>",
@@ -877,22 +876,21 @@ $('#rut').Rut({
 
               });
               //datepicker fin
-
-              if (data.existe=='SI'){
+              if(data.existe=='SI'){
                   //alert(validado);
   				        $('#id_postulante').val(data.id);
                   $('.verificar').hide();
                   $('#alerta').fadeIn();
                   setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
                   return false;
-              }else if(data.existe=='NO' && prueba==1){
+              }else if(data.existe=='NO' && prueba=='1'){
                   //alert('test');
                   $('#id_postulante').val(data.id);
                   $('.verificar').hide();
-                  $('#alerta').fadeIn();
-                  setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
+                  $('#alerta_rut').fadeIn();
+                  setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
                   return false;
-              }else {                
+              }else{                
                   $('.verificar').fadeIn();
               }            
               

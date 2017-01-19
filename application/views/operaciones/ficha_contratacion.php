@@ -4,6 +4,14 @@
       <h1>Ficha<small> de Contratacion</small></h1>
     </section>
    
+    <?php 
+    /*
+    echo '<pre>';
+        print_r($ejecutivo);
+    echo '</pre>';
+    */
+    ?>
+
     <section class="content">
           <div class="row">
             <div class="col-xs-8">
@@ -77,6 +85,12 @@
                                 <div class="form-group">
                                     <label>Apellido Materno</label>                                   
                                     <input class="form-control" type="text" name="materno" id="materno" value="<?php echo $ejecutivo[0]['materno'] ?>" required/>                           
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Cargo a Postular</label>                                   
+                                    <input class="form-control" type="text" name="cargo" id="cargo" value="<?php echo $ejecutivo[0]['cargo'] ?>" required/>                           
                                 </div>
                             </div>
                         </div>
@@ -209,7 +223,7 @@
                                 <div class="form-group">
                                     <label>Horario de Trabajo</label>
                                     <?php
-                                    echo form_dropdown('turno_id',$turnos,$ejecutivo[0]['id_sucursal'],array('class' => 'form-control'));
+                                    echo form_dropdown('turno_id',$turnos,$ejecutivo[0]['id_sucursal'],array('class' => 'form-control','required' => 'required'));
                                     ?>
         
                                 </div>
@@ -286,25 +300,25 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Jefe directo</label>
-                            <input class="form-control" type="text" name="jefe_directo" id="jefe_directo" value="<?php echo $ejecutivo[0]['jefe_directo'] ?>"/>
+                            <input class="form-control" type="text" name="jefe_directo" id="jefe_directo" value="<?php echo $ejecutivo[0]['jefe_directo'] ?>" required/>
                         </div>
                     </div>
                      <div class="col-md-3">
                         <div class="form-group">
                             <label>Encargado area</label>
-                            <input class="form-control" type="text" name="encargado_area" id="encargado_area" value="<?php echo $ejecutivo[0]['encargado_area'] ?>"/>
+                            <input class="form-control" type="text" name="encargado_area" id="encargado_area" value="<?php echo $ejecutivo[0]['encargado_area'] ?>" required/>
                         </div>
                     </div>
                      <div class="col-md-3">
                         <div class="form-group">
                             <label>Coordinadora operativa / Otro</label>
-                            <input class="form-control" type="text" name="coordinadora_operativa" id="coordinadora_operativa" value="<?php echo $ejecutivo[0]['coordinadora_operativa'] ?>"/>
+                            <input class="form-control" type="text" name="coordinadora_operativa" id="coordinadora_operativa" value="<?php echo $ejecutivo[0]['coordinadora_operativa'] ?>" required/>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Gerente ADM</label>
-                            <input class="form-control" type="text" name="gerente_adm" id="gerente_adm" value="<?php echo $ejecutivo[0]['gerente_adm'] ?>"/>
+                            <input class="form-control" type="text" name="gerente_adm" id="gerente_adm" value="<?php echo $ejecutivo[0]['gerente_adm'] ?>" required/>
                         </div>
                     </div>
                     </div>
@@ -327,13 +341,21 @@
 
 
 <script>
+$(document).ready(function(){ 
 $('.datepicker').datepicker({
-      autoclose: true
+        language: 'es',
+        todayBtn: true,        
+        autoclose: true,
+        weekStart: 1,
+        startDate: '01/01/1960',
+        endDate: '01/01/2099',
     });
 $(".timepicker").timepicker({
       showInputs: false,
-      showMeridian: false
-    });
+
+    });    
+});
+
 $('#rut').Rut({
   on_error: function(){ 
     $('#alerta_rut').fadeIn();

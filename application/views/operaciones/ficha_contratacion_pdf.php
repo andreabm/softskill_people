@@ -4,7 +4,7 @@
  echo '<pre>';
  print_r($ejecutivo);
  echo '</pre>';
-*/
+ */
  ?>
 
  <div class="content-wrapper">
@@ -98,7 +98,7 @@
    <table style="width:100%;">     
     <tr>    
         <td width="40">Cargo Postulado</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['id_cargo'];?>" /></td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['cargo'];?>" /></td>
         <td width="40">Plazo de Contrato</td>
         <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="&nbsp;"/></td>
     </tr>
@@ -118,12 +118,14 @@
         <td colspan="2">Departamento (<span style="font-size: 12pt;"><i>Solo area de apoyo</i></span>)</td>
         <td colspan="2"><input style="width:312px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['gerencia'];?>"/></td>
     </tr>
+
     <tr>    
         <td width="40">Horario de trabajo</td>
         <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['turno'];?>" /></td>
-        <td width="40">S&aacute;bado</td>
+         <td width="40">S&aacute;bado</td>
         <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="&nbsp;"/></td>
     </tr>
+
     </table>
 
     <?php
@@ -188,7 +190,8 @@
     <table style="width:100%;">
     <tr>    
         <td width="230"><span style="font-size: 12pt;">Para remuneraciones fijas indicar sueldo liquido</span></td>
-        <td width="200"><input style="width:300px;" class="form-control" type="text" name="afp" id="afp" value="$ <?php echo number_format($ejecutivo[0]['sueldo_liquido'], 0, '', '.');?>" /></td>
+        <td width="200">
+            <input style="width:300px;" class="form-control" type="text" name="afp" id="afp" value="$ <?php echo number_format($ejecutivo[0]['sueldo_liquido'], 0, '', '.');?>" /></td>
     </tr>
     <tr>    
         <td width="230"><span style="font-size: 12pt;">El sueldo base ser&aacute; calculado por recursos humanos</span></td>

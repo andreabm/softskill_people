@@ -24,7 +24,7 @@
                     <div class="col-md-3">
                     <div class="form-group">
                         <label>Rut</label>
-                        <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut'];?>">
+                        <input class="form-control" type="text" name="rut" id="rut" value="<?php echo $postulante[0]['rut'];?>" autocomplete="off" onkeyup="texto_rut(event);" />
                       </div>
                     </div>                    
               </div>
@@ -718,6 +718,23 @@ $(".timepicker").timepicker({
 
     });
 });    
+
+  texto_rut();
+
+  function texto_rut(event){
+    event.preventDefault();
+    $('#rut').Rut({
+      on_error: function(){ 
+        $('#alerta_rut').fadeIn();
+        $('.verificar').fadeOut();
+        $('#prueba').val('1');
+        setTimeout(function(){
+            $("#alerta_rut").fadeOut(2000);},3000);
+        },
+      format_on: 'keyup'
+    });
+  }
+
 //agregar factor
 function agregar_factor(event){
     

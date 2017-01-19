@@ -230,7 +230,7 @@ class Operaciones extends CI_Controller {
         }
         $data['id_ejecutivo'] = $id_ejecutivo;
         
-        $this->db->select('postulantes.id_postulante,postulantes.rut,postulantes.id_fuente,postulantes.referencia_empresa,postulantes.nombre_referencia,postulantes.contacto_referencia,postulantes.manejo_pc,postulantes.acepta_condicion,postulantes.pretension_renta,postulantes.fecha_entrevista,postulantes.prefiltro,postulantes.evaluador_id,postulantes.sucursal_id,postulantes.id_solicitud,personas.id_persona,personas.nombre,personas.fecha_nacimiento,personas.sexo,personas.edo_civil,personas.direccion,personas.comuna,personas.fono_movil,personas.fono_fijo,personas.nacionalidad,personas.num_hijos,personas.edad_hijos,personas.discapacidad,personas.enfermedad,personas.nombre_familiar,personas.contacto_familiar,personas.clasificado,personas.afp,personas.salud,personas.email,personas.edad,personas.paterno,personas.materno,personas.razon_social,areas.area,areas.gerencia,areas.id_sucursal,pms.id_pm,pms.nombre_pm,pms.id_area,sucursales.id_sucursal,sucursales.sucursal,turnos_postulantes.id_postulante,turnos_postulantes.id_turno,turnos.id_turno,turnos.turno,contratados.id_contratado,contratados.fecha_ingreso,contratados.fecha_retiro,contratados.id_area,contratados.id_cartera,contratados.activo,contratados.cod_sap,contratados.id_turno,contratados.motivo_contrato,contratados.jefe_directo,contratados.encargado_area,contratados.coordinadora_operativa,contratados.gerente_adm,contratados.sueldo_liquido,contratados.id_cargo,contratados.ultima_asistencia,contratados.ultima_observacion_asistencia');
+        $this->db->select('postulantes.id_postulante,postulantes.rut,postulantes.id_fuente,postulantes.referencia_empresa,postulantes.nombre_referencia,postulantes.contacto_referencia,postulantes.manejo_pc,postulantes.acepta_condicion,postulantes.pretension_renta,postulantes.fecha_entrevista,postulantes.prefiltro,postulantes.evaluador_id,postulantes.sucursal_id,postulantes.id_solicitud,personas.id_persona,personas.nombre,personas.fecha_nacimiento,personas.sexo,personas.edo_civil,personas.direccion,personas.comuna,personas.fono_movil,personas.fono_fijo,personas.nacionalidad,personas.num_hijos,personas.edad_hijos,personas.discapacidad,personas.enfermedad,personas.nombre_familiar,personas.contacto_familiar,personas.clasificado,personas.afp,personas.salud,personas.email,personas.edad,personas.paterno,personas.materno,personas.razon_social,areas.area,areas.gerencia,areas.id_sucursal,pms.id_pm,pms.nombre_pm,pms.id_area,sucursales.id_sucursal,sucursales.sucursal,turnos_postulantes.id_postulante,turnos_postulantes.id_turno,turnos.id_turno,turnos.turno,contratados.id_contratado,contratados.fecha_ingreso,contratados.fecha_retiro,contratados.id_area,contratados.id_cartera,contratados.activo,contratados.cod_sap,contratados.id_turno,contratados.motivo_contrato,contratados.jefe_directo,contratados.encargado_area,contratados.coordinadora_operativa,contratados.gerente_adm,contratados.sueldo_liquido,postulantes.id_cargo,cargos.cargo,contratados.ultima_asistencia,contratados.ultima_observacion_asistencia');
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');        
         $this->db->join('areas','areas.id_area= postulantes.id_area','left');
@@ -239,6 +239,7 @@ class Operaciones extends CI_Controller {
         $this->db->join('turnos_postulantes','turnos_postulantes.id_postulante = postulantes.id_postulante','left');
         $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno','left');
         $this->db->join('contratados','contratados.rut = postulantes.rut','left');
+        $this->db->join('cargos','cargos.id_cargo = postulantes.id_cargo');
         $this->db->where('postulantes.id_postulante = '.$id_ejecutivo);
         $query = $this->db->get();
         $ejecutivo = $query->result_array();
@@ -329,7 +330,8 @@ class Operaciones extends CI_Controller {
         $this->db->join('pms','pms.id_area= areas.id_area');
         $this->db->join('sucursales','sucursales.id_sucursal = postulantes.sucursal_id');
         $this->db->join('turnos_postulantes','turnos_postulantes.id_postulante = postulantes.id_postulante');
-        $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno');   
+        $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno');
+        $this->db->join('cargos','cargos.id_cargo = postulantes.id_cargo');
         $this->db->join('contratados','contratados.rut = postulantes.rut','left');
         $this->db->where('postulantes.id_postulante = '.$id_ejecutivo);
         $query = $this->db->get();

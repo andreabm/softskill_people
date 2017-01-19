@@ -704,16 +704,19 @@ $(document).ready(function() {
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <script>
-
-$(document).ready(function(){  
-$('.datepicker').datepicker({
-        autoclose: true
-    });
-$(".timepicker").timepicker({
-    });
-}); 
+  $(document).ready(function(){
+    var date_input=$('input[name="fecha"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    date_input.datepicker({
+      format: 'yyyy-mm-dd',
+      container: container,
+      todayHighlight: true,
+      autoclose: true,
+    })
+  })
+</script>
+<script>
 function verPostulante(){
     $.ajax({
           url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
@@ -741,7 +744,6 @@ $('#rut').Rut({
         $("#alerta_rut").fadeOut(2000);},3000);
     },
   format_on: 'keyup'
->>>>>>> 88d2921c44182d571691af5e09f378b1b4d4739c
 });
 </script>
 

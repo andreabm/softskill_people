@@ -8,7 +8,7 @@ class Usuario extends CI_Model {
 
     public function getUsuarios($conditions = null){
         $this->db->from('usuarios');
-        $this->db->where('activo',1);
+        //$this->db->where('activo',1);
         $query = $this->db->get();
         return $query->result_array();
     }

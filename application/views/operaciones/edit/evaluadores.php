@@ -33,7 +33,7 @@ $(document).ready(function() {
                 <div class="col-md-3">
                     <div class="form-group">
                       <input type="hidden" value="<?php echo $evaluador[0]['id_evaluador'];?>" name="id_evaluador" id="id_evaluador" class="form-control" />
-                        <input class="form-control" type="text" name="nombre_evaluador" id="nombre_evaluador" value="<?php echo $evaluador[0]['nombre'];?>" placeholder="Nombre Evaluador">
+                        <input class="form-control" type="text" name="nombre_evaluador" id="nombre_evaluador" value="<?php echo $evaluador[0]['nombre_evaluador'];?>" placeholder="Nombre Evaluador">
                       </div>
                 </div>
 

@@ -556,7 +556,7 @@ class Gestion extends CI_Controller {
         $motivos_no_califica = $this->MyModel->buscar_select('motivo_no_califica','id_motivo_no_califica','motivo');
         $data['motivos_no_califica'] = $motivos_no_califica;
         
-        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,postulantes.id_cargo,personas.email,postulantes.id_cargo');
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno, personas.materno,postulantes.id_cargo,personas.email,postulantes.id_cargo');
         $this->db->from('postulantes');
         $this->db->join('personas','postulantes.rut=personas.rut');
         $this->db->where('postulantes.id_postulante = '.$id_postulante);

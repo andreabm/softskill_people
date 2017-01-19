@@ -1,12 +1,3 @@
- 
- <?php 
- /*
- echo '<pre>';
- print_r($ejecutivo);
- echo '</pre>';
- */
- ?>
-
  <div class="content-wrapper">
 <!-- Content Header (Page header) -->
     <section class="content-header">

@@ -957,7 +957,7 @@ class Operaciones extends CI_Controller {
     }     
     //EVALUACION INDUCCION 2 INI                         
     public function induccion_ejecutivos(){
-        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,evaluacion_induccion_resultados.resultado_final');
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,evaluacion_induccion_resultados.resultado_final');
         $this->db->from('personas');
         $this->db->join('postulantes','personas.rut = postulantes.rut');
         $this->db->join('areas','areas.id_area = postulantes.id_area');
@@ -1183,7 +1183,7 @@ class Operaciones extends CI_Controller {
             $supervisores = $this->MyModel->buscar_select('supervisores','id_supervisor','nombre_supervisor');
             $data['supervisores'] = $supervisores;
 
-            $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre');
+            $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre_evaluador');
             $data['evaluadores'] = $evaluadores;
 
             //hasta aqui            
@@ -1270,7 +1270,7 @@ class Operaciones extends CI_Controller {
 
             if($this->input->post('nombre_evaluador')) {
                 $nombre = $this->input->post('nombre_evaluador');
-                 $actualiza_evaluador = array('nombre' => $nombre);
+                 $actualiza_evaluador = array('nombre_evaluador' => $nombre);
                 $this->MyModel->agregar_model('evaluadores',$actualiza_evaluador,'id_evaluador',$this->input->post('id_evaluador'));                
                 redirect(base_url("index.php/operaciones/evaluadores"));
             }

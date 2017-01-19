@@ -69,10 +69,10 @@
                             <td align="center"><?php echo $t['resultado_final'];?></td>
                             <td>
                               <?php if($t['rut']==$t['rut_b']){?>
-                              <a class="btn btn-xs btn-success" href="<?php echo base_url('index.php/operaciones/ver_evaluacion_escuchas/'.$t['id_postulante'])?>">Ver Evaluacion</a>  
+                              <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/operaciones/ver_evaluacion_escuchas/'.$t['id_postulante'])?>">Ver Evaluacion</a>  
                               <a class="btn btn-xs btn-success" href="#" disabled>Evaluar</a>
                               <?php }else{?>
-                              <a class="btn btn-xs btn-success" href="#" disabled>Ver Evaluacion</a>
+                              <a class="btn btn-xs btn-warning" href="#" disabled>Ver Evaluacion</a>
                               <a class="btn btn-xs btn-success" href="<?php echo base_url('index.php/operaciones/evaluacion_escuchas/'.$t['id_postulante'])?>">Evaluar</a>
                               <?php }?>
                             </td>

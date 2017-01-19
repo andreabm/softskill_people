@@ -127,11 +127,6 @@ $(document).ready(function() {
                         <!-- /.input group -->
                       </div>
                     </div>
-
-
-
-
-
                     <div class="col-md-4">
                     <div class="form-group">
                         <label>Sexo</label>
@@ -710,7 +705,18 @@ $(document).ready(function() {
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+<script>
+  $(document).ready(function(){
+    var date_input=$('input[name="fecha"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    date_input.datepicker({
+      format: 'yyyy-mm-dd',
+      container: container,
+      todayHighlight: true,
+      autoclose: true,
+    })
+  })
+</script>
 <script>
 function verPostulante(){
     $.ajax({

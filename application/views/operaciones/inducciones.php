@@ -18,7 +18,7 @@
                     $disabled = 'disabled title="Lo siento el promedio ya que se ha cumplido"';
                   }
               }?>
-            <button type="submit" class="btn btn-block btn-info" <?php echo $disabled;?>>Agregar Competencia</button>
+            <button type="submit" class="btn btn-block btn-info" <?php echo $disabled;?>>Agregar Pregunta</button>
         </div>
         </form>
     </div>

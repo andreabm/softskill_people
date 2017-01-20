@@ -58,29 +58,22 @@
     </tr>
     </table>
 
-    <table style="width:100%;">  
-    <tr>
-        <td colspan="6">Estado civil</td>
-    </tr>    
+    <table style="width:100%;">
     <tr>    
-        <td width="40">Soltero</td>
-        <td width="110"><input style="width:120px;" class="form-control" type="text" name="tcasa" id="tcasa" value="<?php if($ejecutivo[0]['edo_civil']=='Soltero'){  echo "X";}else{ echo "&nbsp;";} ?>" /></td>
-        <td width="40">Casado</td>
-        <td width="110"><input style="width:120px;" class="form-control" type="text" name="tcelular" id="tcelular" value="<?php if($ejecutivo[0]['edo_civil']=='Casado'){  echo "X";}else{ echo "&nbsp;";} ?>"/></td>
+        <td width="40">Estado Civil</td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['edo_civil'];?>" /></td>
         <td width="40">Con Hijos</td>
-        <td width="110">
-            
-
-            <input style="width:120px;" class="form-control" type="text" name="chijos" id="chijos" value="<?php if($ejecutivo[0]['num_hijos']>0){  echo "X";}else{echo "0";} ?>"/></td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{echo "0";} ?>"/></td>
     </tr>
+
     </table>
 
    <table style="width:100%;">     
     <tr>    
         <td width="40">Afp</td>
-        <td width="110"><input style="width:120px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['afp'] ?>" /></td>
+        <td width="110"><input style="width:120px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $afps[0]['nombre_entidad'] ?>" /></td>
         <td width="40">Salud</td>
-        <td width="110"><input style="width:120px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['salud'] ?>"/></td>
+        <td width="110"><input style="width:120px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $salud[0]['nombre_entidad'] ?>"/></td>
         <td width="40">F. contrato</td>
         <td width="110"><input style="width:120px;" class="form-control" type="text" name="fcontrato" id="fcontrato" value="<?php echo $ejecutivo[0]['fecha_ingreso'] ?>"/></td>
     </tr>

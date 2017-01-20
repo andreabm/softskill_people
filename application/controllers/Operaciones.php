@@ -254,6 +254,16 @@ class Operaciones extends CI_Controller {
         $sucursales = $this->MyModel->buscar_select('sucursales','id_sucursal','sucursal');
         $data['sucursales'] = $sucursales;
 
+        $this->db->from("entidad");
+        $this->db->where("tipo = 'A'");
+        $query = $this->db->get();
+        $data['afps'] = $query->result_array();
+
+        $this->db->from("entidad");
+        $this->db->where("tipo = 'S'");
+        $query = $this->db->get();
+        $data['salud'] = $query->result_array();
+
         //contratados ini
         $this->db->from('contratados');
         $this->db->where('contratados.rut ="'.$ejecutivo[0]['rut'].'"');
@@ -263,12 +273,18 @@ class Operaciones extends CI_Controller {
         //contratados fin96078        
         
         if ($this->input->post('nombre')) {
-            $es_soltero = $this->input->post('soltero');
-            if ($es_soltero == 'X') {
+
+            $ecivil = $this->input->post('ecivil');
+            if ($ecivil=='S') {
                 $edo_civil = 'Soltero';
-            } else{
+            }elseif($ecivil=='C'){
                 $edo_civil = 'Casado';
+            }elseif($ecivil=='D'){
+                $edo_civil = 'Divorciado';
+            }else{
+                $edo_civil = 'Viudo';
             }
+
             $fecha_nacimiento = date("Y-m-d", strtotime($this->input->post('fecha_nacimiento')));
             $update_persona = array(
                 'nombre' => $this->input->post('nombre'),
@@ -327,7 +343,7 @@ class Operaciones extends CI_Controller {
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');
         $this->db->join('areas','areas.id_area= postulantes.id_area');
-        $this->db->join('pms','pms.id_area= areas.id_area');
+        $this->db->join('pms','pms.id_area= areas.id_area','left');
         $this->db->join('sucursales','sucursales.id_sucursal = postulantes.sucursal_id');
         $this->db->join('turnos_postulantes','turnos_postulantes.id_postulante = postulantes.id_postulante');
         $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno');
@@ -335,11 +351,22 @@ class Operaciones extends CI_Controller {
         $this->db->join('contratados','contratados.rut = postulantes.rut','left');
         $this->db->where('postulantes.id_postulante = '.$id_ejecutivo);
         $query = $this->db->get();
-
         //imprime query
-        //echo $this->db->last_query();
+        //$this->db->last_query();
+        $ejecutivo = $query->result_array();  
 
-        $ejecutivo = $query->result_array();                
+        
+        $this->db->from("entidad");
+        $this->db->where("id_entidad = ".$ejecutivo[0]['afp']);
+        $query = $this->db->get();
+        $data['afps'] = $query->result_array();
+
+        $this->db->from("entidad");
+        $this->db->where("id_entidad = ".$ejecutivo[0]['salud']);
+        $query = $this->db->get();
+        $data['salud'] = $query->result_array();
+        
+
         $data['ejecutivo'] = $ejecutivo;
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
         $data['turnos'] = $turnos;

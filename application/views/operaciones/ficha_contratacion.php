@@ -1,17 +1,17 @@
 <div class="content-wrapper">
-<!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>Ficha<small> de Contratacion</small></h1>
-    </section>
-   
-    <?php 
+
+    <?php
     /*
     echo '<pre>';
         print_r($ejecutivo);
     echo '</pre>';
     */
     ?>
-
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>Ficha<small> de Contratacion</small></h1>
+    </section>
+   
     <section class="content">
           <div class="row">
             <div class="col-xs-8">
@@ -141,26 +141,37 @@
                             </div>                      
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <h4>Estado Civil: </h4>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                              
-                                    <label>Soltero</label>
-                                    <input class="form-control" type="text" name="soltero" id="soltero" value="<?php if($ejecutivo[0]['edo_civil']== 'Soltero'){  echo "X";}else{ echo " ";} ?>" required/>
+                                    <label>Soltero</label><br/>
+                                    <input type="radio" value="S" name="ecivil" id="ecivil" <?php if($ejecutivo[0]['edo_civil']== 'Soltero'){echo "checked";}?> required/>
                                 </div>
                             </div> 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Casado</label>
-                                    <input class="form-control" type="text" name="casado" id="casado" value="<?php if($ejecutivo[0]['edo_civil']== 'Casado'){  echo "X";}else{ echo " ";} ?>" required/>
+                                    <label>Casado</label><br/>
+                                    <input type="radio" value="C" name="ecivil" id="ecivil" <?php if($ejecutivo[0]['edo_civil']== 'Casado'){echo "checked";}?> required/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Viudo</label><br/>
+                                    <input type="radio" value="V" name="ecivil" id="ecivil" <?php if($ejecutivo[0]['edo_civil']== 'Viudo'){echo "checked";}?> required/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Divorciado</label><br/>
+                                    <input type="radio" value="D" name="ecivil" id="ecivil" <?php if($ejecutivo[0]['edo_civil']== 'Divorciado'){echo "checked";}?> required/>
                                 </div>
                             </div> 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Con Hijos</label>
-                                    <input class="form-control" type="text" name="con_hijos" id="con_hijos" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{ echo "0";} ?>" required/>
+                                    <label>Con Hijos</label><br/>
+                                    <input type="number" class="form-control" name="con_hijos" id="con_hijos" min="0" max="20" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{ echo "0";} ?>" required>
                                 </div>
                             </div>
                         </div>
@@ -168,13 +179,23 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>AFP</label>
-                                    <input class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['afp'] ?>" required/>
+                                    <select name="afp" id="afp" class="form-control" required>
+                                        <option value="">--Seleccione--</option>
+                                        <?php foreach($afps as $row){?>
+                                        <option value="<?=$row['id_entidad']?>" <?php if($ejecutivo[0]['afp']==$row['id_entidad']){echo "selected";}?>><?=$row['nombre_entidad']?></option>
+                                        <?php }?>
+                                    </select>    
                                 </div>
                             </div> 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Sistema de Salud</label>
-                                    <input class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['salud'] ?>" required/>
+                                    <select name="salud" id="salud" class="form-control" required>
+                                        <option value="">--Seleccione--</option>
+                                        <?php foreach($salud as $row){?>
+                                        <option value="<?=$row['id_entidad']?>" <?php if($ejecutivo[0]['salud']==$row['id_entidad']){echo "selected";}?>><?=$row['nombre_entidad']?></option>
+                                        <?php }?>
+                                    </select> 
                                 </div>
                             </div> 
                             <div class="col-md-4">

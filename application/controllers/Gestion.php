@@ -137,8 +137,14 @@ class Gestion extends CI_Controller {
             $firmo = $this->input->post('firmo');
             $prefiltro = $this->input->post('prefiltro');
             $fuente = $this->input->post('id_fuente');
+
             $fecha_entrevista = $this->input->post('fecha_entrevista');
             $hora_entrevista = $this->input->post('hora_entrevista');
+
+            $hora_separada = explode(" ", $hora_entrevista);
+            $hora_separada[0]; // hora
+            $hora_separada[1]; // am o pm
+
             $fecha_entrevista = date("Y-m-d", strtotime($fecha_entrevista));
             $fecha_nacimiento = date("Y-m-d", strtotime($fecha_nacimiento));
             $email = $this->input->post('email');
@@ -184,7 +190,7 @@ class Gestion extends CI_Controller {
                 'pretension_renta' => $expectativas_renta,
                 'id_cargo' => $cargo_postula,
                 'prefiltro' => $prefiltro,
-                'fecha_entrevista' => $fecha_entrevista.' '.$hora_entrevista.':00',
+                'fecha_entrevista' => $fecha_entrevista.' '.$hora_separada[0].':00',
                 'id_fuente' => $fuente
             );
             
@@ -242,9 +248,9 @@ class Gestion extends CI_Controller {
             $this->MyModel->agregar_model('antecedentes_academicos',$nuevo_antecedente_academico);
             $this->MyModel->agregar_model('antecedentes_laborales',$nuevo_antecedente_laboral);
             $this->MyModel->agregar_model('expectativas',$encuesta_expectativas);
-            redirect(base_url("index.php/Gestion/postulantes"));
+        //    redirect(base_url("index.php/Gestion/postulantes"));
         }
-        $this->load->view('common/header');
+       $this->load->view('common/header');
         $this->load->view('gestion/add/postulante',$data);
         $this->load->view('common/footer');
         

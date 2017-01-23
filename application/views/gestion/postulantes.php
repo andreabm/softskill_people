@@ -83,7 +83,7 @@
                               <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/gestion/editar_postulante/'.$p['id_postulante'])?>">Editar</a>
                               <a class="btn btn-xs btn-primary" href="<?php echo base_url('index.php/gestion/postulante_prueba/'.$p['id_postulante'])?>">Evaluacion</a>
                               <a class="btn btn-xs btn-info" data-toggle="modal" data-target="#postulanteCalifica" onclick = "postulanteCalifica(<?php echo $p['id_postulante'];  ?>)">Califica</a>                  
-                              <a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#eliminarPostulante" onclick = "eliminarPostulante(<?php echo $p['id_postulante'];  ?>)">Eliminar</a>
+                              <!--<a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#eliminarPostulante" onclick = "eliminarPostulante(<?php //echo $p['id_postulante'];  ?>)">Eliminar</a>-->
                           </td>
                         </tr>
                         <?php

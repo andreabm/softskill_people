@@ -69,10 +69,12 @@
                           <td><?php echo $p['discapacidad'] ?></td>
                           <td><?php echo $p['fecha_entrevista'] ?></td>
                           <?php 
-                          if ($p['clasificado'] == 1){
+                          if ($p['clasificado']==1){
                             $val = 'Si';
                           } elseif (!empty($p['id_motivo_no_califica'])) {
                             $val = 'No';
+                          } elseif ($p['prefiltro']=='NO') {
+                            $val = 'Prefiltro';  
                           } else {
                             $val = 'No reportado';
                           }

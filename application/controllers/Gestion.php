@@ -136,6 +136,8 @@ class Gestion extends CI_Controller {
             $acepta_condiciones = $this->input->post('condiciones');
             $firmo = $this->input->post('firmo');
             $prefiltro = $this->input->post('prefiltro');
+
+            
             $fuente = $this->input->post('id_fuente');
 
             $fecha_entrevista = $this->input->post('fecha_entrevista');
@@ -248,7 +250,7 @@ class Gestion extends CI_Controller {
             $this->MyModel->agregar_model('antecedentes_academicos',$nuevo_antecedente_academico);
             $this->MyModel->agregar_model('antecedentes_laborales',$nuevo_antecedente_laboral);
             $this->MyModel->agregar_model('expectativas',$encuesta_expectativas);
-        //    redirect(base_url("index.php/Gestion/postulantes"));
+         redirect(base_url("index.php/Gestion/postulantes"));
         }
        $this->load->view('common/header');
         $this->load->view('gestion/add/postulante',$data);

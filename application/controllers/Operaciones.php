@@ -396,6 +396,7 @@ class Operaciones extends CI_Controller {
         $data['ejecutivo'] = $ejecutivo;
         $turnos = $this->MyModel->buscar_select('turnos','id_turno','turno');
         $data['turnos'] = $turnos;
+		//$this->load->view('operaciones/ficha_contratacion_pdf', $data);
         //importante el slash del final o no funcionará correctamente
         $this->html2pdf->folder('./files/pdfs/');
         $this->html2pdf->paper('a4', 'portrait');

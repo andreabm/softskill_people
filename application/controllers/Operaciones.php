@@ -868,6 +868,68 @@ class Operaciones extends CI_Controller {
             $this->load->view('common/footer');
         }
         //ENTIDADES FIN
+
+        //CARTERAS INI
+        public function carteras(){
+        //carteras
+        $this->db->from('carteras');
+        $this->db->join('areas','areas.id_area = carteras.id_area');      
+        $query = $this->db->get();
+        $carteras = $query->result_array();
+        $data['carteras'] = $carteras;
+
+        $this->load->view('common/header');
+        $this->load->view('operaciones/carteras',$data);
+        $this->load->view('common/footer');
+    }
+        public function agregar_cartera(){
+
+            //
+            $this->db->from('areas');
+            $query = $this->db->get();
+            $areas = $query->result_array();
+            $data['areas'] = $areas;
+
+            if($this->input->post('nombre')) {
+                $nombre = $this->input->post('nombre');
+                $tipo = $this->input->post('tipo');
+                $nueva_entidad = array('nombre_entidad' => $nombre,'tipo' => $tipo,'activo' =>'1');   
+                $this->db->insert('entidad', $nueva_entidad);
+                redirect(base_url("index.php/Operaciones/entidades"));
+            }
+            $this->load->view('common/header');
+            $this->load->view('operaciones/add/cartera',$data);
+            $this->load->view('common/footer');
+        }
+        public function editar_cartera($id_cartera){ 
+
+            if(empty($id_cartera)){
+               $id_cartera = $this->input->post('id_cartera');
+            }
+            //consulto por cartera
+            $this->db->from('carteras');
+            $this->db->where('carteras.id_cartera = '.$id_cartera);
+            $query = $this->db->get();
+            $cartera = $query->result_array();
+            $data['cartera'] = $cartera;
+            //area
+            $this->db->from('areas');     
+            $query = $this->db->get();
+            $areas = $query->result_array();
+            $data['areas'] = $areas;
+
+            if($this->input->post('nombre')) {
+                 $nombre = $this->input->post('nombre');
+                 $actualiza_entidad = array('nombre_entidad' => $nombre);
+                 $this->MyModel->agregar_model('entidad',$actualiza_entidad,'id_entidad',$this->input->post('id_entidad'));                
+                redirect(base_url("index.php/Operaciones/entidades"));
+            }
+            $this->load->view('common/header');
+            $this->load->view('operaciones/edit/cartera',$data);
+            $this->load->view('common/footer');
+        }
+        //CARTERAS FIN
+
         public function inducciones(){
         $this->db->from('evaluacion_induccion');
         $query = $this->db->get();
@@ -982,7 +1044,7 @@ class Operaciones extends CI_Controller {
             $rut = $this->MyModel->buscar_select('postulantes','id_postulante','rut');
             
             $data['rut'] = $rut;
-
+            
             $this->load->view('common/header');
             $this->load->view('operaciones/induccion',$data);
             $this->load->view('common/footer');

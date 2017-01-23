@@ -40,10 +40,10 @@ $('.datepicker').datepicker({
                         <?php 
                         if (!empty($postulante[0]['fecha_entrevista']) && $postulante[0]['fecha_entrevista'] != '0000-00-00') {
                           $date =  date_create($postulante[0]['fecha_entrevista']);
-                          $fecha_entrevista = date_format($date, 'd-m-Y');
+                          $fecha_entrevista = date_format($date, 'Y-m-d');
                         }
                         ?>
-                        <input type="text" class="form-control pull-right" class="datepicker" name="fecha" value="<?php echo $fecha_entrevista ?>" disabled="disabled">
+                        <input type="text" class="form-control pull-right datepicker" name="fecha" value="<?php echo $fecha_entrevista ?>" disabled="disabled">
                       </div>
                       <!-- /.input group -->
                     </div>
@@ -373,13 +373,18 @@ $('.datepicker').datepicker({
     </section>
 
 <script>
+$(document).ready(function(){  
 $('.datepicker').datepicker({
-      autoclose: true
-});
+        todayBtn: true,
+        language: "es",
+        autoclose: true
+    });
 $(".timepicker").timepicker({
       showInputs: false,
-      showMeridian: false
+
     });
+}); 
+
 $('#califica').hide();
 $('#aprueba').hide(); 
 $('#noaprueba').hide();    

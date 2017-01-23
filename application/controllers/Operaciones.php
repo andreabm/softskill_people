@@ -14,10 +14,37 @@ class Operaciones extends CI_Controller {
     //$this->load->model('Usuario');
 	//$this->load->model('Rango');
     $this->load->model('MyModel');
+	$this->init();
 	}
     
+	public function init(){
+     
+      //Verifico si tengo permiso para acceder al modulo
+      $controlador = $this->router->fetch_class();
+      $action = $this->router->fetch_method();
+      $permisos = $this->MyModel->buscar_model('permisos',array(
+            'controller' => $controlador,
+            'view' => $action
+      ));
+      $permisos = explode(';',$permisos[0]['rangos']);
+      $rango = $this->session->userdata['id_rango'];
+	  if (!in_array($rango,$permisos)) {
+        redirect(base_url().'index.php');
+      }
+      
+      //Cargar menu
+      $this->menu_lista = $this->MyModel->buscar_permisos(); 
+	 // print_r($this->menu_lista);
+	  $this->rango = $this->session->userdata['id_rango'];
+      $this->action = $action;
+      $this->controlador = $controlador;
+	  $this->permisos = $permisos;
+	  
+	  return true;
+  	}
+	
     public function solicitudes(){
-        $this->db->from('solicitudes');
+		$this->db->from('solicitudes');
         $this->db->join('areas','areas.id_area = solicitudes.id_area');
         $this->db->join('carteras','carteras.id_cartera = solicitudes.id_cartera');
         $this->db->join('usuarios','usuarios.id_usuario = solicitudes.id_usuario_solicitante');
@@ -32,8 +59,7 @@ class Operaciones extends CI_Controller {
     }
     
     public function agregar_solicitud(){
-
-        if ($this->input->post('area_id')) {
+		if ($this->input->post('area_id')) {
             $nueva_solicitud = array(
                 'id_area' => $this->input->post('area_id'),
                 'id_cartera' => $this->input->post('cartera_id'),
@@ -70,7 +96,7 @@ class Operaciones extends CI_Controller {
         $this->load->view('common/footer');
     }
      public function ejecutivos(){
-        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo');
+		$this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo');
         $this->db->from('personas');
         $this->db->join('postulantes','personas.rut = postulantes.rut');
         $this->db->join('areas','areas.id_area = postulantes.id_area');
@@ -85,7 +111,7 @@ class Operaciones extends CI_Controller {
         $this->load->view('common/footer');
     }
     public function documentacion($id_ejecutivo){
-        $this->output->set_header('Cache-Control: post-check=0, pre-check=0');
+		$this->output->set_header('Cache-Control: post-check=0, pre-check=0');
         $this->db->select('personas.nombre as nombre_ejecutivo, documentacion_ejecutivo.archivo, documentacion_ejecutivo.estado,documentacion_ejecutivo.nombre,id_documentacion');
         $this->db->from('personas');
         $this->db->join('documentacion_ejecutivo','personas.id_persona=id_ejecutivo');
@@ -99,12 +125,12 @@ class Operaciones extends CI_Controller {
         $this->load->view('common/footer');
     }
     public function ingresar_documento(){
-        $data['id_solicitud'] = $this->input->post('id_solicitud');
+		$data['id_solicitud'] = $this->input->post('id_solicitud');
         $this->load->view('operaciones/modal/ingresar_documento',$data);
     }
     
     public function editar_documento(){
-        $documento = $this->input->post('id_documento');
+		$documento = $this->input->post('id_documento');
         //SELECT * from documentacion_ejecutivo where id_documentacion=20
         $this->db->from('documentacion_ejecutivo');
         $this->db->where('id_documentacion='.$documento);
@@ -115,8 +141,8 @@ class Operaciones extends CI_Controller {
         $this->load->view('operaciones/modal/editar_documento',$data);
     }
     
-    public function insert_documento(){        
-        $id_ejecutivo = $this->input->post('id_ejecutivo');
+    public function insert_documento(){ 
+		$id_ejecutivo = $this->input->post('id_ejecutivo');
         //guardo en tabla
         $data = array(
            'nombre' => $this->input->post('nombre'), 
@@ -164,7 +190,7 @@ class Operaciones extends CI_Controller {
     }
     
     public function update_documento(){
-        // Cargamos la libreria Upload
+		// Cargamos la libreria Upload
         $this->load->library('upload');
         $id_documentacion = $this->input->post('id_documento');
         $id_ejecutivo = $this->input->post('id_ejecutivo');
@@ -225,7 +251,7 @@ class Operaciones extends CI_Controller {
     }
     
     public function ficha_contratacion($id_ejecutivo = null){
-        if (empty($id_ejecutivo)){
+		if (empty($id_ejecutivo)){
             $id_ejecutivo = $this->input->post('id_ejecutivo');
         }
         $data['id_ejecutivo'] = $id_ejecutivo;
@@ -336,7 +362,7 @@ class Operaciones extends CI_Controller {
     }
 
     function imprimir_ficha($id_ejecutivo){
-        if (empty($id_ejecutivo)){
+		if (empty($id_ejecutivo)){
             $id_ejecutivo = $this->input->post('id_ejecutivo');
         }
         $data['id_ejecutivo'] = $id_ejecutivo;
@@ -396,7 +422,7 @@ class Operaciones extends CI_Controller {
     }
 
     public function imprime_ficha($id_ejecutivo){
-        if (empty($id_ejecutivo)){
+		if (empty($id_ejecutivo)){
             $id_ejecutivo = $this->input->post('id_ejecutivo');
         }
             $data['id_ejecutivo'] = $id_ejecutivo;
@@ -435,7 +461,7 @@ class Operaciones extends CI_Controller {
     }
     
     public function pasar_asistencia(){
-        $this->db->from('contratados');
+		$this->db->from('contratados');
         $this->db->join('personas','personas.rut = contratados.rut');
         $this->db->join('cargos','cargos.id_cargo = personas.id_cargo','left');
         $this->db->join('carteras','carteras.id_cartera = contratados.id_cartera','left');
@@ -689,7 +715,8 @@ class Operaciones extends CI_Controller {
         $this->load->view('operaciones/pms',$data);
         $this->load->view('common/footer');
     }
-        public function agregar_pms(){
+       
+	   public function agregar_pms(){
             $areas = $this->MyModel->buscar_select('areas','id_area','area');      
             $data['areas'] = $areas;
 

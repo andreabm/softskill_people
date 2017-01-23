@@ -60,13 +60,28 @@ class MyModel extends CI_Model {
     public function buscar_permisos(){
         $this->db->from('permisos');
         $this->db->where('es_menu = 1');
-        $this->db->order_by('grupo','id');
+        $this->db->order_by('area','orden');
         $query = $this->db->get();
         $permisos_q = $query->result_array();
         $permisos = array();
         foreach ($permisos_q as $p) {
-            $permisos[$p['grupo']][] = $p; 
+			if ($p['es_submodulo'] == 1) {
+				if (empty($permisos[$p['area']][$p['nombre']])){
+					$permisos[$p['area']][$p['nombre']] = array(); 
+				}
+				
+			} else {
+				if ($p['es_subarea'] == 1) {
+					//print_r($p);
+					$permisos[$p['area']][$p['subarea']][] = $p; 
+					//print_r($permisos);
+				} else {
+					$permisos[$p['area']][] = $p; 
+				}
+			}
+            
         }
+		
         return $permisos;
     }
 }

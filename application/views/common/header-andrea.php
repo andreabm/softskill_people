@@ -173,62 +173,134 @@ if(!isset($this->session->userdata['id_usuario'])){
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
       <li class="active"><a href="<?php echo base_url('/index.php/index/dashboard');?>"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
-	  <?php 
-	  foreach($this->menu_lista as $area => $menu) {
-		  ?>
-		  <li class="treeview">
+        <li class="treeview">
           <a href="#">
-            <i class="fa fa-child"></i> <span><?php echo $area ?></span>
+            <i class="fa fa-child"></i> <span>Gestion de Personas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-			<ul class="treeview-menu">
-			   <?php 
-			   foreach ($menu as $key => $m) {
-				   
-				   
-					   if (!is_int($key)) {
-						   ?>
-						   <li>
-						   <a href="#"><i class="fa fa-circle-o"></i> <?php echo $key ?>
-							<span class="pull-right-container">
-							  <i class="fa fa-angle-left pull-right"></i>
-							</span>
-						  </a>
-						  <ul class="treeview-menu">
-							<?php
-							foreach ($m as $ms){
-								$busco_permisos = explode(';',$ms['rangos']);
-								if (in_array($this->rango,$busco_permisos)) {
-								?>
-								<li><a href=""><a href="<?php echo base_url('/index.php/'.$ms['controller'].'/'.$ms['view']);?>"><i class="fa fa-circle-o"></i><?php echo $ms['nombre'] ?></a></li>
-							
-								<?php
-								}
-							}
-							?>
-						   </ul>
-						   <li>
-						<?php 
-					   } else {
-						   $busco_permisos = explode(';',$m['rangos']);
-						   if (in_array($this->rango,$busco_permisos)) {
-							   
-						   ?>
-						   <li><a href="<?php echo base_url('/index.php/'.$m['controller'].'/'.$m['view']);?>"><i class="fa fa-circle-o"></i><?php echo $m['nombre'] ?> </a></li>
-						
-						   <?php 
-						   }
-					}
-			   }
-			   ?>
-            
-			</ul>
-           </li>
-		  <?php 
-		}?>
-            
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url('/index.php/gestion/solicitudes');?>"><i class="fa fa-circle-o"></i> Ver Solicitudes</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Reportes</a></li>
+            <li><a href="<?php echo base_url('/index.php/gestion/entrevistas');?>"><i class="fa fa-circle-o"></i> Entrevistas</a></li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Postulantes
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo base_url('/index.php/gestion/postulantes');?>"><i class="fa fa-circle-o"></i>Ver Postulantes </a></li>
+                <li><a href="<?php echo base_url('/index.php/gestion/agregar_postulante');?>"><i class="fa fa-circle-o"></i> Agregar Postulante</a></li>
+                <!-- <li><a href="#"><i class="fa fa-circle-o"></i> Test Psicologico</a></li> 
+                <li><a href="#"><i class="fa fa-circle-o"></i> Competencias</a></li>-->
+                
+              </ul>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Administracion
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo base_url('/index.php/gestion/turnos');?>"><i class="fa fa-circle-o"></i> Turnos</a></li>
+                <li><a href="<?php echo base_url('/index.php/gestion/competencias');?>"><i class="fa fa-circle-o"></i> Competencias</a></li>
+
+                <li><a href="<?php echo base_url('/index.php/gestion/escuchas');?>"><i class="fa fa-circle-o"></i> Escuchas</a></li>
+
+                <li><a href="<?php echo base_url('/index.php/gestion/fuentes');?>"><i class="fa fa-circle-o"></i> Fuentes</a></li>
+                <li><a href="<?php echo base_url('/index.php/gestion/motivo_no_califica');?>"><i class="fa fa-circle-o"></i> Motivo No Califica</a></li>
+              </ul>
+            </li>
+            <li><a href="<?php echo '#' //base_url('/index.php/gestion/exejecutivos');?>"><i class="fa fa-circle-o"></i> Ex Empleados</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-check-square"></i> <span>Calidad</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> Calidad</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>RRHH</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> RRHH</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-bar-chart"></i> <span>Operaciones</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li ><a href="<?php echo base_url('/index.php/operaciones/solicitudes');?>"><i class="fa fa-circle-o"></i> Solicitudes</a></li>
+            <li><a href="<?php echo base_url('/index.php/operaciones/ejecutivos');?>"><i class="fa fa-circle-o"></i> Ejecutivos</a></li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Asistencia
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/ver_asistencia');?>"><i class="fa fa-circle-o"></i>Ver Asistencia </a></li>
+                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/pasar_asistencia');?>"><i class="fa fa-circle-o"></i>Pasar Asistencia </a></li>
+                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/validar_asistencia');?>"><i class="fa fa-circle-o"></i> Validar Asistencia</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Evaluaciones
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/induccion_ejecutivos');?>"><i class="fa fa-circle-o"></i>Inducci&oacute;n Ejecutivo</a></li>
+                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/escuchas_ejecutivos');?>"><i class="fa fa-circle-o"></i>Escuchas</a></li>
+
+                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/desempeño');?>"><i class="fa fa-circle-o"></i>Desempe&ntilde;o </a></li>
+                <li><a href=""><a href="<?php echo base_url('/index.php/operaciones/continuidad_laboral');?>"><i class="fa fa-circle-o"></i> Continuidad Laboral</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Administracion
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo base_url('/index.php/operaciones/inducciones');?>"><i class="fa fa-circle-o"></i> Ev. Inducci&oacute;n</a></li>
+                <li><a href="<?php echo base_url('/index.php/operaciones/evaluadores');?>"><i class="fa fa-circle-o"></i> Evaluadores</a></li>
+                <li><a href="<?php echo base_url('/index.php/operaciones/pms');?>"><i class="fa fa-circle-o"></i> PMS</a></li>
+                <li><a href="<?php echo base_url('/index.php/operaciones/sucursales');?>"><i class="fa fa-circle-o"></i> Sucursales</a></li>
+             </ul>
+          </li>
+         </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-user-plus"></i> <span>Usuarios</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url('/index.php/usuarios/usuarios');?>"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+          </ul>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

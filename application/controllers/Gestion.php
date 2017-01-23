@@ -13,8 +13,33 @@ class Gestion extends CI_Controller {
     //$this->load->model('Usuario');
 	//$this->load->model('Rango');
     $this->load->model('MyModel');
+	$this->init();
 	}
-    
+	
+    public function init(){
+     
+      //Verifico si tengo permiso para acceder al modulo
+      $controlador = $this->router->fetch_class();
+      $action = $this->router->fetch_method();
+      $permisos = $this->MyModel->buscar_model('permisos',array(
+            'controller' => $controlador,
+            'view' => $action
+      ));
+      $permisos = explode(';',$permisos[0]['rangos']);
+      $rango = $this->session->userdata['id_rango'];
+	  if (!in_array($rango,$permisos)) {
+        redirect(base_url().'index.php');
+      }
+      
+      //Cargar menu
+      $this->menu_lista = $this->MyModel->buscar_permisos(); 
+	  $this->rango = $this->session->userdata['id_rango'];
+      $this->action = $action;
+      $this->controlador = $controlador;
+	  
+	  return true;
+  	}
+	
     public function postulantes(){
         $this->db->from('postulantes');
 		$array = array();

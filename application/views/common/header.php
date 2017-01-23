@@ -286,6 +286,7 @@ if(!isset($this->session->userdata['id_usuario'])){
                 <li><a href="<?php echo base_url('/index.php/operaciones/evaluadores');?>"><i class="fa fa-circle-o"></i> Evaluadores</a></li>
                 <li><a href="<?php echo base_url('/index.php/operaciones/pms');?>"><i class="fa fa-circle-o"></i> PMS</a></li>
                 <li><a href="<?php echo base_url('/index.php/operaciones/sucursales');?>"><i class="fa fa-circle-o"></i> Sucursales</a></li>
+                <li><a href="<?php echo base_url('/index.php/operaciones/entidades');?>"><i class="fa fa-circle-o"></i> Entidades</a></li>
              </ul>
           </li>
          </ul>

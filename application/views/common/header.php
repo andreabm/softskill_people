@@ -228,7 +228,6 @@ if(!isset($this->session->userdata['id_usuario'])){
            </li>
 		  <?php 
 		}?>
-            
       </ul>
     </section>
     <!-- /.sidebar -->

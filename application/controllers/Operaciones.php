@@ -808,6 +808,62 @@ class Operaciones extends CI_Controller {
             $this->load->view('operaciones/edit/sucursales',$data);
             $this->load->view('common/footer');
         }
+        //ENTIDADES
+        public function entidades(){        
+        //afps
+        $this->db->from('entidad');
+        $this->db->where("activo='1'");
+        $this->db->where("tipo='A'");
+        $query = $this->db->get();
+        $afps = $query->result_array();
+        $data['afps'] = $afps;
+
+        //salud
+        $this->db->from('entidad');
+        $this->db->where("activo='1'");
+        $this->db->where("tipo='S'");
+        $query = $this->db->get();
+        $salud = $query->result_array();
+        $data['salud'] = $salud;
+
+        $this->load->view('common/header');
+        $this->load->view('operaciones/entidades',$data);
+        $this->load->view('common/footer');
+    }
+        public function agregar_entidad(){
+            if($this->input->post('nombre')) {
+                $nombre = $this->input->post('nombre');
+                $tipo = $this->input->post('tipo');
+                $nueva_entidad = array('nombre_entidad' => $nombre,'tipo' => $tipo,'activo' =>'1');   
+                $this->db->insert('entidad', $nueva_entidad);
+                redirect(base_url("index.php/Operaciones/entidades"));
+            }
+            $this->load->view('common/header');
+            $this->load->view('operaciones/add/entidad');
+            $this->load->view('common/footer');
+        }
+        public function editar_entidad($id_entidad){ 
+            if(empty($id_entidad)){
+               $id_entidad = $this->input->post('id_sucursal');
+            }
+            //consulto por pm
+            $this->db->from('entidad');
+            $this->db->where('entidad.id_entidad = '.$id_entidad);
+            $query = $this->db->get();
+            $entidad = $query->result_array();
+            $data['entidad'] = $entidad;
+
+            if($this->input->post('nombre')) {
+                 $nombre = $this->input->post('nombre');
+                 $actualiza_entidad = array('nombre_entidad' => $nombre);
+                 $this->MyModel->agregar_model('entidad',$actualiza_entidad,'id_entidad',$this->input->post('id_entidad'));                
+                redirect(base_url("index.php/Operaciones/entidades"));
+            }
+            $this->load->view('common/header');
+            $this->load->view('operaciones/edit/entidad',$data);
+            $this->load->view('common/footer');
+        }
+        //ENTIDADES FIN
         public function inducciones(){
         $this->db->from('evaluacion_induccion');
         $query = $this->db->get();

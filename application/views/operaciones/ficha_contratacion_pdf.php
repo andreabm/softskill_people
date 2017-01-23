@@ -8,8 +8,7 @@
    <table style="width:500px;">  
     <tr>
         <th align="left">RAZ&Oacute;N SOCIAL</th>
-        <td align="left">test</td>
-        
+        <td align="left">test</td>        
     </tr>
    </table>
 

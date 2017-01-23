@@ -619,6 +619,9 @@ class Operaciones extends CI_Controller {
     
     public function ver_ejecutivo(){
         $id_postulante = $this->input->post('id_postulante');
+		$this->db->select('postulantes.rut,personas.nombre,personas.fecha_nacimiento,personas.edo_civil,personas.fono_movil,personas.fono_fijo,
+		personas.discapacidad,fuentes.fuente,postulantes.pretension_renta,postulantes.fecha_entrevista,personas.clasificado,postulantes.id_motivo_no_califica,
+		postulantes.id_cargo,personas.direccion,cargos.cargo');
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');
         $this->db->join('fuentes','postulantes.id_fuente = fuentes.id_fuente');

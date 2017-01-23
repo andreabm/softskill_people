@@ -187,8 +187,15 @@ if(!isset($this->session->userdata['id_usuario'])){
 			   <?php 
 			   foreach ($menu as $key => $m) {
 				   
-				   
-					   if (!is_int($key)) {
+						if (!is_int($key)) {
+							$count = 0;
+							foreach ($m as $ms){
+								$busco_permisos = explode(';',$ms['rangos']);
+								if (in_array($this->rango,$busco_permisos)) {
+								$count++;
+								}
+							}
+							if ($count > 0) {
 						   ?>
 						   <li>
 						   <a href="#"><i class="fa fa-circle-o"></i> <?php echo $key ?>
@@ -198,6 +205,7 @@ if(!isset($this->session->userdata['id_usuario'])){
 						  </a>
 						  <ul class="treeview-menu">
 							<?php
+							
 							foreach ($m as $ms){
 								$busco_permisos = explode(';',$ms['rangos']);
 								if (in_array($this->rango,$busco_permisos)) {
@@ -207,10 +215,13 @@ if(!isset($this->session->userdata['id_usuario'])){
 								<?php
 								}
 							}
+						
 							?>
 						   </ul>
 						   <li>
-						<?php 
+						   
+						<?php
+							}						
 					   } else {
 						   $busco_permisos = explode(';',$m['rangos']);
 						   if (in_array($this->rango,$busco_permisos)) {

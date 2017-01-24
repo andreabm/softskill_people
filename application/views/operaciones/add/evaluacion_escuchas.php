@@ -247,14 +247,22 @@
 </section> </div>
 
 <script>
-test();
+
+$(document).ready(function(){  
 $('.datepicker').datepicker({
-      autoclose: true
+        startDate: 'today',
+        format: 'yyyy/mm/dd',
+        todayBtn: true,
+        language: "es",
+        autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,
-      showMeridian: false
+
     });
+});
+
+test();
 
 $('#rut_audio').Rut({
   on_error: function(){ 

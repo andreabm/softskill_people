@@ -1262,22 +1262,25 @@ class Operaciones extends CI_Controller {
 
     }
     public function escuchas_ejecutivos(){
-        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,evaluacion_induccion_resultados.resultado_final,aspecto_escucha_resultado.rut as rut_b');
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,evaluacion_induccion_resultados.resultado_final,aspecto_escucha_resultado.rut as rut_b,aspecto_escucha_resultado.resultado_final');
         $this->db->from('personas');
         $this->db->join('postulantes','personas.rut = postulantes.rut');
         $this->db->join('areas','areas.id_area = postulantes.id_area');
         $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
         $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo', 'left');
         $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
-        $this->db->join('aspecto_escucha_resultado','aspecto_escucha_resultado.rut = postulantes.rut','left');
+        //$this->db->join('aspecto_escucha_resultado','aspecto_escucha_resultado.rut = postulantes.rut','left');
+        $this->db->join('aspecto_escucha_resultado','aspecto_escucha_resultado.rut = postulantes.rut');
         $this->db->where('personas.clasificado = 1');
         $query = $this->db->get();
         $ejecutivos = $query->result_array();
         $data['ejecutivos'] = $ejecutivos;
 
+        /*
         $this->db->from('aspecto_escucha_resultado');
         $query = $this->db->get();
-        $data['escucha_resultado'] = $query->result();
+        $data['escucha_resultado'] = $query->result_array();
+        */
 
         $this->load->view('common/header');
         $this->load->view('operaciones/escuchas_ejecutivos',$data);

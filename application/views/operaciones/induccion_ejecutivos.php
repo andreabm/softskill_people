@@ -17,7 +17,7 @@
             ?>
             <div id="alertita" class="alert alert-<?php if($msje_solicitud[0]==1){echo 'success';}else{echo 'danger';}?> alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong><?php if($msje_solicitud[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'Se ha evaluado con exito';}else{echo 'La solicitud no se ha modificado';}?>
+            <strong><?php if($msje_solicitud[0]==1){echo '&Eacute;xito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'Se ha evaluado con exito';}else{echo 'La solicitud no se ha modificado';}?>
             </div>        
             <?php }?>
         </div>

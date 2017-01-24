@@ -141,7 +141,7 @@ $(document).ready(function () {
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_evaluacion" value="<?php echo date('d-m-Y') ?>" disabled="disabled">
+                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_evaluacion" value="<?php echo date('Y-m-d') ?>" disabled="disabled">
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -153,7 +153,7 @@ $(document).ready(function () {
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_audio" value="<?php echo date('d-m-Y');?>">
+                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_audio" value="<?php echo date('Y-m-d');?>">
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -305,12 +305,18 @@ $(document).ready(function () {
     </section> </div>
 
 <script>
+$(document).ready(function(){  
 $('.datepicker').datepicker({
-      autoclose: true
+        startDate: 'today',
+        format: 'yyyy/mm/dd',
+        todayBtn: true,
+        language: "es",
+        autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,
-      showMeridian: false
+
+    });
 });
 
 $('#rut_audio').Rut({

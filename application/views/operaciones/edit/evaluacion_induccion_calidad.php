@@ -71,7 +71,6 @@ $(document).ready(function () {
             <?php }?>
         </div>
     </div>
-
     <?php 
         $attributes = array('id' => 'form1');
         echo form_open('operaciones/update_einduccion', $attributes);
@@ -143,7 +142,7 @@ $(document).ready(function () {
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_evaluacion" value="<?=$nota[0]['fecha_evaluacion'];?>" disabled="disabled">
+                              <input type="text" class="form-control pull-right datepicker" name="fecha_evaluacion" value="<?=$nota[0]['fecha_evaluacion'];?>" disabled="disabled">
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -155,7 +154,7 @@ $(document).ready(function () {
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right" class="datepicker" name="fecha_audio" value="<?=$nota[0]['fecha_audio'];?>">
+                              <input type="text" class="form-control pull-right datepicker" name="fecha_audio" value="<?=$nota[0]['fecha_audio'];?>">
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -317,12 +316,18 @@ $(document).ready(function () {
     </section> </div>
 
 <script>
+$(document).ready(function(){  
 $('.datepicker').datepicker({
-      autoclose: true
+        startDate: 'today',
+        format: 'yyyy/mm/dd',
+        todayBtn: true,
+        language: "es",
+        autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,
-      showMeridian: false
+
+    });
 });
 
 $('#rut_audio').Rut({

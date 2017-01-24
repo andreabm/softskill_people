@@ -30,6 +30,8 @@
     <?php
         /*
         echo '<pre>';
+          print_r($ejecutivos);
+          echo '<br/>';
           print_r($escucha_resultado);
         echo '</pre>';
         */
@@ -54,6 +56,7 @@
                   <th>RUT</th>
                   <th>Nombre</th>
                   <th>Nota Calificaci&oacute;n</th>
+                  <!--<th>Nota Evaluaci&oacute;n</th>-->
                   <th>Opciones</th>
                 </tr>
                 </thead>
@@ -67,6 +70,7 @@
                             <td><?php echo $t['rut'] ?></td>
                             <td><?php echo $t['nombre'] ?></td>
                             <td align="center"><?php echo $t['resultado_final'];?></td>
+                            <!--<td align="center"><?php //echo $t['resultado_final'];?></td>-->
                             <td>
                               <?php if($t['rut']==$t['rut_b']){?>
                               <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/operaciones/ver_evaluacion_escuchas/'.$t['id_postulante'])?>">Ver Evaluacion</a>  

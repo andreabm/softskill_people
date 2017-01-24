@@ -60,6 +60,7 @@ $(document).ready(function () {
     <div class="row">
         <div class="col-xs-12">        
         <?php 
+              $bloquea = '';
             if($nota[0]['calidad']==1){
               $bloquea = 'disabled';
             ?>

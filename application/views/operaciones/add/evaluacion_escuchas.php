@@ -190,7 +190,9 @@
                               <td><!--Nota Parcial--></td>
                               <td></td>
                               <td>
+
                                   <input type="hidden" name="nparcial<?=$a['id_aspecto'];?>" id="nparcial<?=$a['id_aspecto'];?>" value="" readonly>
+                                  <input type="text" name="nparcial<?=$a['id_aspecto'];?>" id="nparcial<?=$a['id_aspecto'];?>" class="form-control" value="" readonly>
                                   <input type="hidden" name="ntotal<?=$a['id_aspecto'];?>" id="ntotal<?=$a['id_aspecto'];?>" class="form-control importe_linea" value="0" readonly>
                               </td>
                             </tr>  
@@ -247,14 +249,22 @@
 </section> </div>
 
 <script>
-test();
+
+$(document).ready(function(){  
 $('.datepicker').datepicker({
-      autoclose: true
+        startDate: 'today',
+        format: 'yyyy/mm/dd',
+        todayBtn: true,
+        language: "es",
+        autoclose: true
     });
 $(".timepicker").timepicker({
       showInputs: false,
-      showMeridian: false
+
     });
+});
+
+test();
 
 $('#rut_audio').Rut({
   on_error: function(){ 

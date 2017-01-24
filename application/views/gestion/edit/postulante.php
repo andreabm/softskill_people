@@ -710,8 +710,10 @@
 $(document).ready(function(){  
 $('.datepicker').datepicker({
         todayBtn: true,
+		format: 'yyyy/mm/dd',
         language: "es",
-        autoclose: true
+        autoclose: true,
+		startDate: 'today'
     });
 $(".timepicker").timepicker({
       showInputs: false,

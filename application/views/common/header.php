@@ -178,7 +178,18 @@ if(!isset($this->session->userdata['id_usuario'])){
 		  ?>
 		  <li class="treeview">
           <a href="#">
-            <i class="fa fa-child"></i> <span><?php echo $area ?></span>
+            <?php 
+            if ($area == 'Gestion de Personas') {
+                echo '<i class="fa fa-child"></i>';
+            } elseif ($area == 'Calidad') {
+                echo '<i class="fa fa-check-square"></i>';
+            } elseif ($area == 'Operaciones') {
+                echo '<i class="fa fa-bar-chart"></i>';
+            } elseif ($area == 'RRHH') {
+                echo '<i class="fa fa-circle-o"></i>';
+            }
+            ?>
+            <span><?php echo $area ?></span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

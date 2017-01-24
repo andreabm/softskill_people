@@ -881,17 +881,18 @@ class Operaciones extends CI_Controller {
         public function agregar_cartera(){
 
             //
-            $this->db->from('areas');
-            $query = $this->db->get();
-            $areas = $query->result_array();
+            //area
+            $areas = $this->MyModel->buscar_select('areas','id_area','area');
             $data['areas'] = $areas;
 
             if($this->input->post('nombre')) {
+
                 $nombre = $this->input->post('nombre');
-                $tipo = $this->input->post('tipo');
-                $nueva_entidad = array('nombre_entidad' => $nombre,'tipo' => $tipo,'activo' =>'1');   
-                $this->db->insert('entidad', $nueva_entidad);
-                redirect(base_url("index.php/Operaciones/entidades"));
+                $area = $this->input->post('area');
+
+                $nueva_cartera = array('cartera' => $nombre, 'id_area' => $area);   
+                $this->db->insert('carteras', $nueva_cartera);
+                redirect(base_url("index.php/Operaciones/carteras"));
             }
             $this->load->view('common/header');
             $this->load->view('operaciones/add/cartera',$data);
@@ -909,16 +910,16 @@ class Operaciones extends CI_Controller {
             $cartera = $query->result_array();
             $data['cartera'] = $cartera;
             //area
-            $this->db->from('areas');     
-            $query = $this->db->get();
-            $areas = $query->result_array();
+            $areas = $this->MyModel->buscar_select('areas','id_area','area');
             $data['areas'] = $areas;
 
             if($this->input->post('nombre')) {
                  $nombre = $this->input->post('nombre');
-                 $actualiza_entidad = array('nombre_entidad' => $nombre);
-                 $this->MyModel->agregar_model('entidad',$actualiza_entidad,'id_entidad',$this->input->post('id_entidad'));                
-                redirect(base_url("index.php/Operaciones/entidades"));
+                 $area = $this->input->post('area');
+
+                 $actualiza_cartera = array('cartera' => $nombre, 'id_area' =>$area);
+                 $this->MyModel->agregar_model('carteras',$actualiza_cartera,'id_cartera',$this->input->post('id_cartera'));                
+                redirect(base_url("index.php/Operaciones/carteras"));
             }
             $this->load->view('common/header');
             $this->load->view('operaciones/edit/cartera',$data);

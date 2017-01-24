@@ -19,7 +19,7 @@
         });
     </script>
     <?php
-  echo form_open('Operaciones/agregar_entidad');
+  echo form_open('Operaciones/agregar_cartera');
   ?>
   <div class="row">
     <div class="col-xs-8">
@@ -47,23 +47,21 @@
               
               <div class="row">                
                 <div class="col-md-3">
-                    <label>Nombre</label>
+                  <label>Nombre</label>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre Sucursal" required>
-                    </div>
+                        <input type="hidden" value="" name="id_cartera" id="id_cartera" class="form-control" />
+                        <input class="form-control" type="text" name="nombre" id="nombre" value="" placeholder="Nombre Cartera">
+                      </div>
                 </div>
                 <div class="col-md-3">
-                    <label>Tipo</label>
+                  <label>Area</label>
                     <div class="form-group">
-                        <select name="tipo" id="tipo" class="form-control" required>
-                          <option value="">--Seleccione--</option>
-                          <option value="A">Afp</option>
-                          <option value="S">Salud</option>
-                        </select>
+                      <?php echo form_dropdown('area',$areas,'',array('class' => 'form-control','id' => 'area'));?>
                     </div>
                 </div>
 
                 <div class="col-md-2">
+                  <br/>
                     <button type="submit" class="btn btn-info pull-left">Guardar</button>
                 </div>
 

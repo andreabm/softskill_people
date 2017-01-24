@@ -18,7 +18,7 @@
             });
         });
     </script>
-  <?php echo form_open('Operaciones/editar_entidad');?>
+  <?php echo form_open('Operaciones/editar_cartera');?>
   <div class="row">
     <div class="col-xs-8">
         <div class="alert alert-danger alert-dismissible" id="alerta" style="display: none;">
@@ -37,20 +37,9 @@
   
       <div class="row">
         <div class="col-xs-12">
-
-          <?php
-              /*
-              echo '<pre>';
-                print_r($cartera);
-                echo '<br/>';
-                print_r($areas);
-              echo '</pre>';
-              */
-          ?>
-
             <div class="box box-success">
                 <div class="box-header">
-                  <h3 class="box-title">Datos Entidad</h3>
+                  <h3 class="box-title">Datos Cartera</h3>
               </div>
               <div class="box-body">
               
@@ -65,13 +54,12 @@
                 <div class="col-md-3">
                   <label>Area</label>
                     <div class="form-group">
-                        <?php
-                    echo form_dropdown('area',$areas,$cartera[0]['id_cartera'],array('class' => 'form-control','id' => 'comuna'));
-                    ?>
+                      <?php echo form_dropdown('area',$areas,$cartera[0]['id_area'],array('class' => 'form-control','id' => 'area'));?>
                     </div>
                 </div>
 
                 <div class="col-md-2">
+                  <br/>
                     <button type="submit" class="btn btn-info pull-left">Guardar</button>
                 </div>
 

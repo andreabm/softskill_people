@@ -1174,7 +1174,6 @@ class Operaciones extends CI_Controller {
             //datos persona
             $persona = $this->MyModel->buscar_model('personas','rut ="'.$postulante[0]['rut'].'"');
             $data['persona'] = $persona;
-
             
             //busca si ya respondio la encuesta
             $evaluacion_resp = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');

@@ -298,12 +298,8 @@ allPrevBtn.click(function(){
             <button class="btn btn-primary nextBtn btn-md pull-right" type="button" id="continuar<?php echo $a->id_evaluacion_induccion;?>" disabled>Continuar</button>
             <?php }?>
 
-
-
-          </div>
-          
+          </div>          
           <div class="col-md-7">
-            <!--<button type="button" class="btn btn-danger pull-right">Abandonar Test</button>-->
 <button type="button" class="btn btn-danger pull-right" id="load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Finalizando test...">Abandonar Test</button>
           </div>
           
@@ -346,7 +342,8 @@ allPrevBtn.click(function(){
 <script>
 $(document).ready(function(){  
 
-  $('.btn').on('click', function() {
+    //alert('hola');
+    $('.btn-danger').on('click', function() {
       //agrega required
       //$("radio").attr('required', '');
       //quita required

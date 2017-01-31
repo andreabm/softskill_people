@@ -44,44 +44,29 @@
         <td align="left"><?php if(!empty($ejecutivo[0]['comuna'])){echo $ejecutivo[0]['comuna'];}?></td>
 		<td></td>
     </tr>
-    <tr>
-<<<<<<< HEAD
-        <td>Tel&eacute;fonos</td>
-        <td>Casa</td>
-        <td><input class="form-control" type="text" name="tcasa" id="tcasa" value="<?php if(!empty($ejecutivo[0]['fono_fijo'])){echo $ejecutivo[0]['fono_fijo'];}else{echo '&nbsp;';}?>"/></td>
-        <td>Celular</td>
-        <td><input class="form-control" type="text" name="tcelular" id="tcelular" value="<?php if(!empty($ejecutivo[0]['fono_movil'])){echo $ejecutivo[0]['fono_movil'];}else{echo '&nbsp;';}?>"/></td>
-=======
-        <td colspan="3">&nbsp;</td>
->>>>>>> 8553de9225fb0fd11f3f2538f72ca9a50b1ae1de
-    </tr>
+
 	<tr>
         <th align="left">Telefono casa</th>
         <th align="left">Celular</th>
 		<th></th>
     </tr>
     <tr>
-        <td align="left"><?php echo $ejecutivo[0]['fono_fijo'];?></td>
-        <td align="left" ><?php echo $ejecutivo[0]['fono_movil']; ?></td>
+        <td align="left"><?php if(!empty($ejecutivo[0]['fono_fijo'])){echo $ejecutivo[0]['fono_fijo'];}else{echo '&nbsp;';}?></td>
+        <td align="left" ><?php if(!empty($ejecutivo[0]['fono_movil'])){echo $ejecutivo[0]['fono_movil'];}else{echo '&nbsp;';}?></td>
 		<td></td>
 	</tr>
-    <tr>    
-<<<<<<< HEAD
-        <td width="40">Estado Civil</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['edo_civil'];?>" /></td>
-        <td width="40">Con Hijos</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{echo "0"; }?>"/></td>
-=======
+
+    <tr>
         <th align="left">Estado Civil</th>
         <th align="left">Con Hijos</th>
-		<th></th>
->>>>>>> 8553de9225fb0fd11f3f2538f72ca9a50b1ae1de
+        <th></th>
     </tr>
-	<tr>
-	   <td align="left"><?php echo $ejecutivo[0]['edo_civil'];?></td>
-       <td align="left"><?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{echo "0";} ?></td> 
-	   <td></td>
-	</tr>
+    <tr>
+        <td align="left"><?php if(!empty($ejecutivo[0]['edo_civil'])){echo $ejecutivo[0]['edo_civil'];}else{echo '&nbsp;';}?></td>
+        <td align="left" ><?php if(!empty($ejecutivo[0]['num_hijos'])){echo $ejecutivo[0]['num_hijos'];}else{echo 'No';}?></td>
+        <td></td>
+    </tr>
+
     </table>
 	<br>
    <table style="width:100%;">     
@@ -102,13 +87,15 @@
         <th align="left">Plazo de Contrato</th>
         <td align="left"></td>
     </tr>
-    <tr>    
-        <td width="40">Pm/Rol</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php if(!empty($ejecutivo[0]['nombre_pm'])){echo $ejecutivo[0]['nombre_pm'];}else{echo '&nbsp;';}?>" /></td>
-        <td width="40">Industria</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['area'];?>"/></td>
 
+    <tr>    
+        <th align="left">Pm/Rol</th>
+        <td align="left"><?php if(!empty($ejecutivo[0]['nombre_pm'])){echo $ejecutivo[0]['nombre_pm'];}else{echo '&nbsp;';}?></td>
+        <th align="left">Industria</th>
+        <td align="left"><?php if(!empty($ejecutivo[0]['area'])){echo $ejecutivo[0]['area'];}else{echo '&nbsp;';}?></td>
     </tr>
+
+
     <tr>    
         <th align="left">Cod. Proyecto</th>
         <td align="left"><?php echo $ejecutivo[0]['cod_sap'];?></td>
@@ -117,7 +104,7 @@
     </tr>
     <tr>
         <th align="left" colspan="2">Departamento (<span style="font-size: 12pt;"><i>Solo area de apoyo</i></span>)</th>
-        <td  align="left" colspan="2"><input style="width:312px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['gerencia'];?>"/></td>
+        <td  align="left" colspan="2"><?php if(!empty($ejecutivo[0]['gerencia'])){echo $ejecutivo[0]['gerencia'];}else{echo '&nbsp;';}?></td>
     </tr>
 
     <tr>    
@@ -200,9 +187,9 @@
       <tr>
         <td colspan="2">&nbsp;</td>     
       </tr>
-    </table><br/><br/><br/>
+    </table>
 
-   <table style="width:100%;" cellspacing="0">
+   <table style="width:100%; margin-top:110px;" cellspacing="0">
     <tr>    
         <td width="100" style="border: 1px solid black;" align="center"><span style="font-size: 12pt;">Jefe Directo</span></td>
         <td width="100" style="border: 1px solid black;" align="center"><span style="font-size: 12pt;">Encargado del Area</span></td>

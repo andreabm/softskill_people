@@ -1062,21 +1062,22 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
 
         if($guardar==1){
             $postulantes = $this->input->post('postulante');
-            if(isset($postulantes)){
+             
                 foreach($data['entrevistah'] as $i){
                     //borro los actuales
                     $borrar = array('entrevistap' =>NULL);
                     $this->db->where('id_postulante', $i['id_postulante']);
                     $this->db->update('postulantes', $borrar);
                 }
-                //agrego los que corresponden                
-                foreach($postulantes as $k=>$a){
-                    //echo $k;                    
-                    $test = array('entrevistap' =>'1');
-                    $this->db->where('id_postulante', $k);
-                    $this->db->update('postulantes', $test);                    
+                if(!empty($postulantes)){
+                    //agrego los que corresponden                
+                    foreach($postulantes as $k=>$a){
+                        //echo $k;                    
+                        $test = array('entrevistap' =>'1');
+                        $this->db->where('id_postulante', $k);
+                        $this->db->update('postulantes', $test);                    
+                    }
                 }
-            }
         }
         $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.entrevistap,postulantes.observacion');
         $this->db->from('postulantes');

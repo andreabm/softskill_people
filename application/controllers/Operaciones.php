@@ -1640,22 +1640,23 @@ class Operaciones extends CI_Controller {
             $data['hoy'] = $hoy;
             if($guardar==1){
             $postulantes = $this->input->post('postulante');
-            if(isset($postulantes)){
-                foreach($data['hoy'] as $i){
-                    //borro los actuales
-                    $borrar = array('induccionp' =>NULL);
-                    $this->db->where('id_postulante', $i['id_postulante']);
-                    $this->db->update('postulantes', $borrar);
-                }
-                //agrego los que corresponden                
-                foreach($postulantes as $k=>$a){
-                    //echo $k;                    
-                    $test = array('induccionp' =>'1');
-                    $this->db->where('id_postulante', $k);
-                    $this->db->update('postulantes', $test);
-                    
-                }
-            }
+                
+                    foreach($data['hoy'] as $i){
+                        //borro los actuales
+                        $borrar = array('induccionp' =>NULL);
+                        $this->db->where('id_postulante', $i['id_postulante']);
+                        $this->db->update('postulantes', $borrar);
+                    }
+                    //agrego los que corresponden
+                    if(!empty($postulantes)){
+                        foreach($postulantes as $k=>$a){
+                            //echo $k;                    
+                            $test = array('induccionp' =>'1');
+                            $this->db->where('id_postulante', $k);
+                            $this->db->update('postulantes', $test);
+                            
+                        }                        
+                    }
             }
             //inducciones para hoy
             $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,,postulantes.induccionp,postulantes.observacion_induccion');

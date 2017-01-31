@@ -178,7 +178,18 @@ if(!isset($this->session->userdata['id_usuario'])){
 		  ?>
 		  <li class="treeview">
           <a href="#">
-            <i class="fa fa-child"></i> <span><?php echo $area ?></span>
+            <?php 
+            if ($area == 'Gestion de Personas') {
+                echo '<i class="fa fa-child"></i>';
+            } elseif ($area == 'Calidad') {
+                echo '<i class="fa fa-check-square"></i>';
+            } elseif ($area == 'Operaciones') {
+                echo '<i class="fa fa-bar-chart"></i>';
+            } elseif ($area == 'RRHH') {
+                echo '<i class="fa fa-circle-o"></i>';
+            }
+            ?>
+            <span><?php echo $area ?></span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -187,8 +198,15 @@ if(!isset($this->session->userdata['id_usuario'])){
 			   <?php 
 			   foreach ($menu as $key => $m) {
 				   
-				   
-					   if (!is_int($key)) {
+						if (!is_int($key)) {
+							$count = 0;
+							foreach ($m as $ms){
+								$busco_permisos = explode(';',$ms['rangos']);
+								if (in_array($this->rango,$busco_permisos)) {
+								$count++;
+								}
+							}
+							if ($count > 0) {
 						   ?>
 						   <li>
 						   <a href="#"><i class="fa fa-circle-o"></i> <?php echo $key ?>
@@ -198,6 +216,7 @@ if(!isset($this->session->userdata['id_usuario'])){
 						  </a>
 						  <ul class="treeview-menu">
 							<?php
+							
 							foreach ($m as $ms){
 								$busco_permisos = explode(';',$ms['rangos']);
 								if (in_array($this->rango,$busco_permisos)) {
@@ -207,10 +226,13 @@ if(!isset($this->session->userdata['id_usuario'])){
 								<?php
 								}
 							}
+						
 							?>
 						   </ul>
 						   <li>
-						<?php 
+						   
+						<?php
+							}						
 					   } else {
 						   $busco_permisos = explode(';',$m['rangos']);
 						   if (in_array($this->rango,$busco_permisos)) {

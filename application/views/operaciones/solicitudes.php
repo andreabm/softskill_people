@@ -85,8 +85,15 @@
                             <?php if (empty($s['cantidad_entregada'])){$s['cantidad_entregada'] = 0;}?>
                             <td><?php echo $s['cantidad_entregada']?></td>
                             <td><?php echo $validado;?></td>
-                            <td><a class="btn btn-xs btn-success" href="#" data-toggle="modal" data-target="#validarSolicitud" onclick = "validarSolicitud(<?php echo $s['id_solicitud'];  ?>)">Validar</a></td>
-                        </tr>
+                            <td>
+							<?php if ($this->rango == 4) {
+								?>
+								<a class="btn btn-xs btn-success" href="#" data-toggle="modal" data-target="#validarSolicitud" onclick = "validarSolicitud(<?php echo $s['id_solicitud'];  ?>)">Validar</a></td>
+								<?php
+							} else {
+								echo '-';
+							}?>
+							</tr>
                     <?php }
                 }?>
                 </tbody>

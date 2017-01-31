@@ -65,18 +65,21 @@ class MyModel extends CI_Model {
         $permisos_q = $query->result_array();
         $permisos = array();
         foreach ($permisos_q as $p) {
-			if ($p['es_submodulo'] == 1) {
-				if (empty($permisos[$p['area']][$p['nombre']])){
-					$permisos[$p['area']][$p['nombre']] = array(); 
-				}
-				
-			} else {
-				if ($p['es_subarea'] == 1) {
-					//print_r($p);
-					$permisos[$p['area']][$p['subarea']][] = $p; 
-					//print_r($permisos);
+			$busco_permisos = explode(';',$p['rangos']);
+			if (in_array($this->session->userdata['id_rango'],$busco_permisos)) {
+				if ($p['es_submodulo'] == 1) {
+					if (empty($permisos[$p['area']][$p['nombre']])){
+						$permisos[$p['area']][$p['nombre']] = array(); 
+					}
+					
 				} else {
-					$permisos[$p['area']][] = $p; 
+					if ($p['es_subarea'] == 1) {
+						//print_r($p);
+						$permisos[$p['area']][$p['subarea']][] = $p; 
+						//print_r($permisos);
+					} else {
+						$permisos[$p['area']][] = $p; 
+					}
 				}
 			}
             

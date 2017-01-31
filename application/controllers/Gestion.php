@@ -368,6 +368,8 @@ class Gestion extends CI_Controller {
             $fuente = $this->input->post('id_fuente');
             $fecha_entrevista = $this->input->post('fecha_entrevista');
             $hora_entrevista = $this->input->post('hora_entrevista');
+			$hora_entrevista = explode(' ',$hora_entrevista);
+			$hora_entrevista = $hora_entrevista[0];
             $fecha_entrevista = date("Y-m-d", strtotime($fecha_entrevista));
             $fecha_nacimiento = date("Y-m-d", strtotime($fecha_nacimiento));
             
@@ -407,6 +409,7 @@ class Gestion extends CI_Controller {
                 'materno' => $materno,
                 'razon_social' => $r_social
             ); 
+			//echo $fecha_entrevista.' '.$hora_entrevista.':00';
             $nuevo_postulante = array(
                 'rut' => $rut,
                 'referencia_empresa' => $empresa_referencia,

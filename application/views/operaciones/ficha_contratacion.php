@@ -63,7 +63,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>RAZ&Oacute;N SOCIAL</label>
-                                    <input class="form-control" type="text" name="razon_social" id="razon_social" value="<?php echo $ejecutivo[0]['razon_social'] ?>" required/>
+                                    <input class="form-control" type="text" name="razon_social" id="razon_social" value="Servicios de control de creditos S.A" required/>
                                 </div>
                             </div>
                         </div>

@@ -23,108 +23,90 @@
         <td align="left"><?php if(!empty($ejecutivo[0]['materno'])){echo $ejecutivo[0]['materno'];} ?></td>
         <td align="left"><?php if(!empty($ejecutivo[0]['nombre'])){echo $ejecutivo[0]['nombre'];} ?></td>
     </tr>
+   </table >
+    <table style="width:100%;">  
     <tr>
         <th align="left">Rut</th>
-        
+        <td align="left" ><?php if(!empty($ejecutivo[0]['rut'])){echo $ejecutivo[0]['rut'];}?></td>
         <th align="left" >Fecha nacimiento</th>
-       <th></th>
+        <td align="left"><?php if(!empty($ejecutivo[0]['fecha_nacimiento'])){echo $ejecutivo[0]['fecha_nacimiento'];}?></td>
     </tr>
-	<tr>
-       <td align="left" ><?php if(!empty($ejecutivo[0]['rut'])){echo $ejecutivo[0]['rut'];}?></td>
-         <td align="left"><?php if(!empty($ejecutivo[0]['fecha_nacimiento'])){echo $ejecutivo[0]['fecha_nacimiento'];}?></td>
-        <td align="left"></td>
+   </table>
+
+   <table style="width:100%;">  
+    <tr>
+        <th>Direcci&oacute;n</th>
+        <th>Comuna/Ciudad</th>
     </tr>
     <tr>
-        <th align="left">Direcci&oacute;n</th>
-        <th align="left">Comuna/Ciudad</th>
-		<th></th>
+        <td><?php if(!empty($ejecutivo[0]['direccion'])){echo $ejecutivo[0]['direccion'];}?></td>
+        <td><?php if(!empty($ejecutivo[0]['comuna'])){echo $ejecutivo[0]['comuna'];}?></td>
     </tr>
     <tr>
-        <td align="left"><?php if(!empty($ejecutivo[0]['direccion'])){echo $ejecutivo[0]['direccion'];}?></td>
-        <td align="left"><?php if(!empty($ejecutivo[0]['comuna'])){echo $ejecutivo[0]['comuna'];}?></td>
-		<td></td>
+        <td colspan="2">&nbsp;</td>
     </tr>
+   </table>
+
+    <table style="width:100%;">  
     <tr>
-<<<<<<< HEAD
         <td>Tel&eacute;fonos</td>
         <td>Casa</td>
-        <td><input class="form-control" type="text" name="tcasa" id="tcasa" value="<?php if(!empty($ejecutivo[0]['fono_fijo'])){echo $ejecutivo[0]['fono_fijo'];}else{echo '&nbsp;';}?>"/></td>
+        <td><input class="form-control" type="text" name="tcasa" id="tcasa" value="<?php if(!empty($ejecutivo[0]['fono_fijo'])){echo $ejecutivo[0]['fono_fijo'];}?>"/></td>
         <td>Celular</td>
-        <td><input class="form-control" type="text" name="tcelular" id="tcelular" value="<?php if(!empty($ejecutivo[0]['fono_movil'])){echo $ejecutivo[0]['fono_movil'];}else{echo '&nbsp;';}?>"/></td>
-=======
-        <td colspan="3">&nbsp;</td>
->>>>>>> 8553de9225fb0fd11f3f2538f72ca9a50b1ae1de
+        <td><input class="form-control" type="text" name="tcelular" id="tcelular" value="<?php if(!empty($ejecutivo[0]['fono_movil'])){echo $ejecutivo[0]['fono_movil'];}?>"/></td>
     </tr>
-	<tr>
-        <th align="left">Telefono casa</th>
-        <th align="left">Celular</th>
-		<th></th>
-    </tr>
-    <tr>
-        <td align="left"><?php echo $ejecutivo[0]['fono_fijo'];?></td>
-        <td align="left" ><?php echo $ejecutivo[0]['fono_movil']; ?></td>
-		<td></td>
-	</tr>
+    </table>
+
+    <table style="width:100%;">
     <tr>    
-<<<<<<< HEAD
         <td width="40">Estado Civil</td>
         <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['edo_civil'];?>" /></td>
         <td width="40">Con Hijos</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{echo "0"; }?>"/></td>
-=======
-        <th align="left">Estado Civil</th>
-        <th align="left">Con Hijos</th>
-		<th></th>
->>>>>>> 8553de9225fb0fd11f3f2538f72ca9a50b1ae1de
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{echo "0";} ?>"/></td>
     </tr>
-	<tr>
-	   <td align="left"><?php echo $ejecutivo[0]['edo_civil'];?></td>
-       <td align="left"><?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{echo "0";} ?></td> 
-	   <td></td>
-	</tr>
+
     </table>
-	<br>
+
    <table style="width:100%;">     
     <tr>    
-        <th align="left">Afp</th>
-        <td align="left"><?php echo $afps[0]['nombre_entidad'] ?></td>
-        <th  align="left">Salud</th>
-        <td  align="left"><?php echo $salud[0]['nombre_entidad'] ?></td>
-        <th  align="left">F. contrato</th>
-        <td  align="left"><?php echo $ejecutivo[0]['fecha_ingreso'] ?></td>
+        <td width="40">Afp</td>
+        <td width="110"><input style="width:120px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $afps[0]['nombre_entidad'] ?>" /></td>
+        <td width="40">Salud</td>
+        <td width="110"><input style="width:120px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $salud[0]['nombre_entidad'] ?>"/></td>
+        <td width="40">F. contrato</td>
+        <td width="110"><input style="width:120px;" class="form-control" type="text" name="fcontrato" id="fcontrato" value="<?php echo $ejecutivo[0]['fecha_ingreso'] ?>"/></td>
     </tr>
     </table>
-	<br>
+
    <table style="width:100%;">     
     <tr>    
-        <th align="left">Cargo Postulado</th>
-        <td align="left"><?php echo $ejecutivo[0]['cargo'];?></td>
-        <th align="left">Plazo de Contrato</th>
-        <td align="left"></td>
+        <td width="40">Cargo Postulado</td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['cargo'];?>" /></td>
+        <td width="40">Plazo de Contrato</td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="&nbsp;"/></td>
     </tr>
     <tr>    
         <td width="40">Pm/Rol</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php if(!empty($ejecutivo[0]['nombre_pm'])){echo $ejecutivo[0]['nombre_pm'];}else{echo '&nbsp;';}?>" /></td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['nombre_pm'];?>" /></td>
         <td width="40">Industria</td>
         <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['area'];?>"/></td>
-
     </tr>
     <tr>    
-        <th align="left">Cod. Proyecto</th>
-        <td align="left"><?php echo $ejecutivo[0]['cod_sap'];?></td>
-        <th align="left">Direcci&oacute;n sucursal</th>
-        <td align="left"><?php echo $ejecutivo[0]['sucursal'];?></td>
+        <td width="40">Cod. Proyecto</td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['cod_sap'];?>" /></td>
+        <td width="40">Direcci&oacute;n sucursal</td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['sucursal'];?>"/></td>
     </tr>
     <tr>
-        <th align="left" colspan="2">Departamento (<span style="font-size: 12pt;"><i>Solo area de apoyo</i></span>)</th>
-        <td  align="left" colspan="2"><input style="width:312px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['gerencia'];?>"/></td>
+        <td colspan="2">Departamento (<span style="font-size: 12pt;"><i>Solo area de apoyo</i></span>)</td>
+        <td colspan="2"><input style="width:312px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['gerencia'];?>"/></td>
     </tr>
 
     <tr>    
-        <th align="left">Horario de trabajo</th>
-        <td align="left"><?php echo $ejecutivo[0]['turno'];?></td>
-        <th align="left">S&aacute;bado</th>
-        <td align="left"></td>
+        <td width="40">Horario de trabajo</td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['turno'];?>" /></td>
+         <td width="40">S&aacute;bado</td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="&nbsp;"/></td>
     </tr>
 
     </table>
@@ -135,10 +117,11 @@
             //print_r($motivo_contrato1);
             $motivo_contrato = $motivo_contrato1[0];
             $obs = $motivo_contrato1[1];
-        }else{
+        } else {
             $motivo_contrato = ''; 
             $obs = '';
-        }?>
+        }        
+        ?>
 
     <table style="width:100%;"> 
         <tr>    
@@ -150,7 +133,7 @@
         <td width="190"><input style="width:190px;" class="form-control" type="text" name="renuncia" value="<?php if ($motivo_contrato == 'renuncia') { echo 'value = "'.$obs.'"' ;} ?>" /></td>
         <td width="20"><input type="checkbox" value="despido" <?php if ($motivo_contrato == 'despido') { echo 'checked' ;} ?>></td>
         <td width="60">Despido de</td>
-        <td width="176"><input style="width:176px;" class="form-control" type="text" name="despido" id="odespido" value="<?php if ($motivo_contrato == 'despido') { echo $obs ;} ?>" /></td>
+        <td width="176"><input style="width:176px;" class="form-control" type="text" name="despido" id="odespido" value="<?php if ($motivo_contrato == 'despido') { echo 'value = "'.$obs.'"' ;} ?>" /></td>
     </tr>
     <tr>    
         <td width="20"><input type="checkbox" value="licencia" <?php if ($motivo_contrato == 'licencia') { echo 'checked' ;} ?>></td>

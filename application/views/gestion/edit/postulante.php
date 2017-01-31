@@ -736,6 +736,7 @@
       </div>
     </section>
 <script>
+
 $(document).ready(function(){ 
   $('.datepicker').datepicker({
           starDate: 'today',

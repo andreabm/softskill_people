@@ -1,11 +1,3 @@
-
-<?php
-/*
-echo '<pre>';
-print_r($areas);
-echo '</pre>';
-*/
-?>
 <div class="row">
     <div class="col-xs-8">
         <div class="alert alert-danger alert-dismissible" id="alerta_rut" style="display: none;">
@@ -29,7 +21,7 @@ echo '</pre>';
         <div class="form-group">
             <label>CARGO A POSTULAR</label>
             <?php
-                echo form_dropdown('id_cargo',$cargos,$postulante[0]['id_cargo'],array('id' => 'id_cargo','class' => 'form-control','disabled' => 'disabled'));
+                echo form_dropdown('id_cargo',$cargos,$postulante[0]['id_cargo'],array('id' => 'id_cargo','class' => 'form-control','readonly' => 'readonly','required' => 'required'));
              ?>
             <!--<input class="form-control" type="text" name="rut" id="rut" value="<?php //echo $postulante[0]['id_cargo'] ?>" readonly="readonly"/>-->
         </div>
@@ -38,7 +30,7 @@ echo '</pre>';
     <div class="col-md-12">
         <div class="form-group">
             <label>Email</label>
-            <input class="form-control" type="text" name="email" id="email" value="<?php echo $postulante[0]['email'] ?>" readonly="readonly"/>
+            <input class="form-control" type="text" name="email" id="email" value="<?php echo $postulante[0]['email'] ?>" readonly="readonly" required/>
         </div>
     </div>
 
@@ -63,7 +55,7 @@ echo '</pre>';
 
         <input type="hidden" name="nsucursal" id="nsucursal" class="form-control">
         
-        <select class="form-control" name="cartera" id="cartera">
+        <select class="form-control" name="cartera" id="cartera" required>
         <?php foreach($carteras as $a){?>         
             <option value="<?php echo $a['id_cartera'] ?>"><?php echo $a['cartera'] ?></option>
         <?php }?>
@@ -73,7 +65,7 @@ echo '</pre>';
     <div class="col-md-4">
         <label>Califica</label>
         <span id="suc"></span>
-        <select class="form-control" name="califica" id="califica">   
+        <select class="form-control" name="califica" id="califica" required>   
             <option value="1" selected >Califica</option>
              <option value="0">No Califica</option>        
         </select> 
@@ -84,9 +76,12 @@ echo '</pre>';
         <label>Motivo</label>
         <?php echo form_dropdown('id_motivo_no_califica',$motivos_no_califica,'',array('class' => 'form-control','id' => 'motivo_no_califica')); ?>  
     </div>
+
     <?php echo form_hidden('id_cargo',$postulante[0]['id_cargo']) ?>
 </div>
 <script>
+
+
 $('#califica').change(function(){
    if ($(this).val() == '1') {
         $('#div_motivo_no_califica').hide();
@@ -140,7 +135,6 @@ function cargar_carteras(valor_area){
         });
 
       },
-      
       error: function(e) {
         console.debug('error');
       }

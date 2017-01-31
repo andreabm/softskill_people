@@ -159,6 +159,8 @@ class Gestion extends CI_Controller {
             $condiciones = $this->input->post('condiciones');
 
             $r_social = $this->input->post('razon_social');
+            $entrevistado = $this->input->post('entrevistado');
+
             
             $nueva_persona = array(
                 'rut' => $rut,
@@ -193,7 +195,9 @@ class Gestion extends CI_Controller {
                 'id_cargo' => $cargo_postula,
                 'prefiltro' => $prefiltro,
                 'fecha_entrevista' => $fecha_entrevista.' '.$hora_separada[0].':00',
-                'id_fuente' => $fuente
+                'id_fuente' => $fuente,
+                'firmo' => $firmo,
+                'entrevistado' => $entrevistado
             );
             
             $nuevo_antecedente_academico = array(
@@ -374,6 +378,12 @@ class Gestion extends CI_Controller {
             $paterno = $this->input->post('paterno');
             $materno = $this->input->post('materno');
             $r_social = $this->input->post('razon_social');
+
+            $entrevistado = $this->input->post('entrevistado');
+
+            $hora_separada = explode(" ", $hora_entrevista);
+            $hora_separada[0]; // hora
+            $hora_separada[1]; // am o pm
                         
             $nueva_persona = array(
                 'rut' => $rut,
@@ -407,8 +417,10 @@ class Gestion extends CI_Controller {
                 'pretension_renta' => $expectativas_renta,
                 'id_cargo' => $cargo_postula,
                 'prefiltro' => $prefiltro,
-                'fecha_entrevista' => $fecha_entrevista.' '.$hora_entrevista.':00',
-                'id_fuente' => $fuente
+                'fecha_entrevista' => $fecha_entrevista.' '.$hora_separada[0].':00',
+                'id_fuente' => $fuente,
+                'entrevistado' => $entrevistado,
+                'firmo' => $firmo
             );
             
             $nuevo_antecedente_academico = array(
@@ -638,11 +650,20 @@ class Gestion extends CI_Controller {
         $email = $this->input->post('email');
         $id_sucursal = $this->input->post('id_sucursal');
         
+        $fecha_presentacion = $this->input->post('fecha_presentacion');
+        $hora_presentacion = $this->input->post('hora_presentacion');
+
+        $hora_separada = explode(" ", $hora_presentacion);
+        $hora_separada[0]; //hora
+        $hora_separada[1]; //am o pm
+
         $update_postulante = array(
                 'id_cartera' => $cartera,
                 'id_area' => $area,
-                'sucursal_id' => $id_sucursal
-            );
+                'sucursal_id' => $id_sucursal,
+                'fecha_asignacion' => $fecha_presentacion.' '.$hora_separada[0].':00'
+        );
+
         if ($califica == 0) {
             $update_postulante['id_motivo_no_califica'] = $this->input->post('id_motivo_no_califica');
             //$id_solicitud = 0;
@@ -878,7 +899,7 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
         $entrevistas = $query->result_array();
         $array_entrevistas = array();
         $i = 0;
-        foreach($entrevistas as $a) {
+        foreach($entrevistas as $a){
             $array_entrevistas[$i]['title'] = $a['nombre'].'-'.$a['hora'];
             $array_entrevistas[$i]['start'] = $a['fecha'];
 			$array_entrevistas[$i]['id'] = $a['id_postulante'];
@@ -1007,11 +1028,109 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
         $query = $this->db->get();
         $factor_seleccionadas = $query->result_array();                
         $data['factor_seleccionadas'] = $factor_seleccionadas;
-        //factor        
+        //factor      
         
         $this->load->view('gestion/modal/mostrar_factor',$data);
     }
     
+        //dashboard
+        public function dashboard(){
+        $guardar = $this->input->post('guardar');
+        //inducciones restantes
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
+        $this->db->from('postulantes');
+        $this->db->join('personas','personas.rut = postulantes.rut');
+        $this->db->where('postulantes.id_solicitud is null and postulantes.entrevistado=0');        
+        $query = $this->db->get();
+        $pendiente_entrevista = $query->result_array();
+        $data['entrevistap'] = $pendiente_entrevista;
 
+        //inducciones para hoy
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.entrevistap,postulantes.observacion');
+        $this->db->from('postulantes');
+        $this->db->join('personas','personas.rut = postulantes.rut');
+        $this->db->where("postulantes.entrevistado=0 and DATE_FORMAT(postulantes.fecha_entrevista,'%Y-%m-%d') = curdate()");        
+        $query_h = $this->db->get();
+        //postulantes.id_solicitud is null and
+        //muestra query
+        //$this->db->last_query();
+        $hoy_entrevista = $query_h->result_array();
+        $data['entrevistah'] = $hoy_entrevista;
+
+        if($guardar==1){
+            $postulantes = $this->input->post('postulante');
+            if(isset($postulantes)){
+                foreach($data['entrevistah'] as $i){
+                    //borro los actuales
+                    $borrar = array('entrevistap' =>NULL);
+                    $this->db->where('id_postulante', $i['id_postulante']);
+                    $this->db->update('postulantes', $borrar);
+                }
+                //agrego los que corresponden                
+                foreach($postulantes as $k=>$a){
+                    //echo $k;                    
+                    $test = array('entrevistap' =>'1');
+                    $this->db->where('id_postulante', $k);
+                    $this->db->update('postulantes', $test);                    
+                }
+            }
+        }
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.entrevistap,postulantes.observacion');
+        $this->db->from('postulantes');
+        $this->db->join('personas','personas.rut = postulantes.rut');
+        $this->db->where("postulantes.entrevistado=0 and DATE_FORMAT(postulantes.fecha_entrevista,'%Y-%m-%d') = curdate()");        
+        $query_h = $this->db->get();
+        //postulantes.id_solicitud is null and
+        //muestra query
+        //$this->db->last_query();
+        $hoy_entrevista = $query_h->result_array();
+        $data['entrevistah'] = $hoy_entrevista;
+        
+        //postulantes inducidos
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
+        $this->db->from('postulantes');
+        $this->db->join('personas','personas.rut = postulantes.rut');
+        $this->db->where('postulantes.id_solicitud is null and postulantes.entrevistado=1');        
+        $query_e = $this->db->get();
+        $entrevistado = $query_e->result_array();
+        $data['entrevistado'] = $entrevistado;               
+
+        $this->db->select('postulantes.id_postulante, personas.rut ,DATE(postulantes.fecha_entrevista) as fecha, TIME(postulantes.fecha_entrevista) as hora, personas.nombre');
+        $this->db->from('postulantes');
+        $this->db->join('personas','personas.rut = postulantes.rut');
+        //$this->db->where('date(fecha_asignacion) >= curdate()');
+        $query = $this->db->get();
+        $entrevistas = $query->result_array();
+        $array_entrevistas = array();
+        $i = 0;
+        foreach($entrevistas as $a){
+            $array_entrevistas[$i]['title'] = $a['nombre'].'-'.$a['hora'];
+            $array_entrevistas[$i]['start'] = $a['fecha'];
+            $array_entrevistas[$i]['id'] = $a['id_postulante'];
+            $array_entrevistas[$i]['url'] = '';
+            $i++;
+        }
+        $data['array_entrevistas'] = $array_entrevistas;
+        $this->load->view('common/header');
+        $this->load->view('gestion/dashboard',$data);
+        $this->load->view('common/footer');
+    }
+    
+    public function postulante_comentario(){
+            $id_postulante = $this->input->post('id_postulante');
+            $observacion = $this->input->post('observacion');        
+            $data = array('observacion' => $observacion);
+            $this->db->where('id_postulante', $id_postulante);
+            $this->db->update('postulantes', $data);
+            $ins_comentario = $this->db->affected_rows();
+                      
+            if($ins_comentario==1){
+                $this->session->set_flashdata('msje_comentario', '1');
+                redirect(base_url().'/index.php/gestion/dashboard','refresh');
+            }else{
+                $this->session->set_flashdata('msje_comentario', '2');
+                redirect(base_url().'/index.php/gestion/dashboard','refresh');
+            } 
+    }
 }
 ?>

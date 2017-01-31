@@ -52,6 +52,7 @@
                   <th>Discapacidad</th>
                   <th>Fecha Entrevista</th>
                   <th>Califica</th>
+                  <th>Entrevistado</th>
                   <th>Opciones</th>
                 </tr>
                 </thead>
@@ -59,11 +60,13 @@
                 <?php
                 if(!empty($postulantes)) {
                     foreach($postulantes as $p) {
+
+                      $newDate = date("d-m-Y", strtotime($p['fecha_nacimiento']));
                         ?>
                         <tr>
                           <td><?php echo $p['rut'] ?></td>
                           <td><?php echo $p['nombre'].' '.$p['paterno'] ?></td>
-                          <td><?php echo $p['fecha_nacimiento'] ?></td>
+                          <td><?php echo $newDate;?></td>
                           <td><?php echo $p['fono_movil'] ?></td>
                           <td><?php echo $p['nacionalidad'] ?></td>
                           <td><?php echo $p['discapacidad'] ?></td>
@@ -78,13 +81,18 @@
                           } else {
                             $val = 'No reportado';
                           }
-                          ?>
+                          if($p['entrevistado']==1){
+                            $entrevistado = "<i class='fa fa-check fa-lg' aria-hidden='true' style='color:green;'></i>";
+                          }else{
+                            $entrevistado = "<i class='fa fa-times fa-lg' aria-hidden='true' style='color:red;'></i>";
+                          }?>
                           <td><?php echo $val ?></td>
+                          <td><?=$entrevistado?></td>
                           <td>
                               <a class="btn btn-xs btn-success" data-toggle="modal" data-target="#verPostulante" onclick = "verPostulante(<?php echo $p['id_postulante'];  ?>)">Ver</a>
                               <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/gestion/editar_postulante/'.$p['id_postulante'])?>">Editar</a>
                               <a class="btn btn-xs btn-primary" href="<?php echo base_url('index.php/gestion/postulante_prueba/'.$p['id_postulante'])?>">Evaluacion</a>
-                              <a class="btn btn-xs btn-info" data-toggle="modal" data-target="#postulanteCalifica" onclick = "postulanteCalifica(<?php echo $p['id_postulante'];  ?>)">Califica</a>                  
+                              <a class="btn btn-xs btn-info" data-toggle="modal" data-target="#postulanteCalifica" onclick="postulanteCalifica(<?php echo $p['id_postulante'];  ?>)">Califica</a>                  
                               <!--<a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#eliminarPostulante" onclick = "eliminarPostulante(<?php //echo $p['id_postulante'];  ?>)">Eliminar</a>-->
                           </td>
                         </tr>
@@ -137,22 +145,68 @@
                   <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Postulante Califica</h4>
               </div>
-      <?php echo form_open('Gestion/postulante_califica_guardar');?>
-      <div class="modal-body" id="postulanteCalificaBody">
-        
+      <?php 
+      echo form_open('Gestion/postulante_califica_guardar');?>
+
+      <div class="modal-body" id="postulanteCalificaBody"></div>
+      <div class="modal-body" style="color:#333;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                  <label>Fecha de Presentaci&oacute;n</label>
+  
+                  <div class="input-group date">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" class="form-control pull-right datepicker" name="fecha_presentacion">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="bootstrap-timepicker">
+                    <div class="form-group">
+                      <label>Hora de Presentaci&oacute;n:</label>        
+                      <div class="input-group">
+                        <input type="text" class="form-control timepicker" name="hora_presentacion">        
+                        <div class="input-group-addon">
+                          <i class="fa fa-clock-o"></i>
+                        </div>
+                      </div>
+                      <!-- /.input group -->
+                    </div>
+                    <!-- /.form group -->
+                </div>
+            </div>
+
+        </div>
       </div>
+
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
-         
+            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>         
             <button type="submit" class="btn btn-outline" id="asignar">Asignar</button>
         </form>
       </div>
+
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 </div>
 
 <script>
+$(document).ready(function(){ 
+  $('.datepicker').datepicker({
+          starDate: 'today',
+          language: "es",
+          format: 'yyyy-mm-dd',
+          autoclose: true
+  });
+  $(".timepicker").timepicker({
+      showInputs: false,
+  });
+});
+
 $(document).ready(function(){
     setTimeout(function(){ $("#alertita").fadeOut(4000);}, 5000);
     $('#postulantes').DataTable({
@@ -164,7 +218,7 @@ $(document).ready(function(){
     });
 });
 
-function verPostulante(id_postulante){
+function verPostulante(id_postulante){  
     $.ajax({
           url:"<?php echo base_url('index.php/gestion/ver_postulante')?>",
           type: 'POST',

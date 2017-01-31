@@ -17,9 +17,9 @@
         $msje_solicitud = $this->session->flashdata('msje_solicitud');
             if(!empty($msje_solicitud)){
             ?>
-            <div id="alertita" class="alert alert-<?php if($msje_solicitud[0]==1){echo 'success';}else{echo 'danger';}?> alert-dismissible">
+            <div id="alertita" class="alert alert-<?php if($msje_solicitud[0]==1){echo 'success';}elseif($msje_solicitud[0]==3){echo 'warning';}elseif($msje_solicitud[0]==4){echo 'danger';}else{echo 'danger';}?> alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong><?php if($msje_solicitud[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'La solicitud se ha modificado con exito';}else{echo 'La solicitud no se ha modificado';}?>
+            <strong><?php if($msje_solicitud[0]==1){echo '&Eacute;xito';}elseif($msje_solicitud[0]==3){echo 'Atenci&oacute;n';}elseif($msje_solicitud[0]==4){echo 'Atenci&oacute;n';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'La solicitud se ha modificado con &eacute;xito';}elseif($msje_solicitud[0]==3){echo 'La solicitud ha sido aceptada pero con reparo, ya que la cantidad aprobada es menor';}elseif($msje_solicitud[0]==4){echo 'La solicitud ha sido rechazada.';}else{echo 'La solicitud no se ha modificado';}?>
             </div>        
             <?php }?>
 

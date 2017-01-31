@@ -51,9 +51,9 @@
     <tr>
         <td>Tel&eacute;fonos</td>
         <td>Casa</td>
-        <td><input class="form-control" type="text" name="tcasa" id="tcasa" value="<?php if(!empty($ejecutivo[0]['fono_fijo'])){echo $ejecutivo[0]['fono_fijo'];}?>"/></td>
+        <td><input class="form-control" type="text" name="tcasa" id="tcasa" value="<?php if(!empty($ejecutivo[0]['fono_fijo'])){echo $ejecutivo[0]['fono_fijo'];}else{echo '&nbsp;';}?>"/></td>
         <td>Celular</td>
-        <td><input class="form-control" type="text" name="tcelular" id="tcelular" value="<?php if(!empty($ejecutivo[0]['fono_movil'])){echo $ejecutivo[0]['fono_movil'];}?>"/></td>
+        <td><input class="form-control" type="text" name="tcelular" id="tcelular" value="<?php if(!empty($ejecutivo[0]['fono_movil'])){echo $ejecutivo[0]['fono_movil'];}else{echo '&nbsp;';}?>"/></td>
     </tr>
     </table>
 
@@ -62,7 +62,7 @@
         <td width="40">Estado Civil</td>
         <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['edo_civil'];?>" /></td>
         <td width="40">Con Hijos</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{echo "0";} ?>"/></td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php if($ejecutivo[0]['num_hijos']>0){echo "X";}else{echo "0"; }?>"/></td>
     </tr>
 
     </table>
@@ -87,7 +87,7 @@
     </tr>
     <tr>    
         <td width="40">Pm/Rol</td>
-        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php echo $ejecutivo[0]['nombre_pm'];?>" /></td>
+        <td width="110"><input style="width:230px;" class="form-control" type="text" name="afp" id="afp" value="<?php if(!empty($ejecutivo[0]['nombre_pm'])){echo $ejecutivo[0]['nombre_pm'];}else{echo '&nbsp;';}?>" /></td>
         <td width="40">Industria</td>
         <td width="110"><input style="width:230px;" class="form-control" type="text" name="salud" id="salud" value="<?php echo $ejecutivo[0]['area'];?>"/></td>
     </tr>
@@ -117,11 +117,10 @@
             //print_r($motivo_contrato1);
             $motivo_contrato = $motivo_contrato1[0];
             $obs = $motivo_contrato1[1];
-        } else {
+        }else{
             $motivo_contrato = ''; 
             $obs = '';
-        }        
-        ?>
+        }?>
 
     <table style="width:100%;"> 
         <tr>    

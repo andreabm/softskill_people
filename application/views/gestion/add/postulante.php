@@ -92,7 +92,7 @@ $(document).ready(function() {
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right" class="datepicker" name="fecha" value="<?php echo date('d-m-Y') ?>" disabled="disabled" />
+                          <input type="text" class="form-control pull-right" class="datepicker" name="fecha" value="<?php echo date('Y-m-d');?>" disabled="disabled" />
                         </div>
                         <!-- /.input group -->
                       </div>
@@ -101,7 +101,8 @@ $(document).ready(function() {
                     <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Edad</label>
-                            <input class="form-control" type="text" name="edad" id="edad" placeholder="Edad" />                           
+                            <input class="form-control" type="number" name="edad" id="edad" min="18" max="65" />                           
+                            
                         </div>
                     </div>                    
                     <div class="col-md-4 ">
@@ -121,7 +122,7 @@ $(document).ready(function() {
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right datepicker" name="fecha_nac" />
+                          <input type="text" class="form-control pull-right datepicker" name="fecha_nac" value="<?php echo date('Y-m-d');?>" />
                         </div>
                         <!-- /.input group -->
                       </div>
@@ -669,7 +670,25 @@ $(document).ready(function() {
                         </div>
                         <!-- /.form group -->
                     </div>
-                </div>                                       
+                </div>
+
+                <div class="col-md-5">
+                    <div class="bootstrap-timepicker">
+                        <div class="form-group">
+                          <label>Entrevistado:</label>        
+                          <div class="input-group">
+                              <select class="form-control" name="entrevistado" id="entrevistado">
+                                <option value="">--Seleccione--</option>
+                                <option value="0">No</option>
+                                <option value="1">Si</option>
+                              </select>
+                          </div>
+                          <!-- /.input group -->
+                        </div>
+                        <!-- /.form group -->
+                    </div>
+                </div>
+                                                     
               </div>
               <div class="row">
                     <div class="col-md-10"></div>
@@ -705,16 +724,13 @@ $(document).ready(function() {
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script>
-  $(document).ready(function(){
-    var date_input=$('input[name="fecha"]'); //our date input has the name "date"
-    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-    date_input.datepicker({
-      format: 'yyyy-mm-dd',
-      container: container,
-      todayHighlight: true,
-      autoclose: true,
-    })
-  })
+  /*
+  $(function() {
+    $('#datetimepicker1').datetimepicker({
+      language: 'pt-BR'
+    });
+  });
+  */
 </script>
 <script>
 function verPostulante(){
@@ -873,9 +889,10 @@ event.preventDefault();
               data  = JSON.parse(data);
               //datepicker ini
               $('.datepicker').datepicker({
-                      todayBtn: true,
-                      language: "es",
-                      autoclose: true
+                    starDate: 'today',
+                    language: "es",
+                    format: 'yyyy-mm-dd',
+                    autoclose: true
                   });
               $(".timepicker").timepicker({
                     showInputs: false,

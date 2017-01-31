@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <label>Area</label>
                         <?php
-                        array_unshift($areas,'--Seleccione--');
+                        //array_unshift($areas,'--Seleccione--');
                         echo form_dropdown('area_id',$areas,'',array('class' => 'form-control','id' => 'select_area'));
                         ?>
                       </div>
@@ -52,14 +52,15 @@
                   <div class="col-md-4">
                             <div class="form-group">
                                 <label>Cantidad</label>
-                                <select class="form-control" style="width: 100%;" name="cantidad_solicitada">
-                                  <option selected="selected">1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                  <option>6</option>
-                                  <option>7</option>
+                                <select class="form-control" style="width: 100%;" name="cantidad_solicitada" id="cantidad_solicitada">
+                                  <option selected="selected" value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="0">Otro</option>
                                 </select>
                             </div>
                   </div>
@@ -87,6 +88,16 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="row" id="ocantidad">
+                  <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Otra Cantidad</label>
+                                  <input type="text" name="otra_cantidad" id="otra_cantidad" class="form-control">
+                            </div>
+                  </div>
+                  </div>
+
                   <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -122,19 +133,29 @@
 
 </div>
 <script>
-/*
+
  $(document).ready(function() {
       cargar_carteras();
-  });
- */
-
- $( "#select_area" ).change(function() {
+      $('#ocantidad').hide();
+  }); 
+//area
+ $( "#select_area" ).change(function(){
     cargar_carteras(this.value);
 });
-function cargar_carteras(valor_area){
-    
-    var v_area = valor_area;
+//otro
+$( "#cantidad_solicitada" ).change(function(){
+    //alert(this.value);
+    if(this.value==0){
+        $('#ocantidad').fadeIn();
+    }else{
+        $('#otra_cantidad').val('');
+        $('#ocantidad').fadeOut();
+    }
+});
 
+function cargar_carteras(valor_area){
+    var v_area = valor_area;
+    //alert(v_area);
     $.ajax({
       url:"<?php echo base_url('/index.php/index/cargar_carteras')?>",
       type:'POST',

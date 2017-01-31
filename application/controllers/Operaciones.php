@@ -47,7 +47,7 @@ class Operaciones extends CI_Controller {
 		$this->db->from('solicitudes');
         $this->db->join('areas','areas.id_area = solicitudes.id_area');
         $this->db->join('carteras','carteras.id_cartera = solicitudes.id_cartera');
-        $this->db->join('usuarios','usuarios.id_usuario = solicitudes.id_usuario_solicitante');
+        //$this->db->join('usuarios','usuarios.id_usuario = solicitudes.id_usuario_solicitante');
         $this->db->join('cargos','cargos.id_cargo = solicitudes.id_cargo');
         $this->db->where('solicitudes.cantidad_entregada < solicitudes.cantidad_solicitada');
         $query = $this->db->get();
@@ -60,20 +60,27 @@ class Operaciones extends CI_Controller {
     
     public function agregar_solicitud(){
 		if ($this->input->post('area_id')) {
+
+            $cant_solicitada = '';
+            if($this->input->post('cantidad_solicitada')==0){
+                 $cant_solicitada = $this->input->post('otra_cantidad');   
+            }else{
+                 $cant_solicitada = $this->input->post('cantidad_solicitada');    
+            }
+            
+
             $nueva_solicitud = array(
                 'id_area' => $this->input->post('area_id'),
                 'id_cartera' => $this->input->post('cartera_id'),
                 'fecha_solicitud' => date('Y-m-d H:i:s'),
                 'id_cargo' => $this->input->post('cargo_id'),
-                'cantidad_solicitada' => $this->input->post('cantidad_solicitada'),
+                'cantidad_solicitada' => $cant_solicitada,
                 'prioridad' => $this->input->post('prioridad'),
                 'observacion' => $this->input->post('observacion'),
                 'id_usuario_solicitante' => $this->session->userdata['id_usuario'],
-                'motivo_solicitud' => $this->input->post('id_motivo'),
-                'cantidad_aprobada' => $this->input->post('cantidad_solicitada')
+                'motivo_solicitud' => $this->input->post('id_motivo')
             );
-
-            print_r($nueva_solicitud);
+            //print_r($nueva_solicitud); 
             $this->MyModel->agregar_model('solicitudes',$nueva_solicitud);
             redirect('operaciones/solicitudes');
         }
@@ -81,10 +88,6 @@ class Operaciones extends CI_Controller {
         $this->load->view('common/header');
         $areas = $this->MyModel->buscar_select('areas','id_area','area');
         $data['areas'] = $areas;
-        /*
-        $carteras = $this->MyModel->buscar_select('carteras','id_cartera','cartera',array('id_area = 5'));
-        $data['carteras'] = $carteras;
-        */
 
         $cargos = $this->MyModel->buscar_select('cargos','id_cargo','cargo');
         $data['cargos'] = $cargos;
@@ -299,7 +302,6 @@ class Operaciones extends CI_Controller {
         //contratados fin96078        
         
         if ($this->input->post('nombre')) {
-
             $ecivil = $this->input->post('ecivil');
             if ($ecivil=='S') {
                 $edo_civil = 'Soltero';
@@ -335,7 +337,7 @@ class Operaciones extends CI_Controller {
                 'rut' => $this->input->post('rut'),
                 'fecha_ingreso' => $fecha_ingreso,
                 'id_area' =>$ejecutivo[0]['id_area'],
-                'id_cartera' =>$ejecutivo[0]['id_area'], 
+                'id_cartera' =>$ejecutivo[0]['id_area'],
                 'cod_sap' => $this->input->post('sap'),
                 'id_turno' => $this->input->post('turno_id'),
                 'motivo_contrato' => $motivo_contrato,
@@ -367,13 +369,13 @@ class Operaciones extends CI_Controller {
         }
         $data['id_ejecutivo'] = $id_ejecutivo;
         $this->db->from('postulantes');
-        $this->db->join('personas','personas.rut = postulantes.rut');
-        $this->db->join('areas','areas.id_area= postulantes.id_area');
+        $this->db->join('personas','personas.rut = postulantes.rut','left');
+        $this->db->join('areas','areas.id_area= postulantes.id_area','left');
         $this->db->join('pms','pms.id_area= areas.id_area','left');
-        $this->db->join('sucursales','sucursales.id_sucursal = postulantes.sucursal_id');
-        $this->db->join('turnos_postulantes','turnos_postulantes.id_postulante = postulantes.id_postulante');
-        $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno');
-        $this->db->join('cargos','cargos.id_cargo = postulantes.id_cargo');
+        $this->db->join('sucursales','sucursales.id_sucursal = postulantes.sucursal_id','left');
+        $this->db->join('turnos_postulantes','turnos_postulantes.id_postulante = postulantes.id_postulante','left');
+        $this->db->join('turnos','turnos.id_turno = turnos_postulantes.id_turno','left');
+        $this->db->join('cargos','cargos.id_cargo = postulantes.id_cargo','left');
         $this->db->join('contratados','contratados.rut = postulantes.rut','left');
         $this->db->where('postulantes.id_postulante = '.$id_ejecutivo);
         $query = $this->db->get();
@@ -646,7 +648,7 @@ class Operaciones extends CI_Controller {
         $this->db->from('solicitudes');
         $this->db->join('areas','areas.id_area = solicitudes.id_area');
         $this->db->join('carteras','carteras.id_cartera = solicitudes.id_cartera');
-        $this->db->join('usuarios','usuarios.id_usuario = solicitudes.id_usuario_solicitante');
+        //$this->db->join('usuarios','usuarios.id_usuario = solicitudes.id_usuario_solicitante');
         $this->db->join('cargos','cargos.id_cargo = solicitudes.id_cargo');
         $this->db->where('solicitudes.id_solicitud', $id_solicitud);
         $query = $this->db->get();
@@ -663,7 +665,7 @@ class Operaciones extends CI_Controller {
         $observacion = $this->input->post('observacion');
         $observacion_aprobada = $this->input->post('observacion_aprobada');
         $cant_aprobada = $this->input->post('cantidad_aprobada');
-        
+
         $data = array(
                'cantidad_aprobada' => $cant_aprobada,
                'prioridad' => $prioridad,
@@ -689,20 +691,35 @@ class Operaciones extends CI_Controller {
          $this->email->message('Se ha validado una nueva solicitud Numero :'.$id_solicitud);
          $this->email->to('g.moya.monsalve@gmail.com');
          $this->email->send(FALSE);    
-         */
-                       
+         */                       
         $this->db->where('id_solicitud', $id_solicitud);
-        $this->db->update('solicitudes', $data); 
+        $this->db->update('solicitudes', $data);
         $ins_solicitud = $this->db->affected_rows();
+
+        echo $rechazado;
+
         
         if($ins_solicitud==1){
-            $this->session->set_flashdata('msje_solicitud', '1');
-            redirect(base_url().'/index.php/operaciones/solicitudes');
+
+            if($rechazado==0){
+                $this->session->set_flashdata('msje_solicitud', '4');
+                redirect(base_url().'/index.php/operaciones/solicitudes');
+            }elseif($cant_aprobada<$cant_solicitada){
+                $this->session->set_flashdata('msje_solicitud', '3');
+                redirect(base_url().'/index.php/operaciones/solicitudes');
+            }elseif($cant_aprobada==$cant_solicitada){
+                $this->session->set_flashdata('msje_solicitud', '1');
+                redirect(base_url().'/index.php/operaciones/solicitudes');                    
+            }else{
+                $this->session->set_flashdata('msje_solicitud', '1');
+                redirect(base_url().'/index.php/operaciones/solicitudes');
+            }
         }else{
-            $this->session->set_flashdata('msje_solicitud', '2');
+           $this->session->set_flashdata('msje_solicitud', '2');
             redirect(base_url().'/index.php/operaciones/solicitudes');
-        }      
-                 
+        } 
+         
+                    
     }
 
     public function pms(){        
@@ -1580,6 +1597,122 @@ class Operaciones extends CI_Controller {
             $this->load->view('operaciones/add/fuentes');
             $this->load->view('common/footer');
         }
+        public function dashboard(){
 
+            $guardar = $this->input->post('guardar');
+
+            //inducciones restantes
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
+            $this->db->from('postulantes');
+            $this->db->join('personas','personas.rut = postulantes.rut');
+            $this->db->where('postulantes.id_solicitud is null and postulantes.entrevistado=0');        
+            $query = $this->db->get();
+            $pendiente_entrevista = $query->result_array();
+            $data['entrevistap'] = $pendiente_entrevista;
+
+            //inducciones restantes
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
+            $this->db->join('postulantes','personas.rut = postulantes.rut');
+            $this->db->join('areas','areas.id_area = postulantes.id_area');
+            $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+            $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo','left');
+            $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+            $this->db->where('personas.clasificado = 1 and evaluacion_induccion_resultados.resultado_final is null');
+            $consulta = $this->db->get('personas');
+            $cant = $consulta->result_array();
+            //echo $this->db->last_query();
+            $data['induccion_restante'] = $cant;
+
+            //inducciones para hoy
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.induccionp,postulantes.observacion_induccion');
+            $this->db->join('postulantes','personas.rut = postulantes.rut');
+            $this->db->join('areas','areas.id_area = postulantes.id_area');
+            $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+            $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo','left');
+            $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+            $this->db->where("personas.clasificado = 1 and DATE_FORMAT(postulantes.fecha_asignacion,'%Y-%m-%d') = curdate()");
+            $para_hoy = $this->db->get('personas');
+            $hoy = $para_hoy->result_array();
+            $data['hoy'] = $hoy;
+            if($guardar==1){
+            $postulantes = $this->input->post('postulante');
+            if(isset($postulantes)){
+                foreach($data['hoy'] as $i){
+                    //borro los actuales
+                    $borrar = array('induccionp' =>NULL);
+                    $this->db->where('id_postulante', $i['id_postulante']);
+                    $this->db->update('postulantes', $borrar);
+                }
+                //agrego los que corresponden                
+                foreach($postulantes as $k=>$a){
+                    //echo $k;                    
+                    $test = array('induccionp' =>'1');
+                    $this->db->where('id_postulante', $k);
+                    $this->db->update('postulantes', $test);
+                    
+                }
+            }
+            }
+            //inducciones para hoy
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,,postulantes.induccionp,postulantes.observacion_induccion');
+            $this->db->join('postulantes','personas.rut = postulantes.rut');
+            $this->db->join('areas','areas.id_area = postulantes.id_area');
+            $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+            $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo','left');
+            $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+            $this->db->where("personas.clasificado = 1 and DATE_FORMAT(postulantes.fecha_asignacion,'%Y-%m-%d') = curdate()");
+            $para_hoy = $this->db->get('personas');
+            $hoy = $para_hoy->result_array();
+            $data['hoy'] = $hoy;
+
+            //postulantes inducidos
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
+            $this->db->join('postulantes','personas.rut = postulantes.rut');
+            $this->db->join('areas','areas.id_area = postulantes.id_area');
+            $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+            $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo','left');
+            $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+            $this->db->where('personas.clasificado = 1 and evaluacion_induccion_resultados.resultado_final is not null');
+            $inducidos = $this->db->get('personas');
+            $cant_inducidos = $inducidos->result_array();
+            $data['cant_inducidos'] = $cant_inducidos;               
+
+            $this->db->select('postulantes.id_postulante, personas.rut ,DATE(postulantes.fecha_asignacion) as fecha, TIME(postulantes.fecha_asignacion) as hora, personas.nombre');
+            $this->db->from('postulantes');
+            $this->db->join('personas','personas.rut = postulantes.rut');
+            $this->db->where('date(fecha_asignacion) is not null');
+            $query = $this->db->get();
+            $entrevistas = $query->result_array();
+            $array_entrevistas = array();
+            $i = 0;
+            foreach($entrevistas as $a){
+                $array_entrevistas[$i]['title'] = $a['nombre'].'-'.$a['hora'];
+                $array_entrevistas[$i]['start'] = $a['fecha'];
+                $array_entrevistas[$i]['id'] = $a['id_postulante'];
+                $array_entrevistas[$i]['url'] = '';
+                $i++;
+            }
+            $data['array_entrevistas'] = $array_entrevistas;
+
+            $this->load->view('common/header');
+            $this->load->view('operaciones/dashboard',$data);
+            $this->load->view('common/footer');
+        }
+        public function postulante_comentario(){
+            $id_postulante = $this->input->post('id_postulante');
+            $observacion = $this->input->post('observacion');        
+            $data = array('observacion_induccion' => $observacion);
+            $this->db->where('id_postulante', $id_postulante);
+            $this->db->update('postulantes', $data);
+            $ins_comentario = $this->db->affected_rows();
+                      
+            if($ins_comentario==1){
+                $this->session->set_flashdata('msje_comentario', '1');
+                redirect(base_url().'/index.php/operaciones/dashboard','refresh');
+            }else{
+                $this->session->set_flashdata('msje_comentario', '2');
+                redirect(base_url().'/index.php/operaciones/dashboard','refresh');
+            } 
+    }
 }
 ?>

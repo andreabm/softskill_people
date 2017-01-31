@@ -90,7 +90,14 @@
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right datepicker" name="fecha_nac" value="<?php echo $postulante[0]['fecha_nacimiento'] ?>">
+                          <?php
+                              if(!empty($postulante[0]['fecha_nacimiento'])){
+                                $fecha_existe = $postulante[0]['fecha_nacimiento'];
+                              }else{
+                                $fecha_existe = '2017-01-26';
+                              }
+                          ?>
+                          <input type="text" class="form-control pull-right datepicker" name="fecha_nac" value="<?php echo $fecha_existe;?>">
                         </div>
                         <!-- /.input group -->
                       </div>
@@ -633,6 +640,12 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
+                            <label>Participante Firmo</label>
+                            <?php echo form_dropdown('firmo',array('0' => 'No','1' => 'Si'),$postulante[0]['firmo'],array('class' => 'form-control','id' => 'firmo'));?>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
                             <label>Fuente</label>
                             <?php
                                 echo form_dropdown('id_fuente',$fuentes,$postulante[0]['id_fuente'],array('class' => 'form-control','id' => 'fuente'));
@@ -678,7 +691,24 @@
                         </div>
                         <!-- /.form group -->
                     </div>
-                </div>                                       
+                </div> 
+
+                <div class="col-md-5">
+                    <div class="bootstrap-timepicker">
+                        <div class="form-group">
+                          <label>Entrevistado:</label>        
+                          <div class="input-group">
+                              <select class="form-control" name="entrevistado" id="entrevistado" required>
+                                <option value="0">No</option>
+                                <option value="1">Si</option>
+                              </select>
+                          </div>
+                          <!-- /.input group -->
+                        </div>
+                        <!-- /.form group -->
+                    </div>
+                </div>
+
               </div>
               <div class="row">
               <?php
@@ -706,18 +736,17 @@
       </div>
     </section>
 <script>
-
-$(document).ready(function(){  
-$('.datepicker').datepicker({
-        todayBtn: true,
-        language: "es",
-        autoclose: true
-    });
-$(".timepicker").timepicker({
-      showInputs: false,
-
-    });
-});    
+$(document).ready(function(){ 
+  $('.datepicker').datepicker({
+          starDate: 'today',
+          language: "es",
+          format: 'yyyy-mm-dd',
+          autoclose: true
+  });
+  $(".timepicker").timepicker({
+        showInputs: false,
+      });
+  });
 
   texto_rut();
 

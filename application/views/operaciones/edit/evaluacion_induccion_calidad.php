@@ -180,6 +180,50 @@ $(document).ready(function () {
                                 <input class="form-control" type="hidden" name="id_cargo" id="id_cargo" value="<?php echo $cargo[0]['id_cargo'];?>" readonly>                                                           
                             </div>
                         </div>
+
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label>Fecha de Ingreso Laboral</label>        
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" class="form-control pull-right datepicker" name="fecha_ingreso" value="">
+                            </div>
+                            <!-- /.input group -->
+                          </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                  <label>Hora de la Entrevista:</label>        
+                                  <div class="input-group">
+                                    <input type="text" class="form-control timepicker" name="hora_ingreso">        
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-clock-o"></i>
+                                    </div>
+                                  </div>
+                                  <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                  <label>Ejecutivo Inducido:</label>        
+                                    <select class="form-control" name="inducido" id="inducido" required>
+                                      <option value="1">Si</option>
+                                      <option value="0">No</option>
+                                    </select>
+                                  <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                            </div>
+                        </div>
+
                   </div>
                 </div>
             <!-- /.box-body -->

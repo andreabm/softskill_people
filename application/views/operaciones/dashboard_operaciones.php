@@ -2,7 +2,7 @@
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard Calidad
+        Dashboard Operaciones
         <small> Serbanc</small>
       </h1>
     </section>
@@ -46,7 +46,7 @@
             <span class="info-box-icon"><i class="fa fa-user-times" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Pendientes de Inducci&oacute;n</span>
+              <span class="info-box-text">Pendientes de Ingreso</span>
               <span class="info-box-number"><?=count($induccion_restante);?></span>
 
               <div class="progress">
@@ -64,7 +64,7 @@
             <span class="info-box-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Inducci&oacute;n para Hoy</span>
+              <span class="info-box-text">Ingresos para Hoy</span>
               <span class="info-box-number"><?=count($hoy);?></span>
 
               <div class="progress">
@@ -82,7 +82,7 @@
             <span class="info-box-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Inducidos</span>
+              <span class="info-box-text">Ingresados</span>
               <span class="info-box-number"><?=count($cant_inducidos)?></span>
 
               <div class="progress">
@@ -99,7 +99,7 @@
             <span class="info-box-icon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Pendientes de Entrevista</span>
+              <span class="info-box-text">Pendientes de Inducci&oacute;n</span>
               <span class="info-box-number"><?=count($entrevistap);?></span>
 
               <div class="progress">
@@ -137,7 +137,7 @@
             <!--radio fin-->
           </div>
           <div class="col-md-3" id="hoy">
-            <?php echo form_open('operaciones/dashboard');?>
+            <?php echo form_open('operaciones/dashboard_operaciones');?>
             <!--radio ini-->
             <ul class="todo-list ui-sortable">
                 <?php 
@@ -170,7 +170,8 @@
                   <i class="fa fa-ellipsis-v"></i>
                   <i class="fa fa-ellipsis-v"></i>
 
-                  <input value="" type="checkbox" checked>
+                  <input value="" type="checkbox" checked >
+
                   <span class="text"><?=$w['nombre'];?></span>
                 </li>
                <?php }?>

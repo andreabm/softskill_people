@@ -1156,9 +1156,11 @@ class Operaciones extends CI_Controller {
         $this->db->join('postulantes','personas.rut = postulantes.rut');
         $this->db->join('areas','areas.id_area = postulantes.id_area');
         $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
-        $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo', 'left');
+        $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo');
         $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
         $this->db->where('personas.clasificado = 1');
+        //and evaluacion_induccion_resultados.resultado_final is not null
+        //$this->db->group_by('postulantes.rut'); 
         $query = $this->db->get();
         $ejecutivos = $query->result_array();
         $data['ejecutivos'] = $ejecutivos;
@@ -1235,6 +1237,7 @@ class Operaciones extends CI_Controller {
             //evaluacion_items ini
             $nota = $this->MyModel->buscar_model('evaluacion_induccion_resultados','rut ="'.$postulante[0]['rut'].'"');
             $data['nota'] = $nota;
+            
             //lo que respondio            
 
             //$respondido_q= $this->MyModel->buscar_model('evaluacion_induccion_respondido','rut ="'.$postulante[0]['rut'].'"');
@@ -1269,6 +1272,24 @@ class Operaciones extends CI_Controller {
         $resultado = $this->input->post('resultado');
         $resultado2 = $this->input->post('resultado2');
         $resultado_final = $resultado + $resultado2;
+
+        $inducido = $this->input->post('inducido');
+
+        //UPDATE
+        $fecha_ingreso = $this->input->post('fecha_ingreso');
+        $hora_ingreso = $this->input->post('hora_ingreso');
+
+        $hora_separada = explode(" ", $hora_ingreso);
+        $hora_separada[0]; //hora
+        $hora_separada[1]; //am o pm
+        $datos_postulantes = array(
+            'fecha_ilaboral' => $fecha_ingreso.' '.$hora_separada[0].':00',
+            'induccionp' =>$inducido);
+
+        $this->db->where('rut', $rut);
+        $this->db->update('postulantes', $datos_postulantes);
+        //UPDATE
+
         //borro info
         if(!empty($resultado_final)){
         //updeteo resultado
@@ -1601,9 +1622,7 @@ class Operaciones extends CI_Controller {
             $this->load->view('common/footer');
         }
         public function dashboard(){
-
             $guardar = $this->input->post('guardar');
-
             //inducciones restantes
             $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
             $this->db->from('postulantes');
@@ -1717,6 +1736,110 @@ class Operaciones extends CI_Controller {
                 $this->session->set_flashdata('msje_comentario', '2');
                 redirect(base_url().'/index.php/operaciones/dashboard','refresh');
             } 
-    }
+        }
+
+        public function dashboard_operaciones(){
+
+            $guardar = $this->input->post('guardar');
+
+            //inducciones restantes
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
+            $this->db->from('postulantes');
+            $this->db->join('personas','personas.rut = postulantes.rut');
+            $this->db->where('postulantes.id_solicitud is null and postulantes.entrevistado=0');        
+            $query = $this->db->get();
+            $pendiente_entrevista = $query->result_array();
+            $data['entrevistap'] = $pendiente_entrevista;
+
+            //inducciones restantes
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
+            $this->db->join('postulantes','personas.rut = postulantes.rut');
+            $this->db->join('areas','areas.id_area = postulantes.id_area');
+            $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+            $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo','left');
+            $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+            $this->db->where('personas.clasificado = 1 and evaluacion_induccion_resultados.resultado_final is null');
+            $consulta = $this->db->get('personas');
+            $cant = $consulta->result_array();
+            //echo $this->db->last_query();
+            $data['induccion_restante'] = $cant;
+
+            //inducciones para hoy
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.induccionp,postulantes.observacion_induccion');
+            $this->db->join('postulantes','personas.rut = postulantes.rut');
+            $this->db->join('areas','areas.id_area = postulantes.id_area');
+            $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+            $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo','left');
+            $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+            $this->db->where("personas.clasificado = 1 and DATE_FORMAT(postulantes.fecha_ilaboral,'%Y-%m-%d') = curdate()");
+            $para_hoy = $this->db->get('personas');
+            $hoy = $para_hoy->result_array();
+            $data['hoy'] = $hoy;
+            if($guardar==1){
+            $postulantes = $this->input->post('postulante');
+                
+                    foreach($data['hoy'] as $i){
+                        //borro los actuales
+                        $borrar = array('induccionp' =>NULL);
+                        $this->db->where('id_postulante', $i['id_postulante']);
+                        $this->db->update('postulantes', $borrar);
+                    }
+                    //agrego los que corresponden
+                    if(!empty($postulantes)){
+                        foreach($postulantes as $k=>$a){
+                            //echo $k;                    
+                            $test = array('induccionp' =>'1');
+                            $this->db->where('id_postulante', $k);
+                            $this->db->update('postulantes', $test);
+                            
+                        }                        
+                    }
+            }
+            //inducciones para hoy
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,,postulantes.induccionp,postulantes.observacion_induccion');
+            $this->db->join('postulantes','personas.rut = postulantes.rut');
+            $this->db->join('areas','areas.id_area = postulantes.id_area');
+            $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+            $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo','left');
+            $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+            $this->db->where("personas.clasificado = 1 and DATE_FORMAT(postulantes.fecha_ilaboral,'%Y-%m-%d') = curdate()");
+            $para_hoy = $this->db->get('personas');
+            $hoy = $para_hoy->result_array();
+            $data['hoy'] = $hoy;
+
+            //postulantes inducidos
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.induccionp');
+            $this->db->join('postulantes','personas.rut = postulantes.rut');
+            $this->db->join('areas','areas.id_area = postulantes.id_area');
+            $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+            $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo','left');
+            $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
+            $this->db->where('personas.clasificado = 1 and evaluacion_induccion_resultados.resultado_final is not null');
+            $inducidos = $this->db->get('personas');
+            $cant_inducidos = $inducidos->result_array();
+            $data['cant_inducidos'] = $cant_inducidos;               
+
+            $this->db->select('postulantes.id_postulante, personas.rut ,DATE(postulantes.fecha_ilaboral) as fecha, TIME(postulantes.fecha_ilaboral) as hora, personas.nombre');
+            $this->db->from('postulantes');
+            $this->db->join('personas','personas.rut = postulantes.rut');
+            $this->db->where('date(fecha_ilaboral) is not null');
+            $query = $this->db->get();
+            $entrevistas = $query->result_array();
+            $array_entrevistas = array();
+            $i = 0;
+            foreach($entrevistas as $a){
+                $array_entrevistas[$i]['title'] = $a['nombre'].'-'.$a['hora'];
+                $array_entrevistas[$i]['start'] = $a['fecha'];
+                $array_entrevistas[$i]['id'] = $a['id_postulante'];
+                $array_entrevistas[$i]['url'] = '';
+                $i++;
+            }
+            $data['array_entrevistas'] = $array_entrevistas;
+
+            $this->load->view('common/header');
+            $this->load->view('operaciones/dashboard_operaciones',$data);
+            $this->load->view('common/footer');
+        }
+
 }
 ?>

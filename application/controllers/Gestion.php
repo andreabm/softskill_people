@@ -48,7 +48,14 @@ class Gestion extends CI_Controller {
         $query = $this->db->get();
         $postulantes = $query->result_array();
         $data['postulantes'] = $postulantes;
-        $data['query'] = $this->db->last_query();
+
+        $this->db->from('resultado_competencias');
+        $this->db->group_by('resultado_competencias.rut');
+        $query = $this->db->get();
+        $induccion = $query->result_array();   
+        $data['induccion'] = $induccion;
+
+        //$data['query'] = $this->db->last_query();
         $this->load->view('common/header');
         $this->load->view('gestion/postulantes',$data);
         $this->load->view('common/footer');

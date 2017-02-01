@@ -1840,6 +1840,22 @@ class Operaciones extends CI_Controller {
             $this->load->view('operaciones/dashboard_operaciones',$data);
             $this->load->view('common/footer');
         }
+        public function postulante_comentario_operaciones(){
+            $id_postulante = $this->input->post('id_postulante');
+            $observacion = $this->input->post('observacion');        
+            $data = array('observacion_ilaboral' => $observacion);
+            $this->db->where('id_postulante', $id_postulante);
+            $this->db->update('postulantes', $data);
+            $ins_comentario = $this->db->affected_rows();
+                      
+            if($ins_comentario==1){
+                $this->session->set_flashdata('msje_comentario', '1');
+                redirect(base_url().'/index.php/operaciones/dashboard_operaciones','refresh');
+            }else{
+                $this->session->set_flashdata('msje_comentario', '2');
+                redirect(base_url().'/index.php/operaciones/dashboard_operaciones','refresh');
+            } 
+        }
 
 }
 ?>

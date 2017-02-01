@@ -65,13 +65,13 @@ $(document).ready(function() {
                   <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Nombres</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" />
+                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" required/>
                         </div>
                     </div>
                     <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Apellido Paterno</label>
-                            <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" />
+                            <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" required/>
                         </div>
                     </div>
                     <div class="col-md-4 ">
@@ -651,7 +651,7 @@ $(document).ready(function() {
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right datepicker" name="fecha_entrevista">
+                          <input type="text" class="form-control pull-right datepicker" name="fecha_entrevista" required>
                         </div>
                         <!-- /.input group -->
                       </div>
@@ -661,7 +661,7 @@ $(document).ready(function() {
                         <div class="form-group">
                           <label>Hora de la Entrevista:</label>        
                           <div class="input-group">
-                            <input type="text" class="form-control timepicker" name="hora_entrevista">        
+                            <input type="text" class="form-control timepicker" name="hora_entrevista" required>        
                             <div class="input-group-addon">
                               <i class="fa fa-clock-o"></i>
                             </div>

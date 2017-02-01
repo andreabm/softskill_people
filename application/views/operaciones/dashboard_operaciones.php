@@ -221,7 +221,7 @@
     </section>
 	<!--MODAL VER POSTULANTE-->
 <!--MODAL VER POSTULANTE-->
-  <?php echo form_open('operaciones/postulante_comentario');?>
+  <?php echo form_open('operaciones/postulante_comentario_operaciones');?>
   <div class="modal modal-warning fade" id="comentarioPostulante">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

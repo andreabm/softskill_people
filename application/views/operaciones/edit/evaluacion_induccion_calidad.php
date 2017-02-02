@@ -180,7 +180,6 @@ $(document).ready(function () {
                                 <input class="form-control" type="hidden" name="id_cargo" id="id_cargo" value="<?php echo $cargo[0]['id_cargo'];?>" readonly>                                                           
                             </div>
                         </div>
-
                         <div class="col-md-3">
                           <div class="form-group">
                             <label>Fecha de Ingreso Laboral</label>        
@@ -188,7 +187,12 @@ $(document).ready(function () {
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right datepicker" name="fecha_ingreso" value="">
+                              <?php
+                              $date = date_create($postulante[0]['fecha_ilaboral']);
+                              $fecha_ingreso = date_format($date,"Y-m-d");
+                              $hora_ingreso = date_format($date,"H:i");
+                              ?>
+                              <input type="text" class="form-control pull-right datepicker" name="fecha_ingreso" value="<?php echo $fecha_ingreso?>" style="background-color: #ffffcc;" required>
                             </div>
                             <!-- /.input group -->
                           </div>
@@ -199,7 +203,7 @@ $(document).ready(function () {
                                 <div class="form-group">
                                   <label>Hora de la Entrevista:</label>        
                                   <div class="input-group">
-                                    <input type="text" class="form-control timepicker" name="hora_ingreso">        
+                                    <input type="text" class="form-control timepicker" name="hora_ingreso" value="<?php echo $hora_ingreso;?>" style="background-color: #ffffcc;" required>     
                                     <div class="input-group-addon">
                                       <i class="fa fa-clock-o"></i>
                                     </div>

@@ -112,14 +112,7 @@
     
          </div>
 
-               <div class="row">
-        <?php
-        /*
-        echo '<pre>';
-          print_r($entrevistah);
-        echo '</pre>';
-        */
-        ?>
+         <div class="row">
           <div class="col-md-3" id="pendientes">
             <!--radio ini-->
             <ul class="todo-list ui-sortable">

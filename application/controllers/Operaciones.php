@@ -1739,33 +1739,31 @@ class Operaciones extends CI_Controller {
         }
 
         public function dashboard_operaciones(){
-
             $guardar = $this->input->post('guardar');
-
             //inducciones restantes
             $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
             $this->db->from('postulantes');
             $this->db->join('personas','personas.rut = postulantes.rut');
-            $this->db->where('postulantes.id_solicitud is null and postulantes.entrevistado=0');        
+            $this->db->where('postulantes.id_solicitud is null and postulantes.induccionp=1');        
             $query = $this->db->get();
             $pendiente_entrevista = $query->result_array();
-            $data['entrevistap'] = $pendiente_entrevista;
+            $data['induccionp'] = $pendiente_entrevista;
 
             //inducciones restantes
-            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.ingresop');
             $this->db->join('postulantes','personas.rut = postulantes.rut');
             $this->db->join('areas','areas.id_area = postulantes.id_area');
             $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
             $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo','left');
             $this->db->join('evaluacion_induccion_resultados','evaluacion_induccion_resultados.rut = postulantes.rut','left');
-            $this->db->where('personas.clasificado = 1 and evaluacion_induccion_resultados.resultado_final is null');
+            $this->db->where('personas.clasificado = 1 and postulantes.fecha_ilaboral > NOW() and evaluacion_induccion_resultados.resultado_final is not null and postulantes.ingresop=0 or postulantes.ingresop is NULL');
             $consulta = $this->db->get('personas');
             $cant = $consulta->result_array();
             //echo $this->db->last_query();
             $data['induccion_restante'] = $cant;
 
             //inducciones para hoy
-            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.induccionp,postulantes.observacion_induccion');
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.ingresop,postulantes.observacion_induccion');
             $this->db->join('postulantes','personas.rut = postulantes.rut');
             $this->db->join('areas','areas.id_area = postulantes.id_area');
             $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
@@ -1780,23 +1778,21 @@ class Operaciones extends CI_Controller {
                 
                     foreach($data['hoy'] as $i){
                         //borro los actuales
-                        $borrar = array('induccionp' =>NULL);
+                        $borrar = array('ingresop' =>NULL);
                         $this->db->where('id_postulante', $i['id_postulante']);
                         $this->db->update('postulantes', $borrar);
                     }
                     //agrego los que corresponden
                     if(!empty($postulantes)){
-                        foreach($postulantes as $k=>$a){
-                            //echo $k;                    
-                            $test = array('induccionp' =>'1');
+                        foreach($postulantes as $k=>$a){                  
+                            $test = array('ingresop' =>'1');
                             $this->db->where('id_postulante', $k);
                             $this->db->update('postulantes', $test);
-                            
                         }                        
                     }
             }
             //inducciones para hoy
-            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,,postulantes.induccionp,postulantes.observacion_induccion');
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,,postulantes.ingresop,postulantes.observacion_induccion');
             $this->db->join('postulantes','personas.rut = postulantes.rut');
             $this->db->join('areas','areas.id_area = postulantes.id_area');
             $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
@@ -1808,7 +1804,7 @@ class Operaciones extends CI_Controller {
             $data['hoy'] = $hoy;
 
             //postulantes inducidos
-            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.induccionp');
+            $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno,postulantes.ingresop');
             $this->db->join('postulantes','personas.rut = postulantes.rut');
             $this->db->join('areas','areas.id_area = postulantes.id_area');
             $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');

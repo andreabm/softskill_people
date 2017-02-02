@@ -40,7 +40,7 @@
         ?>
 
         <!--colores ini-->
-        <div class="col-md-3">
+        <div class="col-md-4">
           <!--red ini-->
           <div class="info-box bg-red">
             <span class="info-box-icon"><i class="fa fa-user-times" aria-hidden="true"></i></span>
@@ -59,7 +59,7 @@
         </div>  
 
           <!-- Info Boxes Style 2 -->
-        <div class="col-md-3">
+        <div class="col-md-4">
           <div class="info-box bg-yellow">
             <span class="info-box-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
 
@@ -76,7 +76,7 @@
           </div>
         </div>
         
-        <div class="col-md-3">  
+        <div class="col-md-4">  
           <!-- /.info-box -->
           <div class="info-box bg-green">
             <span class="info-box-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
@@ -94,13 +94,13 @@
           </div>
         </div>
         
-        <div class="col-md-3">            
+        <div class="col-md-4" style="display:none;">            
           <div class="info-box bg-aqua">
             <span class="info-box-icon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Pendientes de Inducci&oacute;n</span>
-              <span class="info-box-number"><?=count($entrevistap);?></span>
+              <span class="info-box-number"><?=count($induccionp);?></span>
 
               <div class="progress">
                 <div class="progress-bar" style="width: 100%"></div>
@@ -120,7 +120,7 @@
         echo '</pre>';
         */
         ?>
-          <div class="col-md-3" id="pendientes">
+          <div class="col-md-4" id="pendientes">
             <!--radio ini-->
             <ul class="todo-list ui-sortable">
               <?php 
@@ -136,7 +136,7 @@
               </ul>
             <!--radio fin-->
           </div>
-          <div class="col-md-3" id="hoy">
+          <div class="col-md-4" id="hoy">
             <?php echo form_open('operaciones/dashboard_operaciones');?>
             <!--radio ini-->
             <ul class="todo-list ui-sortable">
@@ -145,7 +145,7 @@
                 <li>
                   <i class="fa fa-ellipsis-v"></i>
                   <i class="fa fa-ellipsis-v"></i>                  
-                  <input value="1" type="checkbox" name="postulante[<?=$s['id_postulante'];?>]" <?php if($s['induccionp']==1){echo 'checked';}else{echo '';}?>>
+                  <input value="1" type="checkbox" name="postulante[<?=$s['id_postulante'];?>]" <?php if($s['ingresop']==1){echo 'checked';}else{echo '';}?>>
                   <span class="text" data-toggle="tooltip" data-placement="top" title="<?=$s['rut']?>"><?=$s['nombre'].' '.$s['paterno'].' '.$s['materno'];?></span>
                   <div class="tools">
                     <?php if(isset($s['observacion_induccion'])){?>
@@ -161,7 +161,7 @@
             <?php echo form_hidden('guardar','1');
                   echo form_close();?>
           </div>
-          <div class="col-md-3" id="listos">
+          <div class="col-md-4" id="listos">
             <!--radio ini-->
             <ul class="todo-list ui-sortable">
                 <?php 
@@ -179,11 +179,11 @@
               </ul>
             <!--radio fin-->
           </div>
-          <div class="col-md-3" id="pendientes">
+          <div class="col-md-3" id="pendientes" style="display:none;">
             <!--radio ini-->
             <ul class="todo-list ui-sortable">
               <?php 
-              foreach($entrevistap as $p){?>
+              foreach($induccionp as $p){?>
                 <li>
                   <i class="fa fa-ellipsis-v"></i>
                   <i class="fa fa-ellipsis-v"></i>                  

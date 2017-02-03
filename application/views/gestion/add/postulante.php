@@ -603,7 +603,7 @@ $(document).ready(function() {
                     <div class="col-md-5">
                         <div class="form-group">
                             <label>Señale Expectativas de Renta</label>
-                            <input class="form-control" type="text" name="renta" id="renta" >                           
+                            <input class="form-control" type="text" name="renta" id="renta" autocomplete="on">                           
                         </div>
                     </div>                    
               </div>

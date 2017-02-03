@@ -626,7 +626,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label>Señale Expectativas de Renta</label>
-                            <input class="form-control" type="text" name="renta" id="renta" value="<?php echo $postulante[0]['pretension_renta']?>">                           
+                            <input class="form-control" type="text" name="renta" id="renta" autocomplete="on" value="<?php echo $postulante[0]['pretension_renta']?>">                           
                         </div>
                     </div>                    
               </div>

@@ -160,8 +160,8 @@ function cargar_supervisor(valor_area){
         //carteras
         data = JSON.parse(data);
         $.each(data.supervisores,function(i,w){
-             options_y +="<input type='hidden' name='id_supervisor' id='id_supervisor' value='"+w.id_supervisor+"' class='form-control'>"; 
-             options_w +="<input type='text' name='supervisor' id='supervisor' value='"+w.nombre_supervisor+"' class='form-control'>"; 
+             options_y +="<input type='hidden' name='id_supervisor' id='id_supervisor' value='"+w.id_supervisor+"' class='form-control' readonly>"; 
+             options_w +="<input type='text' name='supervisor' id='supervisor' value='"+w.nombre_supervisor+"' class='form-control' readonly>"; 
         });
         $("#supervisor_falso").hide();
         $("#supervisor").html(options_w);

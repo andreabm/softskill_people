@@ -35,7 +35,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                 <?php 
+                 <?php
                 foreach ($motivos as $m) {
                     ?>
                     <tr>
@@ -43,7 +43,7 @@
                       <td><?php echo $m['motivo'] ?></td>
                       <td>
                           <div class="btn-group">
-                            <button type="button" class="btn btn-warning" >Editar</button>
+                            <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/gestion/editar_motivo/'.$m['id_motivo_no_califica'])?>">Editar</a>
                           </div>                    
                       </td>
                     </tr>

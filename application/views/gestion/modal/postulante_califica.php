@@ -94,6 +94,13 @@ $( "#area" ).change(function(){
     //alert(this.value);
     cargar_carteras(this.value);
 });
+$("#cartera").change(function(){
+    //alert(this.value);
+    cargar_supervisor(this.value);
+});
+
+
+
 function cargar_carteras(valor_area){
     var v_area = valor_area;
     var cargo_postular = $('#id_cargo').val();
@@ -134,6 +141,31 @@ function cargar_carteras(valor_area){
           $('#nsucursal').val(v.id_solicitud);
         });
 
+      },
+      error: function(e) {
+        console.debug('error');
+      }
+   }); 
+}
+
+function cargar_supervisor(valor_area){
+    var v_area = valor_area;
+    $.ajax({
+      url:"<?php echo base_url('/index.php/index/cargar_supervisor')?>",
+      type:'POST',
+      data: {area:v_area},
+      success: function(data){
+        options_w = "";
+        options_y = "";
+        //carteras
+        data = JSON.parse(data);
+        $.each(data.supervisores,function(i,w){
+             options_y +="<input type='hidden' name='id_supervisor' id='id_supervisor' value='"+w.id_supervisor+"' class='form-control'>"; 
+             options_w +="<input type='text' name='supervisor' id='supervisor' value='"+w.nombre_supervisor+"' class='form-control'>"; 
+        });
+        $("#supervisor_falso").hide();
+        $("#supervisor").html(options_w);
+        $("#id_supervisor").html(options_y);
       },
       error: function(e) {
         console.debug('error');

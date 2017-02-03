@@ -48,6 +48,16 @@ class Gestion extends CI_Controller {
         $query = $this->db->get();
         $postulantes = $query->result_array();
         $data['postulantes'] = $postulantes;
+        /*
+        $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre_evaluador');
+        $data['evaluadores'] = $evaluadores;
+        */
+        $this->db->select('id_supervisor,nombre_supervisor');
+        $this->db->from('supervisores');
+        $this->db->group_by('nombre_supervisor');
+        $query = $this->db->get();
+        $evaluadores = $query->result_array();   
+        $data['evaluadores'] = $evaluadores;        
 
         $this->db->from('resultado_competencias');
         $this->db->group_by('resultado_competencias.rut');
@@ -659,6 +669,8 @@ class Gestion extends CI_Controller {
         $rut = $this->input->post('rut');
         $email = $this->input->post('email');
         $id_sucursal = $this->input->post('id_sucursal');
+        $supervisor = $this->input->post('supervisor');
+        $id_supervisor = $this->input->post('id_supervisor');
         
         $fecha_presentacion = $this->input->post('fecha_presentacion');
         $hora_presentacion = $this->input->post('hora_presentacion');
@@ -671,7 +683,8 @@ class Gestion extends CI_Controller {
                 'id_cartera' => $cartera,
                 'id_area' => $area,
                 'sucursal_id' => $id_sucursal,
-                'fecha_asignacion' => $fecha_presentacion.' '.$hora_separada[0].':00'
+                'fecha_asignacion' => $fecha_presentacion.' '.$hora_separada[0].':00',
+                'id_supervisor_califica' => $id_supervisor
         );
 
         if ($califica == 0) {
@@ -888,6 +901,27 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
         $data['motivos'] = $motivos;
         $this->load->view('common/header');
         $this->load->view('gestion/motivo_no_califica',$data);
+        $this->load->view('common/footer');
+    }
+    public function editar_motivo($id_motivo){ 
+        if(empty($id_motivo)){
+           $id_motivo = $this->input->post('id_sucursal');
+        }
+        //consulto por pm
+        $this->db->from('motivo_no_califica');
+        $this->db->where('motivo_no_califica.id_motivo_no_califica = '.$id_motivo);        
+        $query = $this->db->get();
+        $motivo = $query->result_array();
+        $data['motivo'] = $motivo;
+
+        if($this->input->post('nombre')) {
+             $nombre = $this->input->post('nombre');
+             $actualiza_sucursales = array('sucursal' => $nombre);
+             $this->MyModel->agregar_model('sucursales',$actualiza_sucursales,'id_sucursal',$this->input->post('id_sucursal'));                
+            redirect(base_url("index.php/Operaciones/sucursales"));
+        }
+        $this->load->view('common/header');
+        $this->load->view('gestion/edit/editar_motivo',$data);
         $this->load->view('common/footer');
     }
     public function agregar_motivo(){

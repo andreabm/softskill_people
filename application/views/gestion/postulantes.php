@@ -163,7 +163,25 @@
       <div class="modal-body" id="postulanteCalificaBody"></div>
       <div class="modal-body" style="color:#333;">
         <div class="row">
-            <div class="col-md-6">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Supervisor</label>
+                    <span id="id_supervisor"></span>
+                    <span id="supervisor"></span>
+                    <input type="text" class="form-control" name="supervisor_falso" id="supervisor_falso" readonly/>
+                    <!--<select class="form-control" name="supervisor" id="supervisor">
+                      <?php //foreach($evaluadores as $w){?>
+                      <option value="<?php //echo $w['id_supervisor']?>"><?php //echo //$w['nombre_supervisor']?></option>
+                      <?php //}?>
+                    </select>-->
+
+                    <?php
+                    //echo form_dropdown('evaluador',$evaluadores,'',array('class' => 'form-control','id' => 'evaluador'));
+                    ?>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="form-group">
                   <label>Fecha de Presentaci&oacute;n</label>
   
@@ -176,7 +194,7 @@
                   <!-- /.input group -->
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="bootstrap-timepicker">
                     <div class="form-group">
                       <label>Hora de Presentaci&oacute;n:</label>        

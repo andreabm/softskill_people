@@ -79,6 +79,17 @@ class Index extends CI_Controller {
         print_r(json_encode($data));
 
     }
+    
+    public function cargar_supervisor(){
+        $area = $this->input->post('area');        
+        //$carteras = $this->MyModel->buscar_model('carteras','id_area ='.$area);
+        $query = $this->db->query("SELECT supervisores.id_supervisor, supervisores.nombre_supervisor FROM carteras 
+                                    INNER JOIN supervisores ON supervisores.id_cartera = carteras.id_cartera WHERE supervisores.id_cartera = ".$area);
+        $supervisores = $query->result_array();
+        $data['supervisores'] = $supervisores;
+        print_r(json_encode($data));
+    }
+
     public function cargar_solicitudes_b(){
         $cartera = $this->input->post('cartera');
         $area = $this->input->post('area');

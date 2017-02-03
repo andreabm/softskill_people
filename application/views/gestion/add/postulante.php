@@ -65,19 +65,19 @@ $(document).ready(function() {
                   <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Nombres</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" required/>
+                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" onkeyup="convertir_mayuscula(this)" required/>
                         </div>
                     </div>
                     <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Apellido Paterno</label>
-                            <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" required/>
+                            <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" onkeyup="convertir_mayuscula(this)" required/>
                         </div>
                     </div>
                     <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Apellido Materno</label>
-                            <input class="form-control" type="text" name="materno" id="materno" placeholder="Apellido Materno" />
+                            <input class="form-control" type="text" name="materno" id="materno" placeholder="Apellido Materno" onkeyup="convertir_mayuscula(this)" />
                         </div>
                     </div>
                 </div>
@@ -869,7 +869,7 @@ event.preventDefault();
       }
 
   }      
-        
+  
   function validar_rut(event){
       event.preventDefault();
       var edValue = document.getElementById("rut");
@@ -924,4 +924,10 @@ event.preventDefault();
             }
       });
   }
+
+  function convertir_mayuscula(solicitar){
+    var txt = solicitar.value;
+    solicitar.value = txt.substring(0,1).toUpperCase() + txt.substring(1,txt.length);
+}
+
 </script>

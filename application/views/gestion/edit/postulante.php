@@ -33,19 +33,19 @@
                   <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Nombres</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" value="<?php echo $postulante[0]['nombre'];?>" />
+                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombres" value="<?php echo $postulante[0]['nombre'];?>" onkeyup="convertir_mayuscula(this)" />
                         </div>
                     </div>
                     <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Apellido Paterno</label>
-                            <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" value="<?php echo $postulante[0]['paterno'];?>"/>
+                            <input class="form-control" type="text" name="paterno" id="paterno" placeholder="Apellido Paterno" value="<?php echo $postulante[0]['paterno'];?>" onkeyup="convertir_mayuscula(this)"/>
                         </div>
                     </div>
                     <div class="col-md-4 ">
                         <div class="form-group">
                             <label>Apellido Materno</label>
-                            <input class="form-control" type="text" name="materno" id="materno" placeholder="Apellido Materno" value="<?php echo $postulante[0]['materno'];?>"/>
+                            <input class="form-control" type="text" name="materno" id="materno" placeholder="Apellido Materno" value="<?php echo $postulante[0]['materno'];?>" onkeyup="convertir_mayuscula(this)"/>
                         </div>
                     </div>
 
@@ -839,5 +839,9 @@ function agregar_hobbie(event){
         setTimeout(function(){$("#alerta_hobbies").fadeOut(2000);},3000);
     }
 
-}     
+}    
+  function convertir_mayuscula(solicitar){
+    var txt = solicitar.value;
+    solicitar.value = txt.substring(0,1).toUpperCase() + txt.substring(1,txt.length);
+} 
 </script>

@@ -895,8 +895,8 @@ event.preventDefault();
                     autoclose: true
                   });
               $(".timepicker").timepicker({
-                    showInputs: false,
-
+                    showMeridian:false,
+                    showInputs: false
               });
               //datepicker fin
               if(data.existe=='SI'){
@@ -907,7 +907,6 @@ event.preventDefault();
                   setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
                   return false;
               }else if(data.existe=='NO' && prueba=='1'){
-                  //alert('test');
                   $('#id_postulante').val(data.id);
                   $('.verificar').hide();
                   $('#alerta_rut').fadeIn();

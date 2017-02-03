@@ -60,15 +60,12 @@
                 <?php
                 if(!empty($postulantes)) {
 
-
+                      
                     
 
                     foreach($postulantes as $p) {
 
-                      $rut = '';
-                      foreach ($induccion as $a) {
-                          $rut.= $a['rut'];
-                      }
+                      
 
                       $newDate = date("d-m-Y", strtotime($p['fecha_nacimiento']));
                         ?>
@@ -93,7 +90,7 @@
                           if($p['entrevistado']==1){
                             $entrevistado = "<i class='fa fa-check fa-lg' aria-hidden='true' style='color:green;'></i>";
                           }else{
-                            $entrevistado = "<i class='fa fa-times fa-lg' aria-hidden='true' style='color:red;'></i>";
+                            $entrevistado = "<i class='fa fa-gtimes fa-lg' aria-hidden='true' style='color:red;'></i>";
                           }?>
                           <td><?php echo $val ?></td>
                           <td><?=$entrevistado?></td>
@@ -102,9 +99,16 @@
                               <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/gestion/editar_postulante/'.$p['id_postulante'])?>">Editar</a>
                               <a class="btn btn-xs btn-primary" href="<?php echo base_url('index.php/gestion/postulante_prueba/'.$p['id_postulante'])?>">Evaluacion</a>
                               
-                              <?php if($rut == $p['rut']){?>
+                              <?php 
+                              $rut = '';
+                              foreach ($induccion as $a) {
+                                  if($a['rut']==$p['rut']){
+                                      echo $p['rut'];
+                                  }
+                              }
+                              ?>
                               <a class="btn btn-xs btn-info" data-toggle="modal" data-target="#postulanteCalifica" onclick="postulanteCalifica(<?php echo $p['id_postulante'];  ?>)">Califica</a>                  
-                              <?php }?>
+                              
                               <!--<a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#eliminarPostulante" onclick = "eliminarPostulante(<?php //echo $p['id_postulante'];  ?>)">Eliminar</a>-->
                           </td>
                         </tr>
@@ -233,7 +237,8 @@ $(document).ready(function(){
           autoclose: true
   });
   $(".timepicker").timepicker({
-      showInputs: false,
+      showMeridian:false,
+                    showInputs: false
   });
 });
 

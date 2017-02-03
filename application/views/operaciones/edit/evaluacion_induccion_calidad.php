@@ -373,8 +373,8 @@ $('.datepicker').datepicker({
         autoclose: true
     });
 $(".timepicker").timepicker({
-      showInputs: false,
-
+      showMeridian:false,
+      showInputs: false
     });
 });
 

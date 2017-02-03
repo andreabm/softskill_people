@@ -44,17 +44,14 @@ class Gestion extends CI_Controller {
         $this->db->from('postulantes');
 		$array = array();
         $this->db->join('personas','personas.rut = postulantes.rut');
-        $this->db->join('evaluacion_induccion_resultados','personas.rut = postulantes.rut');
-
         $this->db->where('postulantes.id_solicitud is null');
-        //$this->db->where('postulantes.id_solicitud is null');
         $query = $this->db->get();
         $postulantes = $query->result_array();
         $data['postulantes'] = $postulantes;
-        /*
+        
         $evaluadores = $this->MyModel->buscar_select('evaluadores','id_evaluador','nombre_evaluador');
         $data['evaluadores'] = $evaluadores;
-        */
+        
         $this->db->select('id_supervisor,nombre_supervisor');
         $this->db->from('supervisores');
         $this->db->group_by('nombre_supervisor');
@@ -276,7 +273,7 @@ class Gestion extends CI_Controller {
             $this->MyModel->agregar_model('expectativas',$encuesta_expectativas);
          redirect(base_url("index.php/Gestion/postulantes"));
         }
-       $this->load->view('common/header');
+        $this->load->view('common/header');
         $this->load->view('gestion/add/postulante',$data);
         $this->load->view('common/footer');
         

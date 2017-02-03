@@ -744,8 +744,9 @@ $(document).ready(function(){
           format: 'yyyy-mm-dd',
           autoclose: true
   });
-  $(".timepicker").timepicker({
-        showInputs: false,
+  $(".timepicker").timepicker({        
+          showMeridian:false,
+          showInputs: false
       });
   });
 

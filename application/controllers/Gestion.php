@@ -938,7 +938,7 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
         $this->db->select('postulantes.id_postulante, personas.rut ,DATE(postulantes.fecha_entrevista) as fecha, TIME(postulantes.fecha_entrevista) as hora, personas.nombre');
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');
-        $this->db->where('date(fecha_entrevista) >= curdate()');
+        //$this->db->where('date(fecha_entrevista) >= curdate()');
         $query = $this->db->get();
         $entrevistas = $query->result_array();
         $array_entrevistas = array();

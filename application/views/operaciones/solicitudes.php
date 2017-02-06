@@ -62,6 +62,7 @@
                   <th>Cant. Solicitada</th>
                   <th>Cant. Aprobada</th>
                   <th>Cant. Entregada</th>                  
+                  <th>Cant. Restante</th>
                   <th>Validado</th>
                   <th>Opciones</th> <!-- Mostrar solo si es coordinador operativo -->
                 </tr>
@@ -84,6 +85,7 @@
                             <td><?php echo $s['cantidad_aprobada'] ?></td>
                             <?php if (empty($s['cantidad_entregada'])){$s['cantidad_entregada'] = 0;}?>
                             <td><?php echo $s['cantidad_entregada']?></td>
+                            <td><?php echo $s['cantidad_aprobada']-$s['cantidad_entregada']?></td>
                             <td><?php echo $validado;?></td>
                             <td>
 							<?php if ($this->rango == 4) {

@@ -23,10 +23,10 @@
                   <th>Area</th>
                   <th>Cartera</th>
                   <th>Cargo</th>
-                  <th>Cantidad Solicitada</th>
-                  <th>Cantidad Aprobada</th>
-                  <th>Cantidad Entregada</th>
-                  <th>Cantidad Restante</th>
+                  <th>Cant. Solicitada</th>
+                  <th>Cant. Aprobada</th>
+                  <th>Cant. Entregada</th>
+                  <th>Cant. Restante</th>
                   <th>Prioridad</th>
                   <th>Observacion</th>
                   <!-- <th>Opciones</th> -->

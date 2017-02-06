@@ -914,11 +914,13 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
         $motivo = $query->result_array();
         $data['motivo'] = $motivo;
 
-        if($this->input->post('nombre')) {
-             $nombre = $this->input->post('nombre');
-             $actualiza_sucursales = array('sucursal' => $nombre);
-             $this->MyModel->agregar_model('sucursales',$actualiza_sucursales,'id_sucursal',$this->input->post('id_sucursal'));                
-            redirect(base_url("index.php/Operaciones/sucursales"));
+        if($this->input->post('nombre_motivo')) {
+             $nombre = $this->input->post('nombre_motivo');
+             $actualiza_motivo = array('motivo' => $nombre);
+             $this->MyModel->agregar_model('motivo_no_califica',$actualiza_motivo,'id_motivo_no_califica',$this->input->post('id_motivo'));                
+             
+             redirect(base_url("index.php/Gestion/motivo_no_califica"));
+
         }
         $this->load->view('common/header');
         $this->load->view('gestion/edit/editar_motivo',$data);

@@ -139,7 +139,7 @@
         echo '</pre>';
         */
         ?>
-          <div class="col-md-4" id="pendientes">
+          <div class="col-md-4 pre-scrollable" id="pendientes">
             <!--radio ini-->
             <ul class="todo-list ui-sortable">
               <?php 
@@ -147,7 +147,7 @@
                 <li>
                   <i class="fa fa-ellipsis-v"></i>
                   <i class="fa fa-ellipsis-v"></i>                  
-                  <input value="" type="checkbox">
+                  <input value="" type="checkbox" disabled >
                   <span class="text"><?=$p['nombre'];?></span>
                 </li>
                <?php }?> 
@@ -155,7 +155,7 @@
               </ul>
             <!--radio fin-->
           </div>
-          <div class="col-md-4" id="hoy">
+          <div class="col-md-4 pre-scrollable" id="hoy">
             <?php echo form_open('operaciones/dashboard_operaciones');?>
             <!--radio ini-->
             <ul class="todo-list ui-sortable">
@@ -180,7 +180,7 @@
             <?php echo form_hidden('guardar','1');
                   echo form_close();?>
           </div>
-          <div class="col-md-4" id="listos">
+          <div class="col-md-4 pre-scrollable" id="listos">
             <!--radio ini-->
             <ul class="todo-list ui-sortable">
                 <?php 
@@ -189,7 +189,7 @@
                   <i class="fa fa-ellipsis-v"></i>
                   <i class="fa fa-ellipsis-v"></i>
 
-                  <input value="" type="checkbox" checked >
+                  <input value="" type="checkbox" checked disabled>
 
                   <span class="text"><?=$w['nombre'];?></span>
                 </li>
@@ -198,7 +198,7 @@
               </ul>
             <!--radio fin-->
           </div>
-          <div class="col-md-3" id="pendientes" style="display:none;">
+          <div class="col-md-3 pre-scrollable" id="pendientes" style="display:none;">
             <!--radio ini-->
             <ul class="todo-list ui-sortable">
               <?php 
@@ -206,7 +206,7 @@
                 <li>
                   <i class="fa fa-ellipsis-v"></i>
                   <i class="fa fa-ellipsis-v"></i>                  
-                  <input value="" type="checkbox">
+                  <input value="" type="checkbox" disabled>
                   <span class="text"><?=$p['nombre'];?></span>            
                 </li>
                <?php }?> 

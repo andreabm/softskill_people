@@ -24,7 +24,9 @@
                   <th>Cartera</th>
                   <th>Cargo</th>
                   <th>Cantidad Solicitada</th>
+                  <th>Cantidad Aprobada</th>
                   <th>Cantidad Entregada</th>
+                  <th>Cantidad Restante</th>
                   <th>Prioridad</th>
                   <th>Observacion</th>
                   <!-- <th>Opciones</th> -->
@@ -41,8 +43,10 @@
                             <td><?= $s['cantidad_solicitada'] ?></td>
                             <?php if (empty($s['cantidad_entregada'])) {
                                 $s['cantidad_entregada'] = 0;
-                            }?>
+                            }?></td>
+                            <td><?= $s['cantidad_aprobada']?></td>
                             <td><?= $s['cantidad_entregada']?></td>
+                            <td><?php echo $s['cantidad_aprobada']-$s['cantidad_entregada']?></td>
                             <td><?= $s['prioridad']?></td>
                             <td><?= $s['observacion']?></td>
                             <!--<td>

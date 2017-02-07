@@ -175,6 +175,43 @@
 
       <div class="clearfix">&nbsp;</div>
 
+      <!-- AREA CHART -->
+         <div class="col-md-6">          
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Entrevistas Semanal del mes <?=date('M');?></h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body chart-responsive">
+              <div class="chart" id="revenue-chart" style="height: 300px;"></div>
+            </div>
+          </div>
+          </div>
+          <!-- AREA CHART FIN-->
+          <!-- DONUT CHART -->
+          <div class="col-md-6">
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Entrevistas Semanal del mes <?=date('M');?></h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body chart-responsive">
+              <div class="chart" id="sales-chart" style="height: 300px; position: relative;"><svg height="300" version="1.1" width="627" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; top: -0.200012px;"><desc>Created with Raphaël 2.1.0</desc><defs></defs><path style="opacity: 0;" fill="none" stroke="#3c8dbc" d="M313.5,243.33333333333331A93.33333333333333,93.33333333333333,0,0,0,401.7277551949771,180.44625304313007" stroke-width="2" opacity="0"></path><path style="" fill="#3c8dbc" stroke="#ffffff" d="M313.5,246.33333333333331A96.33333333333333,96.33333333333333,0,0,0,404.56364732624417,181.4248826052307L441.1151459070204,194.03833029452744A135,135,0,0,1,313.5,285Z" stroke-width="3"></path><path style="opacity: 1;" fill="none" stroke="#f56954" d="M401.7277551949771,180.44625304313007A93.33333333333333,93.33333333333333,0,0,0,229.78484627831412,108.73398312817662" stroke-width="2" opacity="1"></path><path style="" fill="#f56954" stroke="#ffffff" d="M404.56364732624417,181.4248826052307A96.33333333333333,96.33333333333333,0,0,0,227.09400205154566,107.40757544301087L187.92726941747117,88.10097469226493A140,140,0,0,1,445.8416327924656,195.6693795646951Z" stroke-width="3"></path><path style="opacity: 0;" fill="none" stroke="#00a65a" d="M229.78484627831412,108.73398312817662A93.33333333333333,93.33333333333333,0,0,0,313.47067846904883,243.333328727518" stroke-width="2" opacity="0"></path><path style="" fill="#00a65a" stroke="#ffffff" d="M227.09400205154566,107.40757544301087A96.33333333333333,96.33333333333333,0,0,0,313.46973599126824,246.3333285794739L313.4575884998742,284.9999933380171A135,135,0,0,1,192.4120097954186,90.31165416754118Z" stroke-width="3"></path><text style="text-anchor: middle; font: 800 15px &quot;Arial&quot;;" x="313.5" y="140" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" font-size="15px" font-weight="800" transform="matrix(1.6311,0,0,1.6311,-198.1553,-94.0291)" stroke-width="0.6130952380952381"><tspan dy="5">In-Store Sales</tspan></text><text style="text-anchor: middle; font: 14px &quot;Arial&quot;;" x="313.5" y="160" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" font-size="14px" transform="matrix(1.9444,0,0,1.9444,-296.5556,-143.5556)" stroke-width="0.5142857142857143"><tspan dy="5">30</tspan></text></svg></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+        <!-- DONUT CHART FIN -->
+
+      <div class="clearfix">&nbsp;</div>
+
       <div class="row">
         <!-- /.col -->
         <div class="col-md-12">
@@ -265,6 +302,33 @@
     }
     });
     setTimeout(function(){ $("#alertita").fadeOut(4000);}, 5000);
+
+        //DONUT CHART
+    var donut = new Morris.Donut({
+      element: 'sales-chart',
+      resize: true,
+      colors: ["#f56954", "#00a65a"],
+      data: [
+        {label: "No Entrevistados", value: <?php echo $tot_entrevista_no;?>},
+        {label: "Entrevistados", value: <?php echo $tot_entrevista_si;?>}
+      ],
+      hideHover: 'auto'
+    });
+    //DONUT CHART
+    //AREA CHART
+    var area = new Morris.Area({
+        element: 'revenue-chart',
+        resize: true,
+        data:<?php print_r($array_entre);?>,       
+      xkey: 'y',
+      ykeys: ['item1'],
+      labels: ['Item 1'],
+      lineColors: ['#3c8dbc'],
+      hideHover: 'auto'
+    });
+    //AREA CHART
+
+
   });
  function datos(id_postulante,observacion){
   $('.modal-body #id_postulante').val(id_postulante);

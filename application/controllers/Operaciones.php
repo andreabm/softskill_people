@@ -1717,6 +1717,51 @@ class Operaciones extends CI_Controller {
             }
             $data['array_entrevistas'] = $array_entrevistas;
 
+
+            //AREA CHARTS INI
+            $this->db->select("count(id_postulante) as postulantes, DATE(postulantes.fecha_asignacion) as fecha, week(postulantes.fecha_asignacion) as semana,date_format(postulantes.fecha_asignacion, '%Y-%m'), date_format(curdate(), '%Y-%m')");
+            $this->db->from('postulantes');
+            $this->db->join('personas','personas.rut = postulantes.rut');
+            $this->db->where("date_format(postulantes.fecha_asignacion, '%Y-%m') = date_format(curdate(), '%Y-%m')");
+            $this->db->group_by("date_format(postulantes.fecha_asignacion, '%Y-%m')");
+            $query = $this->db->get();
+            $entrevis = $query->result_array();
+            $array_entre = array();
+            $g = 0;          
+            foreach($entrevis as $a){
+                //$array_entre[$g]['y'] = $a['fecha'].',item:'.$a['postulantes'];
+                $array_entre[] = array('y' => $a['fecha'], 'item1' => $a['postulantes']);
+                $g++;
+            }
+            $data['array_entre'] = json_encode($array_entre);
+            //AREA CHARTS FIN            
+            
+            //DONUT INI
+            $tot_entrevista_si = '';
+            $tot_entrevista_no = '';
+
+            for($i=1;$i<=2;$i++){
+            $this->db->select("postulantes.id_postulante, DATE(postulantes.fecha_asignacion) as fecha, week(postulantes.fecha_asignacion) as semana,
+            date_format(postulantes.fecha_asignacion, '%Y-%m'), date_format(curdate(), '%Y-%m'),postulantes.induccionp");
+            $this->db->from('postulantes');
+            $this->db->join('personas','personas.rut = postulantes.rut');
+                if($i==1){
+                    $this->db->where("(date_format(postulantes.fecha_asignacion, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.induccionp=0) or postulantes.entrevistap is null");
+                }else{
+                    $this->db->where("date_format(postulantes.fecha_asignacion, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.induccionp=1");
+                }
+            $query = $this->db->get();
+            if($i==1){
+                $tot_entrevista_no = $query->result_array();
+            }else{
+                $tot_entrevista_si = $query->result_array();
+            }
+            $data['tot_asignado_no'] = count($tot_entrevista_no);
+            $data['tot_asignado_si'] = count($tot_entrevista_si);
+            }
+            //DONUT FIN
+
+
             $this->load->view('common/header');
             $this->load->view('operaciones/dashboard',$data);
             $this->load->view('common/footer');

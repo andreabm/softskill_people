@@ -104,10 +104,10 @@ if(!isset($this->session->userdata['id_usuario'])){
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?php echo base_url('/index.php/usuarios/editar_usuario/'.$this->session->userdata('id_usuario'));?>" class="btn btn-default btn-flat">Mi Cuenta</a>
                 </div>
                 <div class="pull-right">
-                  <a href="<?php echo base_url('/index.php/usuarios/logout');?>" class="btn btn-default btn-flat">Logout</a>
+                  <a href="<?php echo base_url('/index.php/usuarios/logout');?>" class="btn btn-default btn-flat">Salir</a>
                 </div>
               </li>   
             </ul>

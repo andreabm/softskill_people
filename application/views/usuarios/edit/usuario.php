@@ -8,6 +8,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
+
     <br />
       <div class="row">
         <div class="col-xs-12">
@@ -16,17 +17,19 @@
                   <h3 class="box-title">Usuario</h3>
               </div>
               <div class="box-body">
+                <?php echo form_open_multipart('usuarios/update_usuario');?>
                 <div class="row">
                     <div class="col-md-3">  
                         <div class="form-group">
                         <label>Rut</label>
-                        <input class="form-control" type="text" name="usuario" id="usuario" value="<?= $usuario[0]['rut']?>" />
+                        <input class="form-control" type="text" name="id_usuario" id="id_usuario" value="<?= $usuario[0]['id_usuario']?>" />
+                        <input class="form-control" type="text" name="rut" id="rut" value="<?= $usuario[0]['rut']?>" />
                         </div>
                     </div>
                     <div class="col-md-3">  
                         <div class="form-group">
                         <label>Nombre</label>
-                        <input class="form-control" type="text" name="usuario" id="usuario" value="<?= $usuario[0]['nombre']?>" />
+                        <input class="form-control" type="text" name="nombre" id="nombre" value="<?= $usuario[0]['nombre']?>" />
                         </div>
                     </div>
                     <div class="col-md-3">  
@@ -38,7 +41,7 @@
                     <div class="col-md-3">  
                         <div class="form-group">
                         <label>Password</label>
-                        <input class="form-control" type="text" name="usuario" id="usuario" value="<?= $usuario[0]['password']?>" />
+                        <input class="form-control" type="password" name="password" id="password" value="<?= $usuario[0]['password']?>" />
                         </div>
                     </div>
               </div>
@@ -46,30 +49,72 @@
                     <div class="col-md-3">  
                         <div class="form-group">
                         <label>Rango</label>
-                        <input class="form-control" type="text" name="usuario" id="usuario" value="<?= $usuario[0]['rango']?>" />
+                        <input class="form-control" type="text" name="rango" id="rango" value="<?= $usuario[0]['rango']?>" />
                         </div>
                     </div>
                     <div class="col-md-3">  
                         <div class="form-group">
                         <label>E-mail</label>
-                        <input class="form-control" type="text" name="usuario" id="usuario" value="<?= $usuario[0]['mail']?>"/>
+                        <input class="form-control" type="text" name="mail" id="mail" value="<?= $usuario[0]['mail']?>"/>
                         </div>
                     </div>
                     <div class="col-md-3">  
                         <div class="form-group">
-                        <label>Avatar</label>
-                        <input class="form-control" type="text" name="usuario" id="usuario" />
+                        <label>Anexo</label>
+                        <input class="form-control" type="text" name="anexo" id="anexo" value="<?= $usuario[0]['anexo']?>"/>
                         </div>
                     </div>
               </div>
+
+              <div class="row">
+                <div class="col-md-3">  
+                  <div class="form-group">
+                  <label>Avatar</label>
+                  <input type="file" name="archivo" id="archivo" value="" class="form-control" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!--http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar5.png-->
+                <div class="col-md-12">
+                  <div class="box-body no-padding">
+                  <ul class="users-list clearfix">
+                    <li>
+                      <img src="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar.png" alt="User Image"><br/>
+                      <input type="radio" name="gender" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar.png">
+                      <span class="users-list-date">Usuario 1</span>
+                    </li>
+                    <li>
+                      <img src="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar2.png" alt="User Image"><br/>
+                      <input type="radio" name="gender" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar2.png">
+                      <span class="users-list-date">Usuario 2</span>
+                    </li>
+                    <li>
+                      <img src="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar5.png" alt="User Image"><br/>
+                      <input type="radio" name="gender" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar5.png">
+                      <span class="users-list-date">Usuario 3</span>
+                    </li>
+                    <li>
+                      <img src="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar3.png" alt="User Image"><br/>
+                      <input type="radio" name="gender" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar3.png">
+                      <span class="users-list-date">Usuario 4</span>
+                    </li>
+                  </ul>
+                  </div>
+                </div>
+              </div>    
+
+
               <div class="row">
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-info pull-right">Guardar</button>
                     </div>
                          
-                  </div>
+              </div>
               <br>
+             <?php echo form_close();?> 
           </div>
             <!-- /.box-body -->
             </div>

@@ -29,5 +29,4 @@
     <?php $id_ejecutivo = $documento[0]['id_ejecutivo'];?>    
     <?php echo form_hidden('id_ejecutivo',$id_ejecutivo);?>
     <?php echo form_hidden('id_documento',$documento[0]['id_documentacion']);?>
-    
 </div>

@@ -12,7 +12,8 @@ class Usuarios extends CI_Controller {
 		$this->load->library('parser');
     $this->load->model('Usuario');
 		//$this->load->model('Rango');
-    $this->load->model('MyModel');		
+    $this->load->model('MyModel');
+
 	}
 
   function login(){    
@@ -79,6 +80,70 @@ class Usuarios extends CI_Controller {
     $this->load->view('common/header');
     $this->load->view('usuarios/edit/usuario',$data);
     $this->load->view('common/footer');
+  }
+  function update_usuario(){  
+        // Cargamos la libreria Upload
+        $this->load->library('upload');
+
+        $id_usuario = $this->input->post('id_usuario');        
+        /*
+         * Revisamos si el archivo fue subido
+         * Comprobamos si existen errores en el archivo subido
+         */
+       if (!empty($_FILES['archivo']['name'])){
+            //solo extension
+            $ext = end(explode(".", $_FILES['archivo']['name']));
+            //Borrar archivo
+            unlink(APPPATH.'uploads/profile/'.$id_usuario.'.'.$ext); 
+            // Configuración para el Archivo 1
+            $config['upload_path'] = APPPATH . 'uploads/profile/';
+            //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
+            $config['allowed_types'] = 'JPG|JPEG|GIF|PNG|gif|jpg|png|jpeg';
+            $config['max_size'] = '3000';
+            $config['max_width']  = '3000';
+            $config['max_height']  = '2500';
+            $config['remove_spaces'] = TRUE;
+            //cambiar nombre archivo, dos formas
+            //$config['encrypt_name'] = TRUE;            
+            //$new_name = $_FILES["archivo"]['name'];
+            $config['file_name'] = $this->input->post('id_usuario');
+            // Cargamos la configuración del Archivo 1
+            $this->upload->initialize($config);
+            // Subimos archivo 1
+            if ($this->upload->do_upload('archivo')){
+                $data = $this->upload->data();
+            }else{
+                echo $this->upload->display_errors();
+            }
+            //updeteo en tabla
+            $data = array(
+                   'rut' => $this->input->post('rut'),
+                   'usuario' => $this->input->post('usuario'),
+                   'nombre' => $this->input->post('nombre'),
+                   'mail' => $this->input->post('mail'),
+                   'img' => base_url('application/uploads/profile/'.$id_usuario.'.'.$ext),
+                   'anexo' => $this->input->post('anexo')
+            );
+            $this->db->where('id_usuario', $id_usuario);
+            $this->db->update('usuarios', $data);
+
+
+            redirect(base_url('/index.php/usuarios/usuarios/'.$id_usuario));
+        }else{
+            //updeteo en tabla
+            $data = array(
+                   'rut' => $this->input->post('rut'),
+                   'usuario' => $this->input->post('usuario'),
+                   'nombre' => $this->input->post('nombre'),
+                   'mail' => $this->input->post('mail'),
+                   'img' => $this->input->post('img'),
+                   'anexo' => $this->input->post('anexo')
+            );
+            $this->db->where('id_usuario', $id_usuario);
+            $this->db->update('usuarios', $data);
+        }
+        
+
   }
 
 }

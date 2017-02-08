@@ -2,7 +2,7 @@
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard Calidad
+        Dashboard Gestion de Personas
         <small> Serbanc</small>
       </h1>
     </section>

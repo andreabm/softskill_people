@@ -1183,13 +1183,13 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
 
             for($i=1;$i<=2;$i++){
             $this->db->select("postulantes.id_postulante, DATE(postulantes.fecha_entrevista) as fecha, week(postulantes.fecha_entrevista) as semana,
-            date_format(postulantes.fecha_entrevista, '%Y-%m'), date_format(curdate(), '%Y-%m'),postulantes.entrevistap");
+            date_format(postulantes.fecha_entrevista, '%Y-%m'), date_format(curdate(), '%Y-%m'),postulantes.entrevistado");
             $this->db->from('postulantes');
             $this->db->join('personas','personas.rut = postulantes.rut');
                 if($i==1){
-                    $this->db->where("(date_format(postulantes.fecha_entrevista, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.entrevistap=0) or postulantes.entrevistap is null");
+                    $this->db->where("(date_format(postulantes.fecha_entrevista, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.entrevistado=0) or postulantes.entrevistado is null");
                 }else{
-                    $this->db->where("date_format(postulantes.fecha_entrevista, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.entrevistap=1");
+                    $this->db->where("date_format(postulantes.fecha_entrevista, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.entrevistado=1");
                 }
             $query = $this->db->get();
             if($i==1){
@@ -1197,9 +1197,10 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
             }else{
                 $tot_entrevista_si = $query->result_array();
             }
+            }
             $data['tot_entrevista_no'] = count($tot_entrevista_no);
             $data['tot_entrevista_si'] = count($tot_entrevista_si);
-            }
+
             //DONUT FIN
 
         $this->load->view('common/header');

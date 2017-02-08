@@ -99,11 +99,12 @@ class Operaciones extends CI_Controller {
         $this->load->view('common/footer');
     }
      public function ejecutivos(){
-		$this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo');
+		$this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,resultado_evaluacion_psicologica.resultado_final');
         $this->db->from('personas');
         $this->db->join('postulantes','personas.rut = postulantes.rut');
         $this->db->join('areas','areas.id_area = postulantes.id_area');
         $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+        $this->db->join('resultado_evaluacion_psicologica','resultado_evaluacion_psicologica.rut = postulantes.rut');
         $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo', 'left');
         $this->db->where('personas.clasificado = 1');
         $query = $this->db->get();

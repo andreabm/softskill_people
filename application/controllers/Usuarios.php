@@ -13,8 +13,35 @@ class Usuarios extends CI_Controller {
     $this->load->model('Usuario');
 		//$this->load->model('Rango');
     $this->load->model('MyModel');
-
+    $this->init();
 	}
+  
+  public function init(){
+     if (isset($this->session->userdata['usuario'])){
+          //Verifico si tengo permiso para acceder al modulo
+          $controlador = $this->router->fetch_class();
+          $action = $this->router->fetch_method();
+
+          $permisos = $this->MyModel->buscar_model('permisos',array('controller' => $controlador,'view' => $action));
+
+          $permisos = explode(';',$permisos[0]['rangos']);
+          $rango = $this->session->userdata['id_rango'];
+                   
+          if(!in_array($rango,$permisos)) {
+            redirect(base_url().'index.php');
+          }
+          
+          //Cargar menu
+          $this->menu_lista = $this->MyModel->buscar_permisos(); 
+          // print_r($this->menu_lista);
+          $this->rango = $this->session->userdata['id_rango'];
+          $this->action = $action;
+          $this->controlador = $controlador;
+          $this->permisos = $permisos;
+      return true;
+      }
+    }
+    
 
   function login(){    
      //###############################################
@@ -55,15 +82,21 @@ class Usuarios extends CI_Controller {
   }
 
   function usuarios(){
+    $this->session->userdata['id_rango']; 
     $this->db->from('usuarios');
     $this->db->join('rangos','rangos.id_rango = usuarios.id_rango');
     $query = $this->db->get();
     $usuarios = $query->result_array();
 
     $data['usuarios'] = $usuarios;
-    $this->load->view('common/header');
-    $this->load->view('usuarios/usuarios',$data);
-    $this->load->view('common/footer');
+
+    if($this->session->userdata['id_rango']==1 || $this->session->userdata['id_rango']==2){
+        $this->load->view('common/header');
+        $this->load->view('usuarios/usuarios',$data);
+        $this->load->view('common/footer');
+    }else{
+        redirect(base_url('index.php/usuarios/usuarios'),'refresh');
+    }
   }
 
   function editar_usuario($id_usuario){
@@ -94,9 +127,11 @@ class Usuarios extends CI_Controller {
             //solo extension
             $ext = end(explode(".", $_FILES['archivo']['name']));
             //Borrar archivo
-            unlink(APPPATH.'uploads/profile/'.$id_usuario.'.'.$ext); 
+            //unlink(APPPATH.'uploads/profile/'.$id_usuario.'.'.$ext);
+            unlink(FCPATH.'assets/dist/img/profile/'.$id_usuario.'.'.strtolower($ext));
             // Configuración para el Archivo 1
-            $config['upload_path'] = APPPATH . 'uploads/profile/';
+            //$config['upload_path'] = APPPATH . 'uploads/profile/';
+            $config['upload_path'] = FCPATH . 'assets/dist/img/profile/';
             //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
             $config['allowed_types'] = 'JPG|JPEG|GIF|PNG|gif|jpg|png|jpeg';
             $config['max_size'] = '3000';
@@ -116,19 +151,19 @@ class Usuarios extends CI_Controller {
                 echo $this->upload->display_errors();
             }
             //updeteo en tabla
+
+            $subir = 'http://172.16.10.15/SoftSkills_People/assets/dist/img/profile/'.$id_usuario.'.'.strtolower($ext);
+
             $data = array(
                    'rut' => $this->input->post('rut'),
                    'usuario' => $this->input->post('usuario'),
                    'nombre' => $this->input->post('nombre'),
                    'mail' => $this->input->post('mail'),
-                   'img' => base_url('application/uploads/profile/'.$id_usuario.'.'.$ext),
+                   'img' => $subir,
                    'anexo' => $this->input->post('anexo')
             );
             $this->db->where('id_usuario', $id_usuario);
             $this->db->update('usuarios', $data);
-
-
-            redirect(base_url('/index.php/usuarios/usuarios/'.$id_usuario));
         }else{
             //updeteo en tabla
             $data = array(
@@ -142,8 +177,7 @@ class Usuarios extends CI_Controller {
             $this->db->where('id_usuario', $id_usuario);
             $this->db->update('usuarios', $data);
         }
-        
-
+        redirect(base_url('/index.php/usuarios/usuarios/'.$id_usuario));
   }
 
 }

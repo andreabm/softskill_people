@@ -9,6 +9,8 @@
     <!-- Main content -->
     <section class="content">
     
+
+
     <div class="row">
         <div class="col-xs-12">        
         <?php 
@@ -103,11 +105,13 @@
                               $rut = '';
                               foreach ($induccion as $a) {
                                   if($a['rut']==$p['rut']){
-                                      echo $p['rut'];
+                                      ?>
+<a class="btn btn-xs btn-info" data-toggle="modal" data-target="#postulanteCalifica" onclick="postulanteCalifica(<?php echo $p['id_postulante'];  ?>)">Califica</a>
+                                      <?php
                                   }
                               }
                               ?>
-                              <a class="btn btn-xs btn-info" data-toggle="modal" data-target="#postulanteCalifica" onclick="postulanteCalifica(<?php echo $p['id_postulante'];  ?>)">Califica</a>                  
+                                                
                               
                               <!--<a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#eliminarPostulante" onclick = "eliminarPostulante(<?php //echo $p['id_postulante'];  ?>)">Eliminar</a>-->
                           </td>

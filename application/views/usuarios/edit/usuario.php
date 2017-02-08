@@ -22,7 +22,7 @@
                     <div class="col-md-3">  
                         <div class="form-group">
                         <label>Rut</label>
-                        <input class="form-control" type="text" name="id_usuario" id="id_usuario" value="<?= $usuario[0]['id_usuario']?>" />
+                        <input class="form-control" type="hidden" name="id_usuario" id="id_usuario" value="<?= $usuario[0]['id_usuario']?>" />
                         <input class="form-control" type="text" name="rut" id="rut" value="<?= $usuario[0]['rut']?>" />
                         </div>
                     </div>
@@ -70,6 +70,7 @@
                 <div class="col-md-3">  
                   <div class="form-group">
                   <label>Avatar</label>
+                  <img src="<?= $usuario[0]['img']?>" class="img-rounded" alt="User Image"  style="width: 100px; margin:10px;">
                   <input type="file" name="archivo" id="archivo" value="" class="form-control" />
                   </div>
                 </div>
@@ -82,29 +83,28 @@
                   <ul class="users-list clearfix">
                     <li>
                       <img src="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar.png" alt="User Image"><br/>
-                      <input type="radio" name="gender" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar.png">
+                      <input type="radio" name="img" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar.png">
                       <span class="users-list-date">Usuario 1</span>
                     </li>
                     <li>
                       <img src="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar2.png" alt="User Image"><br/>
-                      <input type="radio" name="gender" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar2.png">
+                      <input type="radio" name="img" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar2.png">
                       <span class="users-list-date">Usuario 2</span>
                     </li>
                     <li>
                       <img src="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar5.png" alt="User Image"><br/>
-                      <input type="radio" name="gender" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar5.png">
+                      <input type="radio" name="img" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar5.png">
                       <span class="users-list-date">Usuario 3</span>
                     </li>
                     <li>
                       <img src="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar3.png" alt="User Image"><br/>
-                      <input type="radio" name="gender" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar3.png">
+                      <input type="radio" name="img" value="http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar3.png">
                       <span class="users-list-date">Usuario 4</span>
                     </li>
                   </ul>
                   </div>
                 </div>
               </div>    
-
 
               <div class="row">
                     <div class="col-md-10"></div>

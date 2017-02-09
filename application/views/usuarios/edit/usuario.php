@@ -41,6 +41,7 @@
                     <div class="col-md-3">  
                         <div class="form-group">
                         <label>Password</label>
+                        <input class="form-control" type="hidden" name="contrasena" id="contrasena" value="<?=$usuario[0]['password'];?>" />
                         <input class="form-control" type="password" name="password" id="password" value="<?= $usuario[0]['password']?>" />
                         </div>
                     </div>
@@ -70,8 +71,8 @@
                 <div class="col-md-3">  
                   <div class="form-group">
                   <label>Avatar</label>
-                  <img src="<?= $usuario[0]['img']?>" class="img-rounded" alt="User Image"  style="width: 100px; margin:10px;">
-                  <input type="file" name="archivo" id="archivo" value="" class="form-control" />
+                  <img src="<?= $usuario[0]['img']?>" class="img-circle" alt="User Image"  style="height: 100px; margin:10px;">
+                  <input type="file" name="archivo" id="archivo" value="<?=$usuario[0]['img'];?>" class="form-control" />
                   </div>
                 </div>
               </div>

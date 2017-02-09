@@ -118,11 +118,22 @@ class Usuarios extends CI_Controller {
         // Cargamos la libreria Upload
         $this->load->library('upload');
 
-        $id_usuario = $this->input->post('id_usuario');        
+        $id_usuario = $this->input->post('id_usuario');
+
+        echo $password = md5($this->input->post('password'));
+        echo '<br/>';
+        echo $contrasena = $this->input->post('contrasena');
+        echo '<br/>';
+        //si son iguales actualizo la contraseña
+        if($password!=$contrasena){
+            $pass = $password;
+        }
+
         /*
          * Revisamos si el archivo fue subido
          * Comprobamos si existen errores en el archivo subido
          */
+       
        if (!empty($_FILES['archivo']['name'])){
             //solo extension
             $ext = end(explode(".", $_FILES['archivo']['name']));
@@ -172,12 +183,14 @@ class Usuarios extends CI_Controller {
                    'nombre' => $this->input->post('nombre'),
                    'mail' => $this->input->post('mail'),
                    'img' => $this->input->post('img'),
-                   'anexo' => $this->input->post('anexo')
+                   'anexo' => $this->input->post('anexo'),
+                   'password' => $pass
             );
             $this->db->where('id_usuario', $id_usuario);
             $this->db->update('usuarios', $data);
         }
         redirect(base_url('/index.php/usuarios/usuarios/'.$id_usuario));
+        
   }
 
 }

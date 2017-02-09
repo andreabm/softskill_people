@@ -73,7 +73,7 @@ $(document).ready(function () {
     </div>
     <?php 
         $attributes = array('id' => 'form1');
-        echo form_open('operaciones/update_einduccion', $attributes);
+        echo form_open('calidad/update_einduccion', $attributes);
         ?>
         <input class="form-control" type="hidden" name="id" id="id" value="<?php echo $id;?>" readonly/><br />
       <div class="row">
@@ -352,6 +352,7 @@ $(document).ready(function () {
       <?php 
       $contador = $contador + 1;
     } ?>
+
 
 <div class="row">
   <div class="col-md-10"></div>

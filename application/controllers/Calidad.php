@@ -202,7 +202,9 @@ class Calidad extends CI_Controller {
         $hora_separada[1]; //am o pm
         $datos_postulantes = array(
             'fecha_ilaboral' => $fecha_ingreso.' '.$hora_separada[0].':00',
-            'induccionp' =>$inducido);
+            'induccionp' => $inducido,
+            'inducido' => $inducido
+            );
 
         $this->db->where('rut', $rut);
         $this->db->update('postulantes', $datos_postulantes);
@@ -341,13 +343,13 @@ class Calidad extends CI_Controller {
 
             for($i=1;$i<=2;$i++){
             $this->db->select("postulantes.id_postulante, DATE(postulantes.fecha_asignacion) as fecha, week(postulantes.fecha_asignacion) as semana,
-            date_format(postulantes.fecha_asignacion, '%Y-%m'), date_format(curdate(), '%Y-%m'),postulantes.induccionp");
+            date_format(postulantes.fecha_asignacion, '%Y-%m'), date_format(curdate(), '%Y-%m'),postulantes.inducido");
             $this->db->from('postulantes');
             $this->db->join('personas','personas.rut = postulantes.rut');
                 if($i==1){
-                    $this->db->where("(date_format(postulantes.fecha_asignacion, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.induccionp=0) or postulantes.entrevistap is null");
+                    $this->db->where("(date_format(postulantes.fecha_asignacion, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.inducido=0) or postulantes.entrevistap is null");
                 }else{
-                    $this->db->where("date_format(postulantes.fecha_asignacion, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.induccionp=1");
+                    $this->db->where("date_format(postulantes.fecha_asignacion, '%Y-%m') = date_format(curdate(), '%Y-%m') and postulantes.inducido=1");
                 }
             $query = $this->db->get();
             if($i==1){

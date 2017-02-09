@@ -175,10 +175,9 @@ class Usuarios extends CI_Controller {
             $this->db->update('usuarios', $data);          
         }else{
             //updeteo en tabla
-
             if(!empty($this->input->post('img'))){
 
-                //borrar archivo
+                //borrar archivo existente
                 $variable = explode('/', $this->input->post('imagen'));
                 unlink(FCPATH.'assets/dist/img/profile/'.$variable[8]);
 

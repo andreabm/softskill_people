@@ -41,7 +41,7 @@
                             <td><?php echo $t['cartera'] ?></td>
                             <td><?php echo $t['tipo_ejecutivo'] ?></td>
                             <td><?php echo $t['rut'] ?></td>
-                            <td><?php echo $t['nombre'].' '.$t['paterno'] ?></td>
+                            <td><?php echo $t['nombre'] ?></td>
                             <td><?php echo $t['resultado_final'] ?></td>
                             <td>
                             <!--<a class="btn btn-xs btn-warning" href="<?php //echo base_url('/index.php/operaciones/documentacion/'.$t['id_postulante']);?>">Documentos</a>-->
@@ -91,7 +91,6 @@
 <script>
 $(document).ready(function(){
     $('#ejecutivos').DataTable({
-        "lengthMenu": [[25, 50, -1], [10, 25, 50, "All"]],
        "language": {
                 "url": '<?php echo base_url("/js/bootstrap-dataTables-Spanish.json") ?>',
                 "decimal": ",",

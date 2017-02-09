@@ -8,9 +8,35 @@
     </section>
     <!-- Main content -->
     <section class="content">
+
+      <div class="row">
+        <div class="col-xs-12">        
+        <?php 
+        $msje_solicitud = $this->session->flashdata('msje_evaluacion');
+            if(!empty($msje_solicitud)){
+            ?>
+            <div id="alertita" class="alert alert-<?php if($msje_solicitud[0]==1){echo 'success';}else{echo 'danger';}?> alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><?php if($msje_solicitud[0]==1){echo 'Exito';}else{echo 'Fracaso';}?></strong> <?php if($msje_solicitud[0]==1){echo 'Se ha evaluado con exito';}else{echo 'La solicitud no se ha modificado';}?>
+            </div>        
+            <?php }?>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-9"></div>
     </div>
+
+    <?php
+        /*
+        echo '<pre>';
+          print_r($ejecutivos);
+          echo '<br/>';
+          print_r($escucha_resultado);
+        echo '</pre>';
+        */
+        
+        ?>
     <br />
       <div class="row">
         <div class="col-xs-12">
@@ -20,7 +46,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-            
+
               <table id="ejecutivos" class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -30,6 +56,7 @@
                   <th>RUT</th>
                   <th>Nombre</th>
                   <th>Nota Calificaci&oacute;n</th>
+                  <!--<th>Nota Evaluaci&oacute;n</th>-->
                   <th>Opciones</th>
                 </tr>
                 </thead>
@@ -41,16 +68,21 @@
                             <td><?php echo $t['cartera'] ?></td>
                             <td><?php echo $t['tipo_ejecutivo'] ?></td>
                             <td><?php echo $t['rut'] ?></td>
-                            <td><?php echo $t['nombre'].' '.$t['paterno'] ?></td>
-                            <td><?php echo $t['resultado_final'] ?></td>
+                            <td><?php echo $t['nombre'] ?></td>
+                            <td align="center"><?php echo $t['resultado_final'];?></td>
+                            <!--<td align="center"><?php //echo $t['resultado_final'];?></td>-->
                             <td>
-                            <!--<a class="btn btn-xs btn-warning" href="<?php //echo base_url('/index.php/operaciones/documentacion/'.$t['id_postulante']);?>">Documentos</a>-->
-                            <a class="btn btn-xs btn-success" href="#" data-toggle="modal" data-target="#verPostulante" onclick = "verPostulante(<?php echo $t['id_postulante'];  ?>)">Ver</a>
-                             <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/operaciones/ficha_contratacion/'.$t['id_postulante'])?>">Ficha </a>
+                              <?php if($t['rut']==$t['rut_b']){?>
+                              <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/operaciones/ver_evaluacion_escuchas/'.$t['id_postulante'])?>">Ver Evaluacion</a>  
+                              <a class="btn btn-xs btn-success" href="#" disabled>Evaluar</a>
+                              <?php }else{?>
+                              <a class="btn btn-xs btn-warning" href="#" disabled>Ver Evaluacion</a>
+                              <a class="btn btn-xs btn-success" href="<?php echo base_url('index.php/operaciones/evaluacion_escuchas/'.$t['id_postulante'])?>">Evaluar</a>
+                              <?php }?>
                             </td>
                     </tr>  
                   <?php }
-                } ?>                    
+                }?>                    
                 </tbody>
                 <tfoot>
                
@@ -69,29 +101,10 @@
     </section>
 
 </div>
-<!--MODAL VER EJECUTIVO-->
-<div class="modal modal-success fade" id="verPostulante">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Postulante</h4>
-              </div>
-      <div class="modal-body" id="verPostulanteBody">
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-     
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 <script>
 $(document).ready(function(){
     $('#ejecutivos').DataTable({
-        "lengthMenu": [[25, 50, -1], [10, 25, 50, "All"]],
        "language": {
                 "url": '<?php echo base_url("/js/bootstrap-dataTables-Spanish.json") ?>',
                 "decimal": ",",
@@ -101,7 +114,7 @@ $(document).ready(function(){
 });
 function verPostulante(id_postulante){
     $.ajax({
-          url:"<?php echo base_url('index.php/operaciones/ver_ejecutivo')?>",
+          url:"<?php echo base_url('index.php/gestion/ver_postulante')?>",
           type: 'POST',
           data: {id_postulante:id_postulante},
           success: function(data) {

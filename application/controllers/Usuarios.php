@@ -125,13 +125,10 @@ class Usuarios extends CI_Controller {
         if($password!=$contrasena){
             $pass = $password;
         }
-
         /*
          * Revisamos si el archivo fue subido
          * Comprobamos si existen errores en el archivo subido
          */
-       
-       
        if (!empty($_FILES['archivo']['name'])){
             //solo extension
             $ext = end(explode(".", $_FILES['archivo']['name']));

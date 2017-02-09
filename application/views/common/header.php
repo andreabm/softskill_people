@@ -176,7 +176,7 @@ if(!isset($this->session->userdata['id_usuario'])){
 	  <?php 
 	  foreach($this->menu_lista as $area => $menu) {
 		  ?>
-		  <li class="treeview">
+		  <li class="treeview active">
           <a href="#">
             <?php 
             if ($area == 'Gestion de Personas') {

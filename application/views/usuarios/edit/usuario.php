@@ -72,7 +72,8 @@
                   <div class="form-group">
                   <label>Avatar</label>
                   <img src="<?= $usuario[0]['img']?>" class="img-circle" alt="User Image"  style="height: 100px; margin:10px;">
-                  <input type="file" name="archivo" id="archivo" value="<?=$usuario[0]['img'];?>" class="form-control" />
+                  <input type="file" name="archivo" id="archivo" value="" class="form-control" />
+                  <input type="text" name="imagen" id="imagen" value="<?=$usuario[0]['img'];?>" class="form-control" />
                   </div>
                 </div>
               </div>

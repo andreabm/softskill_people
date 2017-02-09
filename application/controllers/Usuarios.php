@@ -117,13 +117,10 @@ class Usuarios extends CI_Controller {
   function update_usuario(){  
         // Cargamos la libreria Upload
         $this->load->library('upload');
-
         $id_usuario = $this->input->post('id_usuario');
+        $password = md5($this->input->post('password'));
+        $contrasena = $this->input->post('contrasena');
 
-        echo $password = md5($this->input->post('password'));
-        echo '<br/>';
-        echo $contrasena = $this->input->post('contrasena');
-        echo '<br/>';
         //si son iguales actualizo la contraseña
         if($password!=$contrasena){
             $pass = $password;
@@ -134,12 +131,14 @@ class Usuarios extends CI_Controller {
          * Comprobamos si existen errores en el archivo subido
          */
        
+       
        if (!empty($_FILES['archivo']['name'])){
             //solo extension
             $ext = end(explode(".", $_FILES['archivo']['name']));
             //Borrar archivo
             //unlink(APPPATH.'uploads/profile/'.$id_usuario.'.'.$ext);
             unlink(FCPATH.'assets/dist/img/profile/'.$id_usuario.'.'.strtolower($ext));
+
             // Configuración para el Archivo 1
             //$config['upload_path'] = APPPATH . 'uploads/profile/';
             $config['upload_path'] = FCPATH . 'assets/dist/img/profile/';
@@ -162,7 +161,6 @@ class Usuarios extends CI_Controller {
                 echo $this->upload->display_errors();
             }
             //updeteo en tabla
-
             $subir = 'http://172.16.10.15/SoftSkills_People/assets/dist/img/profile/'.$id_usuario.'.'.strtolower($ext);
 
             $data = array(
@@ -174,10 +172,17 @@ class Usuarios extends CI_Controller {
                    'anexo' => $this->input->post('anexo')
             );
             $this->db->where('id_usuario', $id_usuario);
-            $this->db->update('usuarios', $data);
+            $this->db->update('usuarios', $data);          
         }else{
             //updeteo en tabla
-            $data = array(
+
+            if(!empty($this->input->post('img'))){
+
+                //borrar archivo
+                $variable = explode('/', $this->input->post('imagen'));
+                unlink(FCPATH.'assets/dist/img/profile/'.$variable[8]);
+
+                $data = array(
                    'rut' => $this->input->post('rut'),
                    'usuario' => $this->input->post('usuario'),
                    'nombre' => $this->input->post('nombre'),
@@ -185,7 +190,17 @@ class Usuarios extends CI_Controller {
                    'img' => $this->input->post('img'),
                    'anexo' => $this->input->post('anexo'),
                    'password' => $pass
-            );
+                );
+            }else{
+                $data = array(
+                   'rut' => $this->input->post('rut'),
+                   'usuario' => $this->input->post('usuario'),
+                   'nombre' => $this->input->post('nombre'),
+                   'mail' => $this->input->post('mail'),
+                   'anexo' => $this->input->post('anexo'),
+                   'password' => $pass
+                );
+            }            
             $this->db->where('id_usuario', $id_usuario);
             $this->db->update('usuarios', $data);
         }

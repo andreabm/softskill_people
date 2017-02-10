@@ -139,65 +139,61 @@ class Usuarios extends CI_Controller {
          * Revisamos si el archivo fue subido
          * Comprobamos si existen errores en el archivo subido
          */
-        
        if(!empty($_FILES['archivo']['name'])){        
-            //solo extension
-            $ext = end(explode(".", $_FILES['archivo']['name']));
-            //Borrar archivo
-            //unlink(APPPATH.'uploads/profile/'.$id_usuario.'.'.$ext);
-            unlink(FCPATH.'assets/dist/img/profile/'.$id_usuario.'.'.strtolower($ext));
+              //solo extension
+              $ext = end(explode(".", $_FILES['archivo']['name']));
+              //Borrar archivo
+              //unlink(APPPATH.'uploads/profile/'.$id_usuario.'.'.$ext);
+              unlink(FCPATH.'assets/dist/img/profile/'.$id_usuario.'.'.strtolower($ext));
 
-            // Configuración para el Archivo 1
-            //$config['upload_path'] = APPPATH . 'uploads/profile/';
-            $config['upload_path'] = FCPATH . 'assets/dist/img/profile/';
-            //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
-            $config['allowed_types'] = 'JPG|JPEG|GIF|PNG|gif|jpg|png|jpeg';
-            $config['max_size'] = '3000';
-            $config['max_width']  = '3000';
-            $config['max_height']  = '2500';
-            $config['remove_spaces'] = TRUE;
-            //cambiar nombre archivo, dos formas
-            //$config['encrypt_name'] = TRUE;            
-            //$new_name = $_FILES["archivo"]['name'];
-            $config['file_name'] = $this->input->post('id_usuario');
-            // Cargamos la configuración del Archivo 1
-            $this->upload->initialize($config);
-            // Subimos archivo 1
-            if ($this->upload->do_upload('archivo')){
-                $data = $this->upload->data();
-            }else{
-                echo $this->upload->display_errors();
-            }
+              // Configuración para el Archivo 1
+              //$config['upload_path'] = APPPATH . 'uploads/profile/';
+              $config['upload_path'] = FCPATH . 'assets/dist/img/profile/';
+              //$this->upload_config['upload_path'] = APPPATH . 'uploads/working/';
+              $config['allowed_types'] = 'JPG|JPEG|GIF|PNG|gif|jpg|png|jpeg';
+              $config['max_size'] = '3000';
+              $config['max_width']  = '3000';
+              $config['max_height']  = '2500';
+              $config['remove_spaces'] = TRUE;
+              //cambiar nombre archivo, dos formas
+              //$config['encrypt_name'] = TRUE;            
+              //$new_name = $_FILES["archivo"]['name'];
+              $config['file_name'] = $this->input->post('id_usuario');
+              // Cargamos la configuración del Archivo 1
+              $this->upload->initialize($config);
+                  // Subimos archivo 1
+                  if ($this->upload->do_upload('archivo')){
+                      $data = $this->upload->data();
+                  }else{
+                      echo $this->upload->display_errors();
+                  }
+              //updeteo en tabla
+              $subir = 'http://172.16.10.15/SoftSkills_People/assets/dist/img/profile/'.$id_usuario.'.'.strtolower($ext);
+              $data = array(
+                     'rut' => $this->input->post('rut'),
+                     'usuario' => $this->input->post('usuario'),
+                     'nombre' => $this->input->post('nombre'),
+                     'mail' => $this->input->post('mail'),
+                     'img' => $subir,
+                     'anexo' => $this->input->post('anexo')
+              );
+              $this->db->where('id_usuario', $id_usuario);
+              $this->db->update('usuarios', $data);                     
+        }else{          
             //updeteo en tabla
-            $subir = 'http://172.16.10.15/SoftSkills_People/assets/dist/img/profile/'.$id_usuario.'.'.strtolower($ext);
-            $data = array(
-                   'rut' => $this->input->post('rut'),
-                   'usuario' => $this->input->post('usuario'),
-                   'nombre' => $this->input->post('nombre'),
-                   'mail' => $this->input->post('mail'),
-                   'img' => $subir,
-                   'anexo' => $this->input->post('anexo')
-            );
-            $this->db->where('id_usuario', $id_usuario);
-            $this->db->update('usuarios', $data);                     
-        }else{
-          
-            //updeteo en tabla
-            if(!empty($this->input->post('img'))){
+            if($this->input->post('img')!=""){
+                  //borrar archivo existente
+                  $variable = explode('/', $this->input->post('imagen'));
+                  unlink(FCPATH.'assets/dist/img/profile/'.$variable[8]);
 
-                //borrar archivo existente
-                $variable = explode('/', $this->input->post('imagen'));
-                unlink(FCPATH.'assets/dist/img/profile/'.$variable[8]);
-
-                $data = array(
-                   'rut' => $this->input->post('rut'),
-                   'usuario' => $this->input->post('usuario'),
-                   'nombre' => $this->input->post('nombre'),
-                   'mail' => $this->input->post('mail'),
-                   'img' => $this->input->post('img'),
-                   'anexo' => $this->input->post('anexo'),
-                   'password' => $pass
-                );
+                  $data = array(
+                     'rut' => $this->input->post('rut'),
+                     'usuario' => $this->input->post('usuario'),
+                     'nombre' => $this->input->post('nombre'),
+                     'mail' => $this->input->post('mail'),
+                     'img' => $this->input->post('img'),
+                     'anexo' => $this->input->post('anexo'),
+                     'password' => $pass);
             }else{
                 $data = array(
                    'rut' => $this->input->post('rut'),
@@ -205,13 +201,12 @@ class Usuarios extends CI_Controller {
                    'nombre' => $this->input->post('nombre'),
                    'mail' => $this->input->post('mail'),
                    'anexo' => $this->input->post('anexo'),
-                   'password' => $pass
-                );
+                   'password' => $pass);
             }            
             $this->db->where('id_usuario', $id_usuario);
             $this->db->update('usuarios', $data);
         }
-        redirect(base_url('/index.php/usuarios/usuarios/'.$id_usuario));        
+        redirect(base_url('/index.php/usuarios/usuarios/'.$id_usuario));             
     }
   }
 //}

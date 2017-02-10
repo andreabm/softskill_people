@@ -169,12 +169,12 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
     $('#ejecutivos').DataTable({
-        "lengthMenu": [[25, 50, -1], [10, 25, 50, "All"]],
-       "language": {
-                "url": '<?php echo base_url("/js/bootstrap-dataTables-Spanish.json") ?>',
+        "language": {
+                "url": 'http://localhost/SoftSkills_People/js/bootstrap-dataTables-Spanish.json',
                 "decimal": ",",
                 "thousands": "."
             },
+
     });
 });
 function verPostulante(id_postulante){

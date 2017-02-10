@@ -66,7 +66,17 @@ class Usuarios extends CI_Controller {
                   'img' => $valido[0]['img']
                 );
                 $this->session->set_userdata($sessiondata);
-                redirect(base_url().'index.php/index/dashboard');
+
+                if($this->session->userdata['id_rango']==6){
+                   redirect(base_url().'index.php/calidad/dashboard');  
+                }elseif($this->session->userdata['id_rango']==4){
+                   redirect(base_url().'index.php/operaciones/dashboard');
+                }elseif($this->session->userdata['id_rango']==2){
+                   redirect(base_url().'index.php/gestion/dashboard');   
+                }else{
+                   redirect(base_url().'index.php/index/dashboard');
+                }
+
             } else {
                 $data['msg'] = '<div class="alert alert-danger text-center">Datos de sesión invalidos o Usuario inactivo</div>';     
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Nombre de usuario o contraseña inválido</div>');
@@ -129,7 +139,8 @@ class Usuarios extends CI_Controller {
          * Revisamos si el archivo fue subido
          * Comprobamos si existen errores en el archivo subido
          */
-       if (!empty($_FILES['archivo']['name'])){
+        
+       if(!empty($_FILES['archivo']['name'])){        
             //solo extension
             $ext = end(explode(".", $_FILES['archivo']['name']));
             //Borrar archivo
@@ -159,7 +170,6 @@ class Usuarios extends CI_Controller {
             }
             //updeteo en tabla
             $subir = 'http://172.16.10.15/SoftSkills_People/assets/dist/img/profile/'.$id_usuario.'.'.strtolower($ext);
-
             $data = array(
                    'rut' => $this->input->post('rut'),
                    'usuario' => $this->input->post('usuario'),
@@ -169,8 +179,9 @@ class Usuarios extends CI_Controller {
                    'anexo' => $this->input->post('anexo')
             );
             $this->db->where('id_usuario', $id_usuario);
-            $this->db->update('usuarios', $data);          
+            $this->db->update('usuarios', $data);                     
         }else{
+          
             //updeteo en tabla
             if(!empty($this->input->post('img'))){
 
@@ -200,9 +211,8 @@ class Usuarios extends CI_Controller {
             $this->db->where('id_usuario', $id_usuario);
             $this->db->update('usuarios', $data);
         }
-        redirect(base_url('/index.php/usuarios/usuarios/'.$id_usuario));
-        
+        redirect(base_url('/index.php/usuarios/usuarios/'.$id_usuario));        
+    }
   }
-
-}
+//}
 ?>

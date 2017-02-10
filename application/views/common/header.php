@@ -63,7 +63,7 @@ if(!isset($this->session->userdata['id_usuario'])){
 <div class="wrapper">
   <header class="main-header">
     <!-- Logo -->
-    <a href="#" class="logo">
+    <a href="" class="logo" style="cursor:default;">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>SS</b>P</span>
       <!-- logo for regular state and mobile devices -->
@@ -172,7 +172,22 @@ if(!isset($this->session->userdata['id_usuario'])){
     <section class="sidebar">
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
-      <li class="active"><a href="<?php echo base_url('/index.php/index/dashboard');?>"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
+      <li class="active">
+        <?php 
+        if($this->session->userdata['id_rango']==6){
+             $url = base_url('index.php/calidad/dashboard');  
+          }elseif($this->session->userdata['id_rango']==4){
+             $url = base_url('index.php/operaciones/dashboard');
+          }elseif($this->session->userdata['id_rango']==2){
+             $url = base_url('index.php/gestion/dashboard');   
+          }else{
+             $url = base_url('index.php/index/dashboard');
+          }
+        ?>
+        <a href="<?php echo $url;?>">
+          <i class="fa fa-home"></i><span>Inicio</span>
+        </a>
+      </li>
 	  <?php 
 	  foreach($this->menu_lista as $area => $menu) {
 		  ?>

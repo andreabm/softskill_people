@@ -326,7 +326,7 @@ $('.datepicker').datepicker({
                 <div class="col-md-4">
                   <div class="form-group">
                       <label>Nota Final</label>
-                      <input class="form-control" name="aprobacion" id="aprobacion" value="<?=$total_cat?>" disabled readonly /> 
+                      <input class="form-control" name="aprobacion" id="aprobacion" value="<?=$total_cat?>" readonly /> 
                   </div>
                 </div><br/><br/>
 

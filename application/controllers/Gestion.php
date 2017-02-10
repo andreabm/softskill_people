@@ -40,6 +40,124 @@ class Gestion extends CI_Controller {
 	  return true;
   	}
 	
+    public function ejecutivos(){
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,resultado_evaluacion_psicologica.resultado_final');
+        $this->db->from('personas');
+        $this->db->join('postulantes','personas.rut = postulantes.rut');
+        $this->db->join('areas','areas.id_area = postulantes.id_area');
+        $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera');
+        $this->db->join('resultado_evaluacion_psicologica','resultado_evaluacion_psicologica.rut = postulantes.rut');
+        $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo', 'left');
+        $this->db->where('personas.clasificado = 1');
+        $query = $this->db->get();
+        $ejecutivos = $query->result_array();
+        $data['ejecutivos'] = $ejecutivos;
+        $this->load->view('common/header');
+        $this->load->view('gestion/ejecutivos',$data);
+        $this->load->view('common/footer');
+    }
+    public function mover_ejecutivo(){
+        $id_postulante = $this->input->post('id_postulante');
+        
+        $cargos = $this->MyModel->buscar_select('cargos','id_cargo','cargo');    
+        $data['cargos'] = $cargos;
+
+        $this->db->from('areas');
+        $this->db->join('solicitudes','solicitudes.id_area=areas.id_area');
+        $this->db->where('solicitudes.cantidad_entregada < solicitudes.cantidad_solicitada');
+        $this->db->where('solicitudes.validado = 1');
+        $this->db->group_by('areas.id_area');
+        $query = $this->db->get();
+        $areas = $query->result_array();   
+        $data['areas'] = $areas;
+                
+        $motivos_no_califica = $this->MyModel->buscar_select('motivo_no_califica','id_motivo_no_califica','motivo');
+        $data['motivos_no_califica'] = $motivos_no_califica;
+        
+        $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno, personas.materno,postulantes.id_cargo,personas.email,postulantes.id_cargo,postulantes.id_solicitud');
+        $this->db->from('postulantes');
+        $this->db->join('personas','postulantes.rut=personas.rut');
+        $this->db->where('postulantes.id_postulante = '.$id_postulante);
+        $query = $this->db->get();
+        $postulante = $query->result_array();       
+        $data['postulante']=$postulante;
+
+        $this->db->from('sucursales');
+        $query = $this->db->get();
+        $sucu = $query->result_array();       
+        $data['sucu']=$sucu;
+
+        $this->load->view('gestion/modal/mover_ejecutivo',$data);
+    }
+
+    //UPDATE MOVER EJECUTIVO INI
+        public function update_ejecutivo_mover(){
+        $rut = $this->input->post('rut');
+        $califica=$this->input->post('califica');
+        $area = $this->input->post('area');
+        $cartera = $this->input->post('cartera');
+        $id_sol = $this->input->post('id_sol');
+        $nombre = $this->input->post('nombre');
+        $rut = $this->input->post('rut');
+        $email = $this->input->post('email');
+        $id_sucursal = $this->input->post('id_sucursal');
+        $supervisor = $this->input->post('supervisor');
+        $id_supervisor = $this->input->post('id_supervisor');
+        
+        $fecha_presentacion = $this->input->post('fecha_presentacion');
+        $hora_presentacion = $this->input->post('hora_presentacion');
+
+        $hora_separada = explode(" ", $hora_presentacion);
+        $hora_separada[0]; //hora
+        $hora_separada[1]; //am o pm
+
+        $this->db->from('solicitudes');
+        $this->db->where(array('id_solicitud' => $id_sol));
+        $query = $this->db->get();
+        $sol = $query->result_array();
+        $nueva_cantidad = $sol[0]['cantidad_entregada'] - 1;
+
+        //actualizo la nueva cantidad de la solicitud anterior
+        $data_solicitud = array('cantidad_entregada' => $nueva_cantidad);
+        $this->db->where('id_solicitud', $id_sol);
+        $this->db->update('solicitudes', $data_solicitud);        
+            
+            //array para la actualizacion de postulante
+            $update_postulante = array(
+                    'id_cartera' => $cartera,
+                    'id_area' => $area,
+                    'sucursal_id' => $id_sucursal,
+                    'fecha_asignacion' => $fecha_presentacion.' '.$hora_separada[0].':00',
+                    'id_supervisor_califica' => $id_supervisor
+            );
+
+            //comparo datos de la solicitud
+            $this->db->from('solicitudes');
+            $this->db->where(array('id_cartera' => $cartera, 'id_area' => $area, 'id_cargo' => $this->input->post('id_cargo')));
+            $this->db->order_by('solicitudes.id_solicitud');
+            $this->db->limit(1);
+            $query = $this->db->get();
+            $solicitud = $query->result_array();
+
+            $update_solicitud = array(
+                'cantidad_entregada' => $solicitud[0]['cantidad_entregada']+1
+            );
+            if (($solicitud[0]['cantidad_entregada'] + 1) == $solicitud[0]['cantidad_solicitada']) { 
+                $update_solicitud['activo'] = 0;
+            }
+            $this->db->where('id_solicitud',$solicitud[0]['id_solicitud']);
+            $this->db->update('solicitudes', $update_solicitud);
+            $id_solicitud = $solicitud[0]['id_solicitud'];
+            $update_postulante['id_solicitud'] = $id_solicitud;            
+               
+        //actualizo los datos en postulantes       
+        $this->db->where('rut',$rut);
+        $this->db->update('postulantes', $update_postulante);        
+        
+        redirect(base_url().'index.php/gestion/ejecutivos');        
+    }
+    //UPDATE MOVER EJECUTIVO FIN
+
     public function postulantes(){
         $this->db->from('postulantes');
 		$array = array();
@@ -549,13 +667,15 @@ class Gestion extends CI_Controller {
         $data['evaluadores'] = $evaluadores;
 
         if ($this->input->post('rut')) {
-            $rut = $this->input->post('rut');
-            $nombre = $this->input->post('nombre');
+           $rut = $this->input->post('rut');
+           $nombre = $this->input->post('nombre');
            $edo_civil = $this->input->post('edo_civil');
            $hijos = $this->input->post('hijos');
            $edades_hijos = $this->input->post('edades_hijos');
            $cargo = $this->input->post('cargo');
            $resultado_psicologica = $this->input->post('resultado_psicologica');
+           $aprobacion = $this->input->post('aprobacion');
+           $comentario = $this->input->post('comentario');
            //$competencias = 
            //Actualizamos datos de la persona
            $update_persona = array(
@@ -588,6 +708,14 @@ class Gestion extends CI_Controller {
                );
                $this->db->insert('resultado_competencias', $nuevo_resultado);
             }
+            
+            $data_result = array(
+                   'rut' => $rut,
+                   'observacion' => $comentario ,
+                   'resultado_final' => $aprobacion
+            );
+            $this->db->insert('resultado_evaluacion_psicologica', $data_result);
+
             redirect(base_url().'index.php/Gestion/postulantes');            
         }
         $this->load->view('common/header');

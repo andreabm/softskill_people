@@ -37,6 +37,7 @@
                 </thead>
                 <tbody>
                 <?php 
+                $tot = 0;
                 foreach($escuchas as $c) {
                     ?>
                     <tr>
@@ -49,14 +50,14 @@
                       </td>
                     </tr>
                     <?php
+                    $tot = $tot + $c['ponderacion'];
                 }?>
                 </tbody>
                 <tfoot>
                 <tr>
                   <th>Totales</th>
                   <th></th>
-                  <th></th>
-                  <th></th>
+                  <th><?=$tot?> %</th>
                   <th></th>
                 </tr>
                 </tfoot>

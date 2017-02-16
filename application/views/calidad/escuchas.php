@@ -37,6 +37,7 @@
                 </thead>
                 <tbody>
                 <?php 
+                $tot = 0;
                 foreach($escuchas as $c) {
                     ?>
                     <tr>
@@ -44,19 +45,18 @@
                       <td><?php echo $c['aspecto']?></td>
                       <td><?php echo $c['ponderacion']?>%</td>
                       <td>
-                         <!--<a class="btn btn-xs btn-success">Ver</a>-->
                          <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/calidad/editar_escucha/'.$c['id_aspecto'])?>">Editar</a>      
                       </td>
                     </tr>
                     <?php
+                    $tot = $tot + $c['ponderacion'];
                 }?>
                 </tbody>
                 <tfoot>
                 <tr>
                   <th>Totales</th>
                   <th></th>
-                  <th></th>
-                  <th></th>
+                  <th><?=$tot?> %</th>
                   <th></th>
                 </tr>
                 </tfoot>

@@ -548,7 +548,8 @@ class Calidad extends CI_Controller {
             $this->db->from('postulantes');
             $this->db->join('personas','personas.rut = postulantes.rut');
             $this->db->where("date_format(postulantes.fecha_asignacion, '%Y-%m') = date_format(curdate(), '%Y-%m')");
-            $this->db->group_by("date_format(postulantes.fecha_asignacion, '%Y-%m')");
+            $this->db->group_by("semana");
+            //$this->db->group_by("date_format(postulantes.fecha_asignacion, '%Y-%m')");
             $query = $this->db->get();
             $entrevis = $query->result_array();
             $array_entre = array();
@@ -599,6 +600,9 @@ class Calidad extends CI_Controller {
         $query = $this->db->get();
         $escuchas = $query->result_array();
         $data['escuchas'] = $escuchas;
+
+
+
         $this->load->view('common/header');
         $this->load->view('calidad/escuchas',$data);
         $this->load->view('common/footer');

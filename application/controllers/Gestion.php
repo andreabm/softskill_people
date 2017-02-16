@@ -1222,7 +1222,8 @@ class Gestion extends CI_Controller {
             $this->db->from('postulantes');
             $this->db->join('personas','personas.rut = postulantes.rut');
             $this->db->where("date_format(postulantes.fecha_entrevista, '%Y-%m') = date_format(curdate(), '%Y-%m')");
-            $this->db->group_by("date_format(postulantes.fecha_entrevista, '%Y-%m')");
+            //$this->db->group_by("date_format(postulantes.fecha_entrevista, '%Y-%m')");
+            $this->db->group_by("semana");
             $query = $this->db->get();
             $entrevis = $query->result_array();
             $array_entre = array();

@@ -847,6 +847,7 @@ class Gestion extends CI_Controller {
                 'id_rango' => '1',
                 'password' => $passwordx,
                 'mail' => $email,
+                'anexo' => '0000',
                 'img' => 'http://172.16.10.15/SoftSkills_People/assets/dist/img/avatar5.png'
             );            
             $this->db->insert('usuarios', $data); 
@@ -935,77 +936,6 @@ class Gestion extends CI_Controller {
         $this->load->view('gestion/edit/competencia',$data);
         $this->load->view('common/footer');
     }
-
-    //desde aqui, escuchas
-    public function escuchas(){
-        $this->db->from('aspectos_escucha');
-        $query = $this->db->get();
-        $escuchas = $query->result_array();
-        $data['escuchas'] = $escuchas;
-        $this->load->view('common/header');
-        $this->load->view('gestion/escuchas',$data);
-        $this->load->view('common/footer');
-    }
-    public function agregar_escucha(){
-        $escucha = $this->input->post('escucha');
-        $ponderacion = $this ->input->post('ponderacion');
-
-          if(!empty($escucha)){
-              $nuevo_escucha = array('aspecto' =>  $escucha,'ponderacion' => $ponderacion);
-              $this->db->insert('aspectos_escucha',$nuevo_escucha);
-              redirect(base_url("index.php/Gestion/escuchas"));
-          }
-
-        $this->load->view('common/header');
-        $this->load->view('gestion/add/escucha');
-        $this->load->view('common/footer');
-    }
-    public function editar_escucha($id = null){
-
-        if ($this->input->post('escucha')) {
-
-            $update_escucha = array(
-                'aspecto' => $this->input->post('escucha'),
-                'ponderacion' => $this->input->post('ponderacion_escucha')
-            );
-
-            $this->db->where('id_aspecto',$this->input->post('id_escucha'));
-            $this->db->update('aspectos_escucha', $update_escucha); 
-            
-            //Elimino los items para volverlos a agregar
-            $this->db->delete('aspecto_escucha_items', array('id_aspecto_escucha' => $this->input->post('id_escucha')));
-           
-            $items = $this->input->post('item_aspectos');
-            $ponderaciones = $this->input->post('ponderacion_item[]');
-
-            foreach ($items as $key => $i){
-                if (!empty($i)){
-                    $nuevo_item_escucha = array(
-                        'id_aspecto_escucha' =>  $this->input->post('id_escucha'),
-                        'item_aspecto' => $i,
-                        'ponderacion' => $ponderaciones[$key],
-                        'multiplicar' => '7'
-                    );
-                    $this->db->insert('aspecto_escucha_items', $nuevo_item_escucha);
-                }
-            }
-            redirect(base_url("index.php/Gestion/escuchas"));
-        }
-        
-        $this->db->select('aspectos_escucha.id_aspecto, aspectos_escucha.aspecto,aspectos_escucha.ponderacion, aspecto_escucha_items.item_aspecto,
-aspecto_escucha_items.ponderacion as i_ponderacion');
-        $this->db->from('aspectos_escucha');
-        $this->db->join('aspecto_escucha_items','aspectos_escucha.id_aspecto = aspecto_escucha_items.id_aspecto_escucha','left');
-        $this->db->where('aspectos_escucha.id_aspecto = '.$id);
-        $query = $this->db->get();
-        $escucha = $query->result_array();
-        $data['escucha'] = $escucha;
-        $data['id'] = $id;
-        $this->load->view('common/header');
-        $this->load->view('gestion/edit/escucha',$data);
-        $this->load->view('common/footer');
-    }
-    //hasta aqui escuchas
 
     public function fuentes(){
         $fuentes = $this->MyModel->buscar_model('fuentes');

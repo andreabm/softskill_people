@@ -3,10 +3,9 @@
     <section class="content-header">
       <h1>
         Evaluci&oacute;n
-        <small> de Escuchas</small>
+        <small> de Operaciones Serbanc </small>
       </h1>
     </section>
-
 
     <!-- Main content -->
     <section class="content">
@@ -25,17 +24,17 @@
         </div>
     </div>
     <script type="text/javascript">
-$(document).ready(function() {
-    $("form").keypress(function(e) {
-        if (e.which == 13) {
-            return false;
-        }
-    });
-});
+      $(document).ready(function(){
+          $("form").keypress(function(e) {
+              if (e.which == 13) {
+                  return false;
+              }
+          });
+      });
     </script>
     <?php 
         $attributes = array('id' => 'form1');
-        echo form_open('operaciones/insert_escuchas', $attributes);
+        echo form_open('', $attributes);
         ?>
         <input class="form-control" type="hidden" name="id" id="id" value="<?php echo $id;?>" readonly/><br />
       <div class="row">
@@ -133,14 +132,14 @@ $(document).ready(function() {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Rut del Audio</label>
-                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio" value="<?php echo $respondido_r[0]['rut_audio'];?>" disables readonly>                           
+                                <input class="form-control" type="rut_audio" name="rut_audio" id="rut_audio" value="<?php echo $respondido_r[0]['rut_audio'];?>" autocomplete="off" onkeyup="texto_rut(event);" readonly>                           
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Cargo a Postular</label>
                                 <input class="form-control" type="text" name="cargo" id="cargo" value="<?php echo $cargo[0]['cargo'];?>" disables readonly>
-                                <input class="form-control" type="hidden" name="id_cargo" id="id_cargo" value="<?php echo $cargo[0]['id_cargo'];?>" disables readonly>                                                           
+                                <input class="form-control" type="hidden" name="id_cargo" id="id_cargo" value="<?php echo $cargo[0]['id_cargo'];?>" readonly>                                                           
                             </div>
                         </div>
                   </div>
@@ -154,7 +153,6 @@ $(document).ready(function() {
 
 
     <?php
-    array_unshift($respondido_q,'');
     foreach($aspectos_escuchas as $a){ ?>
        <div class="row">
         <div class="col-xs-12">
@@ -174,11 +172,14 @@ $(document).ready(function() {
                         <th width="40%">Observacion</th>
                     </tr>
                     <?php 
-
+                    $color = "";
+                                       
                     foreach($aspectos_escuchas_items as $i){
+
                             if($i['id_aspecto_escucha'] == $a['id_aspecto']){?>
                             <?php 
-                                  if($respondido_q[$i['id_item_aspecto']]['id_aspecto_items']==$i['id_item_aspecto']){                                    
+                                  if($respondido_q[$i['id_item_aspecto']]['id_aspecto_items']==$i['id_item_aspecto']){
+
                                       if($respondido_q[$i['id_item_aspecto']]['respondido']=='1'){
                                           $checked_si = 'selected';
                                           $checked_no = '';
@@ -192,7 +193,8 @@ $(document).ready(function() {
                                         $checked_no = '';
                                       }
 
-                                      $nota = $respondido_q[$i['id_item_aspecto']]['nota_grupo'];
+                                      $nota = $respondido_q[$i['id_item_aspecto']]['nota_grupo'];                                      
+                                      //observacion, $respondido_q[$i['id_item_aspecto']]['observacion']
                                   }?>                        
                             <tr <?=$color;?>>
                               <td>
@@ -212,17 +214,17 @@ $(document).ready(function() {
                                 <input type="hidden" name="multiplicar<?=$i['id_item_aspecto'];?>" id="multiplicar<?=$i['id_item_aspecto'];?>" value="<?=$i['multiplicar'];?>" style="width:50px;" readonly/>
                                 <input type="hidden" name="pondera<?=$i['id_item_aspecto'];?>" id="pondera<?=$i['id_item_aspecto'];?>" value="<?=$i['ponderacion'];?>" style="width:50px;" readonly/>
                                 <input type="hidden" id="resultado_grupo<?=$i['id_item_aspecto'];?>" name="resultado_grupo<?=$i['id_item_aspecto'];?>" value="0" style="width:60px;" class="form-control grupo<?=$a['id_aspecto'];?>" readonly/>
-                                <input type="text" id="observacion<?=$i['id_item_aspecto'];?>" name="observacion<?=$i['id_item_aspecto'];?>" class="form-control" value="<?php echo $respondido_q[$i['id_item_aspecto']]['observacion'];?>" disabled/>
+                                <input type="text" id="observacion<?=$i['id_item_aspecto'];?>" name="observacion<?=$i['id_item_aspecto'];?>" class="form-control" value="<?=$respondido_q[$i['id_item_aspecto']]['observacion']?>" disabled/>
                               </td>
                             </tr>                                
                            <?php  }?>
                          <?php }?>
                          <tr>
-                              <td>Nota Parcial</td>
+                              <td></td>
                               <td></td>
                               <td>
                                   <input type="hidden" name="nparcial<?=$a['id_aspecto'];?>" id="nparcial<?=$a['id_aspecto'];?>" value="" readonly>
-                                  <input type="text" name="ntotal<?=$a['id_aspecto'];?>" id="ntotal<?=$a['id_aspecto'];?>" class="form-control importe_linea" value="<?php echo $nota;?>" readonly>
+                                  <input type="hidden" name="ntotal<?=$a['id_aspecto'];?>" id="ntotal<?=$a['id_aspecto'];?>" class="form-control importe_linea" value="" readonly>
                               </td>
                             </tr>
                          
@@ -244,7 +246,7 @@ $(document).ready(function() {
                 </div>
                 <div class="box-body">
                      <div class="form-group has-error">
-                      <input type="text" id="total_general" name="total_general" class="form-control" value="<?php echo $respondido_r[0]['resultado_final'];?>" readonly>
+                      <input type="text" id="total_general" name="total_general" class="form-control" value="<?php echo $respondido_r[0]['resultado_final_operaciones'];?>" readonly>
                     </div> 
                 </div>
             </div>

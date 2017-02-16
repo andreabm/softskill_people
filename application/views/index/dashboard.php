@@ -123,7 +123,7 @@
                   <h3 class="box-title">Founder</h3>
 
                   <div class="box-tools pull-right">
-                    <span class="label label-danger">8 New Members</span>
+                    <span class="label label-info"><?=count($founder);?> Founder</span>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
                     <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
@@ -132,27 +132,14 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
-                  <ul class="users-list clearfix">
+                  <ul class="users-list clearfix" style="overflow-x:scroll; overflow-y:hidden; width:100%;">
+                    <?php foreach($founder as $a){?>
                     <li>
-                      <img src="<?=base_url("assets/dist/img/user1-128x128.jpg")?>" alt="User Image">
-                      <a class="users-list-name" href="#">Alexander Pierce</a>
-                      <span class="users-list-date">Today</span>
+                      <img src="<?=$a['img'];?>" alt="User Image" style="width:100px;">
+                      <a class="users-list-name" href="#"><?=$a['nombre']?></a>
+                      <span class="users-list-date"><?=$a['anexo'];?></span>
                     </li>
-                    <li>
-                      <img src="<?=base_url("assets/dist/img/user8-128x128.jpg")?>" alt="User Image">
-                      <a class="users-list-name" href="#">Norman</a>
-                      <span class="users-list-date">Yesterday</span>
-                    </li>
-                    <li>
-                      <img src="<?=base_url("assets/dist/img/user7-128x128.jpg")?>" alt="User Image">
-                      <a class="users-list-name" href="#">Jane</a>
-                      <span class="users-list-date">12 Jan</span>
-                    </li>
-                    <li>
-                      <img src="<?=base_url("assets/dist/img/user6-128x128.jpg")?>" alt="User Image">
-                      <a class="users-list-name" href="#">John</a>
-                      <span class="users-list-date">12 Jan</span>
-                    </li>
+                    <?php }?>
                   </ul>
                   <!-- /.users-list -->
                 </div>

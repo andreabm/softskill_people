@@ -3,7 +3,7 @@
     <section class="content-header">
       <h1>
         Ejecutivos
-        <small> Serbanc</small>
+        <small> Evaluaci&oacute;n de Calidad Serbanc</small>
       </h1>
     </section>
     <!-- Main content -->
@@ -26,17 +26,6 @@
     <div class="row">
         <div class="col-md-9"></div>
     </div>
-
-    <?php
-        /*
-        echo '<pre>';
-          print_r($ejecutivos);
-          echo '<br/>';
-          print_r($escucha_resultado);
-        echo '</pre>';
-        */
-        
-        ?>
     <br />
       <div class="row">
         <div class="col-xs-12">
@@ -61,28 +50,38 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php if(!empty($ejecutivos)){
+                <?php 
+
+                if(!empty($ejecutivos)){
                         foreach($ejecutivos as $t){?>
                         <tr>
                             <td><?php echo $t['area'] ?></td>
                             <td><?php echo $t['cartera'] ?></td>
                             <td><?php echo $t['tipo_ejecutivo'] ?></td>
                             <td><?php echo $t['rut'] ?></td>
-                            <td><?php echo $t['nombre'] ?></td>
-                            <td align="center"><?php echo $t['resultado_final'];?></td>
-                            <!--<td align="center"><?php //echo $t['resultado_final'];?></td>-->
+                            <td><?php echo $t['nombre'];?></td>
+                            <td align="center"><?php echo $t['calificacion'];
+                             /*
+                                foreach ($calificacion as $r){
+                                      if($r['rut'] == $t['rut'] && $r['controlador']=='O' && $r['resultado_final_operaciones']!=""){
+                                        echo $r['resultado_final_operaciones'];
+                                      }    
+                                }
+                                */
+                              ?></td>
                             <td>
-                              <?php if($t['rut']==$t['rut_b']){?>
-                              <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/operaciones/ver_evaluacion_escuchas/'.$t['id_postulante'])?>">Ver Evaluacion</a>  
-                              <a class="btn btn-xs btn-success" href="#" disabled>Evaluar</a>
+                              <?php 
+                               if($t['calificacion']!=""){?>
+                                  <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/calidad/ver_evaluacion_escuchas/'.$t['id_postulante'])?>">Ver Evaluacion</a>  
+                                  <a class="btn btn-xs btn-success" href="#" disabled>Evaluar</a>
                               <?php }else{?>
-                              <a class="btn btn-xs btn-warning" href="#" disabled>Ver Evaluacion</a>
-                              <a class="btn btn-xs btn-success" href="<?php echo base_url('index.php/operaciones/evaluacion_escuchas/'.$t['id_postulante'])?>">Evaluar</a>
+                                  <a class="btn btn-xs btn-warning" href="#" disabled>Ver Evaluacion</a>
+                                  <a class="btn btn-xs btn-success" href="<?php echo base_url('index.php/calidad/evaluacion_escuchas/'.$t['id_postulante'])?>">Evaluar</a>
                               <?php }?>
                             </td>
                     </tr>  
                   <?php }
-                }?>                    
+                 }?>                    
                 </tbody>
                 <tfoot>
                

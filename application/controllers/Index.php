@@ -90,6 +90,9 @@ class Index extends CI_Controller {
             $data['tot_entrevista_si'] = count($tot_entrevista_si);
             //DONUT FIN
 
+            $data['founder'] = $this->MyModel->buscar_model('usuarios','id_rango = 1');
+            
+
         $this->load->view('common/header');
         $this->load->view('index/dashboard',$data);
         $this->load->view('common/footer');

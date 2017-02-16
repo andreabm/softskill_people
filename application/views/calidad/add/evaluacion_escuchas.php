@@ -3,7 +3,7 @@
     <section class="content-header">
       <h1>
         Evaluci&oacute;n
-        <small> Escuchas de Operaciones Serbanc</small>
+        <small> Escuchas de Calidad Serbanc</small>
       </h1>
     </section>
 
@@ -13,7 +13,7 @@
 
     <div class="row">
 
-        <div class="col-xs-8">
+      <div class="col-xs-8">
         <div class="alert alert-danger alert-dismissible" id="alerta" style="display: none;">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Atenci&oacute;n!</strong> El Rut ya se encuentra ingresado anteriormente. <a class= "btn btn-xs primary" href="#"data-toggle="modal" data-target="#verPostulante" onclick = "verPostulante()">VER PERSONA</a>
@@ -38,9 +38,10 @@
             <?php }?>
         </div>
     </div>
+
     <?php
         $attributes = array('id' => 'form1');
-        echo form_open('operaciones/insert_escuchas', $attributes);
+        echo form_open('calidad/insert_escuchas', $attributes);
         ?>
         <input class="form-control" type="hidden" name="id" id="id" value="<?php echo $id;?>" readonly/><br />
       <div class="row">
@@ -277,11 +278,10 @@ function texto_rut(event){
       format_on: 'keyup'
     });
   }
-
   setTimeout(function(){$("#alerta").fadeOut(2000);},3000);
   setTimeout(function(){$("#alerta_rut").fadeOut(2000);},3000);
 
-$(document).ready(function(){
+$(document).ready(function(){  
 $('.datepicker').datepicker({
         startDate: 'today',
         format: 'yyyy/mm/dd',

@@ -99,7 +99,7 @@
                           <td>
                               <a class="btn btn-xs btn-success" data-toggle="modal" data-target="#verPostulante" onclick = "verPostulante(<?php echo $p['id_postulante'];  ?>)">Ver</a>
                               <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/gestion/editar_postulante/'.$p['id_postulante'])?>">Editar</a>
-                              <a class="btn btn-xs btn-primary" href="<?php echo base_url('index.php/gestion/postulante_prueba/'.$p['id_postulante'])?>">Evaluacion</a>
+                              <a class="btn btn-xs btn-primary" href="<?php echo base_url('index.php/gestion/postulante_prueba/'.$p['id_postulante'])?>">Evaluaci&oacute;n</a>
                               
                               <?php 
                               $rut = '';

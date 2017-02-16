@@ -10,7 +10,7 @@
     <section class="content">
     <div class="row">
         <div class="col-md-9"></div>
-        <form action="<?php echo base_url("/index.php/gestion/agregar_escucha"); ?>">
+        <form action="<?php echo base_url("/index.php/calidad/agregar_escucha"); ?>">
         <div class="col-md-3">
             <button type="submit" class="btn btn-block btn-info" >Agregar Escuchas</button>
         </div>
@@ -44,8 +44,8 @@
                       <td><?php echo $c['aspecto']?></td>
                       <td><?php echo $c['ponderacion']?>%</td>
                       <td>
-                         <a class="btn btn-xs btn-success">Ver</a>
-                         <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/gestion/editar_escucha/'.$c['id_aspecto'])?>">Editar</a>      
+                         <!--<a class="btn btn-xs btn-success">Ver</a>-->
+                         <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/calidad/editar_escucha/'.$c['id_aspecto'])?>">Editar</a>      
                       </td>
                     </tr>
                     <?php

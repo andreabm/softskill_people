@@ -45,8 +45,9 @@
                             <td><?php echo $t['resultado_final'] ?></td>
                             <td>
                             <!--<a class="btn btn-xs btn-warning" href="<?php //echo base_url('/index.php/operaciones/documentacion/'.$t['id_postulante']);?>">Documentos</a>-->
-                            <a class="btn btn-xs btn-danger" href="#" data-toggle="modal" data-target="#moverEjecutivo" onclick = "moverEjecutivo(<?php echo $t['id_postulante'];  ?>)">Mover</a>
                             <a class="btn btn-xs btn-success" href="#" data-toggle="modal" data-target="#verPostulante" onclick = "verPostulante(<?php echo $t['id_postulante'];  ?>)">Ver</a>
+                            <a class="btn btn-xs btn-danger" href="#" data-toggle="modal" data-target="#moverEjecutivo" onclick = "moverEjecutivo(<?php echo $t['id_postulante'];  ?>)">Mover</a>
+                            <a class="btn btn-xs btn-primary" href="<?php echo base_url('index.php/gestion/evaluacion_test/'.$t['id_postulante'])?>">Evaluaci&oacute;n</a>
                             <!--<a class="btn btn-xs btn-warning" href="<?php //echo base_url('index.php/operaciones/ficha_contratacion/'.$t['id_postulante'])?>">Ficha </a>-->
                             </td>
                     </tr>  

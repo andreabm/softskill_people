@@ -9,7 +9,7 @@
     <!-- Main content -->
     <section class="content">
     <br />
-      <?php echo form_open('Gestion/agregar_escucha');?>
+      <?php echo form_open('Operaciones/agregar_escucha');?>
       <div class="row">
         <div class="col-xs-12">
             <div class="box box-success">

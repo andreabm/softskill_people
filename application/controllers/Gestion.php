@@ -1195,7 +1195,7 @@ class Gestion extends CI_Controller {
         $this->db->select('postulantes.id_postulante,postulantes.rut,personas.nombre,personas.paterno,personas.materno');
         $this->db->from('postulantes');
         $this->db->join('personas','personas.rut = postulantes.rut');
-        $this->db->where('postulantes.id_solicitud is null and postulantes.entrevistado=1');        
+        $this->db->where('postulantes.entrevistado=1');        
         $query_e = $this->db->get();
         $entrevistado = $query_e->result_array();
         $data['entrevistado'] = $entrevistado;               
@@ -1239,7 +1239,6 @@ class Gestion extends CI_Controller {
             //DONUT INI
             $tot_entrevista_si = '';
             $tot_entrevista_no = '';
-
             for($i=1;$i<=2;$i++){
             $this->db->select("postulantes.id_postulante, DATE(postulantes.fecha_entrevista) as fecha, week(postulantes.fecha_entrevista) as semana,
             date_format(postulantes.fecha_entrevista, '%Y-%m'), date_format(curdate(), '%Y-%m'),postulantes.entrevistado");
@@ -1259,7 +1258,6 @@ class Gestion extends CI_Controller {
             }
             $data['tot_entrevista_no'] = count($tot_entrevista_no);
             $data['tot_entrevista_si'] = count($tot_entrevista_si);
-
             //DONUT FIN
 
         $this->load->view('common/header');

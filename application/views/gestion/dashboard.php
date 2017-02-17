@@ -136,10 +136,10 @@
                   <i class="fa fa-ellipsis-v"></i>
                   <i class="fa fa-ellipsis-v"></i>                  
                   <input value="1" type="checkbox" name="postulante[<?=$s['id_postulante'];?>]" <?php if($s['entrevistap']==1){echo 'checked';}else{echo '';}?>>
-                  <span class="text" data-toggle="tooltip" data-placement="top" title="<?=$s['rut']?>"><?=$s['nombre'].' '.$s['paterno'].' '.$s['materno'];?></span>
+                  <span class="text" data-toggle="tooltip" data-placement="right" title="<?=$s['rut']?>"><?=$s['nombre'].' '.$s['paterno'].' '.$s['materno'];?></span>
                   <div class="tools">
                     <?php if(isset($s['observacion'])){?>
-                    <i class="fa fa-comment" data-toggle="tooltip" data-placement="top" title="<?=$s['observacion']?>" style="color:#f39c12;"></i>
+                    <i class="fa fa-comment" data-toggle="tooltip" data-placement="right" title="<?=$s['observacion']?>" style="color:#f39c12;"></i>
                     <?php }?>
                     <a data-toggle="modal" data-target="#comentarioPostulante" data-id="<?=$s['id_postulante'];?>" style="color:#f39c12;" href="#" onclick="datos(<?=$s['id_postulante'];?>,'<?=$s['observacion'];?>');"><i class="fa fa-edit"></i></a>
                   </div>
@@ -179,7 +179,7 @@
          <div class="col-md-6">          
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Entrevistas Semanal del mes <?=date('M');?></h3>
+              <h3 class="box-title">Entrevistas Semanal</h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -322,7 +322,7 @@
         data:<?php print_r($array_entre);?>,       
       xkey: 'y',
       ykeys: ['item1'],
-      labels: ['Item 1'],
+      labels: ['Cantidad'],
       lineColors: ['#3c8dbc'],
       hideHover: 'auto'
     });

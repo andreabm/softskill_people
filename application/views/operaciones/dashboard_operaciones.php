@@ -165,10 +165,10 @@
                   <i class="fa fa-ellipsis-v"></i>
                   <i class="fa fa-ellipsis-v"></i>                  
                   <input value="1" type="checkbox" name="postulante[<?=$s['id_postulante'];?>]" <?php if($s['ingresop']==1){echo 'checked';}else{echo '';}?>>
-                  <span class="text" data-toggle="tooltip" data-placement="top" title="<?=$s['rut']?>"><?=$s['nombre'].' '.$s['paterno'].' '.$s['materno'];?></span>
+                  <span class="text" data-toggle="tooltip" data-placement="right" title="<?=$s['rut']?>"><?=$s['nombre'].' '.$s['paterno'].' '.$s['materno'];?></span>
                   <div class="tools">
                     <?php if(isset($s['observacion_induccion'])){?>
-                    <i class="fa fa-comment" data-toggle="tooltip" data-placement="top" title="<?=$s['observacion_induccion']?>" style="color:#f39c12;"></i>
+                    <i class="fa fa-comment" data-toggle="tooltip" data-placement="right" title="<?=$s['observacion_induccion']?>" style="color:#f39c12;"></i>
                     <?php }?>
                     <a data-toggle="modal" data-target="#comentarioPostulante" data-id="<?=$s['id_postulante'];?>" style="color:#f39c12;" href="#" onclick="datos(<?=$s['id_postulante'];?>,'<?=$s['observacion_induccion'];?>');"><i class="fa fa-edit"></i></a>
                   </div>

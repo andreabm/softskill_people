@@ -556,7 +556,7 @@ class Calidad extends CI_Controller {
             $g = 0;          
             foreach($entrevis as $a){
                 //$array_entre[$g]['y'] = $a['fecha'].',item:'.$a['postulantes'];
-                $array_entre[] = array('y' => $a['fecha'], 'item1' => $a['postulantes']);
+                $array_entre[] = array('y' => $a['fecha'], 'aaa' => $a['postulantes']);
                 $g++;
             }
             $data['array_entre'] = json_encode($array_entre);

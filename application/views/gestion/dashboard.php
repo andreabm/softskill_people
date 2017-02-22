@@ -334,6 +334,4 @@
   $('.modal-body #id_postulante').val(id_postulante);
   $('.modal-body #observacion').val(observacion);
  }
-
-
 </script>

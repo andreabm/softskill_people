@@ -92,6 +92,19 @@ class Index extends CI_Controller {
 
             $data['founder'] = $this->MyModel->buscar_model('usuarios','id_rango = 1');
             
+        //autocomplete ini
+        $this->db->select("postulantes.id_postulante,postulantes.rut,date_format(postulantes.fecha_entrevista, '%d-%m-%Y') as fecha_entrevista,date_format(postulantes.fecha_asignacion, '%d-%m-%Y') as fecha_asignacion,personas.nombre,personas.paterno,areas.area,carteras.cartera,tipos_ejecutivos.tipo_ejecutivo,resultado_evaluacion_psicologica.resultado_final");
+        $this->db->from('personas');
+        $this->db->join('postulantes','personas.rut = postulantes.rut');
+        $this->db->join('areas','areas.id_area = postulantes.id_area','left');
+        $this->db->join('carteras','carteras.id_cartera = postulantes.id_cartera','left');
+        $this->db->join('resultado_evaluacion_psicologica','resultado_evaluacion_psicologica.rut = postulantes.rut','left');
+        $this->db->join('tipos_ejecutivos','tipos_ejecutivos.id_tipo_ejecutivo = postulantes.id_cargo', 'left');
+        //$this->db->where('personas.clasificado = 1');
+        $query = $this->db->get();
+        $ejecutivos = $query->result_array();
+        $data['ejecutivos'] = $ejecutivos;
+        //autocomplete fin
 
         $this->load->view('common/header');
         $this->load->view('index/dashboard',$data);

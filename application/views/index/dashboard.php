@@ -116,6 +116,66 @@
 
       <div class="clearfix">&nbsp;</div>
 
+            <div class="row">
+        <div class="col-xs-12">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Ejecutivos</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+            
+              <table id="ejecutivos" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>RUT</th>
+                  <th>Nombre</th>
+                  <th>F. Entrevista</th>
+                  <th>F. Asignaci&oacute;n Inducci&oacute;n</th>
+                  <th>Area</th>
+                  <th>Cartera</th>
+                  <th>Cargo</th>                  
+                  <th>Nota Calificaci&oacute;n</th>
+                  <th>Opciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php if(!empty($ejecutivos)){
+                        foreach($ejecutivos as $t){?>
+                        <tr>
+                            <td><?php echo $t['rut'] ?></td>
+                            <td><?php echo $t['nombre'].' '.$t['paterno'] ?></td>
+                            <td><?php echo $t['fecha_entrevista'];?></td>
+                            <td><?php echo $t['fecha_asignacion'];?></td>
+                            <td><?php echo $t['area'] ?></td>
+                            <td><?php echo $t['cartera'] ?></td>
+                            <td><?php echo $t['tipo_ejecutivo'] ?></td>                            
+                            <td><?php echo $t['resultado_final'] ?></td>
+                            <td>
+                            <!--<a class="btn btn-xs btn-warning" href="<?php //echo base_url('/index.php/operaciones/documentacion/'.$t['id_postulante']);?>">Documentos</a>-->
+                             <a class="btn btn-xs btn-success" href="#" data-toggle="modal" data-target="#verPostulante" onclick = "verPostulante(<?php echo $t['id_postulante'];  ?>)">Ver</a>
+                             <a class="btn btn-xs btn-warning" href="<?php echo base_url('index.php/operaciones/ficha_contratacion/'.$t['id_postulante'])?>">Ficha </a>
+                            </td>
+                    </tr>  
+                  <?php }
+                } ?>                    
+                </tbody>
+                <tfoot>
+               
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+
+      <div class="clearfix">&nbsp;</div>
+
       <div class="row">
           <div class="col-md-12">
               <div class="box box-info">
@@ -158,6 +218,16 @@
 
 <script>
   $(function () {
+
+    $('#ejecutivos').DataTable({
+        "lengthMenu": [[25, 50, -1], [10, 25, 50, "All"]],
+       "language": {
+                "url": '<?php echo base_url("/js/bootstrap-dataTables-Spanish.json") ?>',
+                "decimal": ",",
+                "thousands": "."
+            },
+    });
+
     //DONUT CHART
     var donut = new Morris.Donut({
       element: 'sales-chart',

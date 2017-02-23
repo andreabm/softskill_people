@@ -88,7 +88,7 @@
                             <td><?php echo $s['cantidad_aprobada']-$s['cantidad_entregada']?></td>
                             <td><?php echo $validado;?></td>
                             <td>
-							<?php if ($this->rango == 4 ||$this->rango == 1 ) {
+							<?php if($this->rango == 4 || $this->rango == 1 || $this->rango == 2) {
 								?>
 								<a class="btn btn-xs btn-success" href="#" data-toggle="modal" data-target="#validarSolicitud" onclick = "validarSolicitud(<?php echo $s['id_solicitud'];  ?>)">Validar</a></td>
 								<?php

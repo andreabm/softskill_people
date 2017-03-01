@@ -70,7 +70,7 @@ class Usuarios extends CI_Controller {
                 if($this->session->userdata['id_rango']==6){
                    redirect(base_url().'index.php/calidad/dashboard');  
                 }elseif($this->session->userdata['id_rango']==4){
-                   redirect(base_url().'index.php/operaciones/dashboard');
+                   redirect(base_url().'index.php/operaciones/dashboard_operaciones');
                 }elseif($this->session->userdata['id_rango']==2){
                    redirect(base_url().'index.php/gestion/dashboard');   
                 }else{

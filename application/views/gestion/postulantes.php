@@ -178,12 +178,6 @@
                     <span id="id_supervisor"></span>
                     <span id="supervisor"></span>
                     <input type="text" class="form-control" name="supervisor_falso" id="supervisor_falso" readonly/>
-                    <!--<select class="form-control" name="supervisor" id="supervisor">
-                      <?php //foreach($evaluadores as $w){?>
-                      <option value="<?php //echo $w['id_supervisor']?>"><?php //echo //$w['nombre_supervisor']?></option>
-                      <?php //}?>
-                    </select>-->
-
                     <?php
                     //echo form_dropdown('evaluador',$evaluadores,'',array('class' => 'form-control','id' => 'evaluador'));
                     ?>

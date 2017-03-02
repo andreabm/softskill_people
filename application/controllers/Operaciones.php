@@ -67,8 +67,6 @@ class Operaciones extends CI_Controller {
             }else{
                  $cant_solicitada = $this->input->post('cantidad_solicitada');    
             }
-            
-
             $nueva_solicitud = array(
                 'id_area' => $this->input->post('area_id'),
                 'id_cartera' => $this->input->post('cartera_id'),
@@ -80,7 +78,6 @@ class Operaciones extends CI_Controller {
                 'id_usuario_solicitante' => $this->session->userdata['id_usuario'],
                 'motivo_solicitud' => $this->input->post('id_motivo')
             );
-            //print_r($nueva_solicitud); 
             $this->MyModel->agregar_model('solicitudes',$nueva_solicitud);
             redirect('operaciones/solicitudes');
         }

@@ -138,8 +138,13 @@ class Index extends CI_Controller {
     public function cargar_solicitudes(){
         $area = $this->input->post('area');        
         //$carteras = $this->MyModel->buscar_model('carteras','id_area ='.$area);
-        $query = $this->db->query("SELECT carteras.id_cartera, carteras.cartera FROM carteras 
-                                    INNER JOIN solicitudes ON solicitudes.id_cartera = carteras.id_cartera WHERE carteras.id_area = ".$area);
+        $query = $this->db->query("
+        SELECT carteras.id_cartera,carteras.cartera
+FROM solicitudes
+INNER JOIN areas on (areas.id_area = solicitudes.id_area)
+INNER JOIN carteras on (carteras.id_cartera = solicitudes.id_cartera)
+INNER JOIN cargos on (cargos.id_cargo = solicitudes.id_cargo)
+where solicitudes.cantidad_entregada < solicitudes.cantidad_solicitada and carteras.id_area = ".$area);
         $carteras = $query->result_array();
 
         $sucursales = $this->MyModel->buscar_model('areas','id_area ='.$area);

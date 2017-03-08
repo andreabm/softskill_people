@@ -1661,6 +1661,83 @@ aspecto_escucha_items.ponderacion as i_ponderacion');
                 redirect(base_url().'/index.php/operaciones/dashboard_operaciones','refresh');
             } 
         }
+        public function supervisores(){
+            $this->db->select('carteras.id_cartera, carteras.cartera, supervisores.id_supervisor, supervisores.nombre_supervisor');
+            $this->db->from('carteras');
+            $this->db->join('supervisores','supervisores.id_cartera = carteras.id_cartera','left');
+            //$this->db->where('date(fecha_ilaboral) is not null');
+            $query = $this->db->get();
+            $supervisores = $query->result_array();
+            $data['supervisores'] = $supervisores;
+            $this->load->view('common/header');
+            $this->load->view('operaciones/supervisores',$data);
+            $this->load->view('common/footer');
+        }
+
+        public function editar_supervisores($id_cartera){ 
+
+            if(empty($id_cartera)){
+               $id_cartera = $this->input->post('id_cartera');
+            }    
+            //CONSULTO SI LA CARTERA TIENE SUPERVISOR ASIGNADO
+            $this->db->select('carteras.id_cartera, carteras.cartera, supervisores.id_supervisor, supervisores.nombre_supervisor');
+            $this->db->from('carteras');
+            $this->db->join('supervisores','supervisores.id_cartera = carteras.id_cartera','left');
+            $this->db->where('carteras.id_cartera ='.$id_cartera);
+            $query = $this->db->get();            
+            $supervisor = $query->result_array();
+            /*
+            if($query->num_rows()>0){//SI LO TIENE$existe = 1;
+            }else{//NO TIENE$existe = 0;
+            }
+            */
+            $query = $this->db->query("SELECT nombre from usuarios where id_rango = 3");
+            //$supervisores = $query->result_array();
+            //$data['supervisores'] = $supervisores;            
+            $super = array();
+            foreach ($query->result() as $w) {
+                $super[]=$w->nombre;
+            }
+            $data['supervisores'] = $super;
+            $data['supervisor'] = $supervisor;
+            $this->load->view('common/header');
+            $this->load->view('operaciones/edit/supervisores',$data);
+            $this->load->view('common/footer');
+        }
+        public function ingresar_supervisores($id_cartera){ 
+
+            if(empty($id_cartera)){
+               $id_cartera = $this->input->post('id_cartera');
+            }    
+            //CONSULTO SI LA CARTERA TIENE SUPERVISOR ASIGNADO
+            $this->db->select('carteras.id_cartera, carteras.cartera, supervisores.id_supervisor, supervisores.nombre_supervisor');
+            $this->db->from('carteras');
+            $this->db->join('supervisores','supervisores.id_cartera = carteras.id_cartera','left');
+            $this->db->where('carteras.id_cartera ='.$id_cartera);
+            $query = $this->db->get();            
+            $supervisor = $query->result_array();
+            /*
+            if($query->num_rows()>0){//SI LO TIENE$existe = 1;
+            }else{//NO TIENE$existe = 0;
+            }
+            */
+            $query = $this->db->query("SELECT nombre from usuarios where id_rango = 3");
+            //$supervisores = $query->result_array();
+            //$data['supervisores'] = $supervisores;            
+            $super = array();
+            foreach ($query->result() as $w) {
+                $super[]=$w->nombre;
+            }
+            $data['supervisores'] = $super;
+            $data['supervisor'] = $supervisor;
+            $this->load->view('common/header');
+            $this->load->view('operaciones/add/supervisores',$data);
+            $this->load->view('common/footer');
+        }
+
+        public function accion_supervisor(){
+            echo $accion = $this->input->post('accion');
+        }
 
 }
 ?>
